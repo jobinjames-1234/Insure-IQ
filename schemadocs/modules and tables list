@@ -1,0 +1,1467 @@
+based on your InsureIQ project document, the architecture we discussed, and what a production-grade multi-tenant insurance SaaS would actually require, my estimate is:
+
+Minimum viable enterprise: 180–250 tables
+Real production SaaS (your vision): 300–450 tables
+Large enterprise comparable to Guidewire/Duck Creek/Pega Insurance: 500–900+ tables
+
+For InsureIQ, I do not think 500 tables are necessary unless you decide to model every insurance product, underwriting rule, workflow, and AI artifact in extreme detail.
+
+My estimate for InsureIQ
+Module	Approx. Tables
+Tenant & Organization	20–30
+Authentication & RBAC	20–30
+User Profiles	15–25
+Insurance Companies	20–30
+Broker/Agent Management	20–40
+Customer Management	25–40
+Policy Management	40–60
+Quotes	20–35
+Claims	40–70
+Risk Score Engine	25–40
+AI Models & Predictions	25–50
+Document Management	20–35
+Marketplace	30–50
+Billing & Subscription	25–40
+Payments & Commission	20–35
+Notifications	15–25
+Workflow Engine	30–50
+Audit & Compliance	25–40
+Analytics & Reports	20–30
+Integrations	20–35
+System Configuration	20–40
+Miscellaneous	20–40
+
+Total: ≈320–430 tables
+
+Why so many?
+
+People usually think:
+
+"Insurance app = Users + Policies + Claims."
+
+In reality, that's only about 20 tables.
+
+A production SaaS has many more concerns:
+
+Multi-tenancy
+Organizations
+Branches
+Departments
+Employee hierarchy
+Permissions
+Policy versions
+Endorsements
+Renewals
+Risk assessments
+AI predictions
+ML datasets
+Marketplace listings
+Billing
+Payment reconciliation
+Commission engine
+Workflow definitions
+Workflow executions
+Document templates
+OCR results
+Notifications
+Audit logs
+API logs
+Security events
+Feature flags
+Integration mappings
+Data retention
+Compliance records
+Search indexes
+Caching metadata
+
+Each of those becomes multiple related tables.
+
+Could it reach 500?
+
+Yes, if you include:
+
+Generic workflow engine
+Rule engine
+No-code form builder
+Product configurator
+Universal document management
+AI feature store
+Prompt management
+Model registry
+Training pipelines
+Vector search metadata
+Full event sourcing
+Multi-region deployment metadata
+Localization
+Partner APIs
+Customer support
+CRM
+Marketing
+Referral system
+Fraud detection
+Data warehouse metadata
+
+Then you'll easily cross 500 tables.
+
+If I were the chief architect
+
+For the InsureIQ vision you've described, I would aim for approximately:
+
+~350 normalized tables
+50–70 lookup/reference tables
+30–40 bridge (many-to-many) tables
+20–30 audit/history tables
+15–20 materialized reporting tables
+
+That results in roughly 420–470 tables, which is a realistic size for an enterprise insurance platform without unnecessary complexity.
+
+I also wouldn't design them all at once. I'd organize them into around 35–45 bounded contexts (modules) and design one module completely before moving to the next. This keeps the architecture understandable while still yielding a comprehensive enterprise-grade schema by the end.
+
+Perfect. We'll design it exactly like an enterprise ERP. Each conversation will cover one bounded context (module) and we'll list only the table names first. Later we can drill down into every table with columns, keys, indexes, constraints, and relationships.
+
+We'll start with the foundation module because everything else depends on it. The expanded requirements explicitly require a multi-tenant SaaS architecture where every insurer is an isolated tenant with its own users, branding, configuration, and administration.
+
+Module 1 — Tenant Management (Multi-Tenant Core)
+
+Estimated tables: 27
+
+#	Table Name	Purpose
+1	tenants	Master tenant (insurance company)
+2	tenant_profiles	Company information
+3	tenant_addresses	Company addresses
+4	tenant_contacts	Official contacts
+5	tenant_domains	Custom domains & subdomains
+6	tenant_branding	Logos, themes, colors
+7	tenant_settings	General tenant configuration
+8	tenant_locales	Timezone, language, currency
+9	tenant_features	Enabled feature flags
+10	tenant_feature_overrides	Per-feature customization
+11	tenant_modules	Enabled application modules
+12	tenant_subscription_plans	Assigned SaaS plan
+13	tenant_usage_limits	Usage quotas
+14	tenant_usage_counters	Current usage statistics
+15	tenant_status_history	Activation/Suspension history
+16	tenant_lifecycle_events	Provisioning lifecycle
+17	tenant_api_credentials	Tenant API credentials
+18	tenant_oauth_clients	OAuth clients
+19	tenant_security_settings	Password, MFA, security policies
+20	tenant_data_regions	Data residency region
+21	tenant_backup_policies	Backup configuration
+22	tenant_integrations	Third-party integrations
+23	tenant_webhooks	Outgoing webhook endpoints
+24	tenant_email_settings	SMTP configuration
+25	tenant_sms_settings	SMS provider configuration
+26	tenant_storage_settings	File/object storage configuration
+27	tenant_provisioning_logs	Tenant creation and provisioning audit
+Relationships
+Tenant
+├── Profile
+├── Addresses
+├── Contacts
+├── Branding
+├── Domains
+├── Settings
+├── Modules
+├── Features
+├── Subscription
+├── Usage
+├── API Credentials
+├── Security Settings
+├── Integrations
+├── Webhooks
+└── Provisioning Logs
+
+This module serves as the root aggregate for the entire platform. Almost every business table in InsureIQ (users, customers, policies, claims, billing, AI models, documents, reports, etc.) will ultimately reference tenant_id, ensuring strict tenant isolation as required by the project's architecture.
+
+Next conversation: Module 2 — Identity, Authentication & User Management (approximately 35–40 tables).
+
+Module 2 — Identity, Authentication & User Management
+
+Estimated tables: 39
+
+This module manages every human user in the platform—from InsureIQ Super Admins to tenant Administrators, Underwriters, Agents, Claims Adjusters, Customer Support, Auditors, and eventually B2C marketplace users. It supports role-based access control (RBAC), secure authentication, MFA, session management, password policies, and account lifecycle. The requirements specify multiple user roles within each tenant and tenant-level administration.
+
+Core Identity
+#	Table Name	Purpose
+1	users	Master user account
+2	user_profiles	Personal profile
+3	user_addresses	User addresses
+4	user_contacts	Contact information
+5	user_preferences	UI preferences
+6	user_settings	Account settings
+7	user_status_history	Status changes
+8	user_login_history	Login audit
+9	user_devices	Registered devices
+10	user_sessions	Active sessions
+Authentication
+#	Table Name	Purpose
+11	passwords	Password metadata
+12	password_history	Previous passwords
+13	password_reset_tokens	Password reset
+14	email_verification_tokens	Email verification
+15	phone_verification_tokens	OTP verification
+16	refresh_tokens	JWT refresh tokens
+17	api_tokens	Personal API tokens
+18	mfa_methods	MFA methods
+19	mfa_backup_codes	Recovery codes
+20	login_attempts	Failed logins
+21	account_lockouts	Temporary lockouts
+Authorization (RBAC)
+#	Table Name	Purpose
+22	roles	System roles
+23	permissions	Individual permissions
+24	role_permissions	Role-permission mapping
+25	user_roles	User-role mapping
+26	permission_groups	Permission categories
+27	custom_roles	Tenant-defined roles
+28	custom_role_permissions	Custom role permissions
+Organization Membership
+#	Table Name	Purpose
+29	tenant_users	User belongs to tenant
+30	departments	Departments
+31	user_departments	Department membership
+32	teams	Teams
+33	team_members	Team membership
+34	reporting_hierarchy	Manager-subordinate relationships
+Security & Compliance
+#	Table Name	Purpose
+35	user_consents	Privacy/GDPR consent
+36	security_questions	Recovery questions
+37	security_answers	Encrypted answers
+38	trusted_devices	Trusted devices
+39	user_access_logs	Security audit log
+Relationship Overview
+Tenant
+│
+├── Users
+│      │
+│      ├── Profile
+│      ├── Contacts
+│      ├── Addresses
+│      ├── Preferences
+│      ├── Settings
+│      ├── Devices
+│      ├── Sessions
+│      ├── Login History
+│      ├── Passwords
+│      ├── MFA
+│      ├── API Tokens
+│      ├── Consents
+│      └── Access Logs
+│
+├── Roles
+│      ├── Permissions
+│      └── Role Permissions
+│
+├── Departments
+├── Teams
+└── Reporting Hierarchy
+Major Relationships
+Tenant → Users (1:N)
+User → User Profile (1:1)
+User → Sessions (1:N)
+User → Devices (1:N)
+User → Roles (M:N)
+Role → Permissions (M:N)
+Department → Users (M:N)
+Team → Users (M:N)
+Manager → Employee (1:N via reporting_hierarchy)
+User → Login History (1:N)
+User → MFA Methods (1:N)
+User → Access Logs (1:N)
+Users covered by this module
+InsureIQ Platform Super Admin
+Tenant Administrator
+Underwriter
+Insurance Agent
+Claims Adjuster
+Customer Support Executive
+Finance Officer
+Compliance Officer
+Auditor
+Data Analyst
+AI/ML Administrator
+B2C Marketplace Customer
+Broker (future)
+Partner Users (future)
+
+This module provides the identity foundation for every other module. Tables such as policies, claims, documents, billing, workflows, AI predictions, and audit logs will reference users.user_id for ownership, actions, approvals, and accountability.
+
+Next module: Module 3 — Organization Structure & Employee Management (approximately 30–35 tables).
+
+Module 3 — Organization Structure & Employee Management
+
+Estimated tables: 34
+
+This module models the internal organizational hierarchy of each insurance company (tenant). It defines branches, regions, departments, job positions, reporting structures, employee assignments, and workforce management. This supports the tenant roles described in the requirements (Agents, Underwriters, Claims Adjusters, Administrators, etc.) while allowing every insurer to have its own organizational structure.
+
+Organization
+#	Table Name	Purpose
+1	organizations	Legal business entity
+2	organization_types	Company classifications
+3	organization_hierarchy	Parent-child organization structure
+4	organization_settings	Organization-level settings
+Regional Structure
+#	Table Name	Purpose
+5	regions	Sales/operational regions
+6	zones	Zone hierarchy
+7	territories	Territory definitions
+8	branches	Insurance branch offices
+9	branch_addresses	Branch addresses
+10	branch_contacts	Branch contact details
+11	branch_operating_hours	Working hours
+12	branch_service_areas	Coverage/service regions
+Departments
+#	Table Name	Purpose
+13	departments	Departments
+14	department_types	Department categories
+15	department_hierarchy	Parent-child departments
+16	department_cost_centers	Financial cost centers
+Employee Structure
+#	Table Name	Purpose
+17	employees	Employee master
+18	employee_positions	Employee designation
+19	job_titles	Standard job titles
+20	employment_types	Full-time, contract, etc.
+21	employee_branch_assignments	Branch assignment
+22	employee_department_assignments	Department assignment
+23	employee_region_assignments	Regional assignment
+24	employee_reporting_lines	Reporting manager
+25	employee_work_locations	Physical/remote work location
+Workforce Assignment
+	Table Name	Purpose
+26	employee_workloads	Current workload
+27	employee_specializations	Insurance specialization
+28	employee_certifications	Professional certifications
+29	employee_license_records	Regulatory licenses
+30	employee_skill_matrix	Skills inventory
+31	employee_availability	Availability status
+32	employee_leave_balances	Leave balances
+33	employee_shift_assignments	Shift schedules
+34	employee_assignment_history	Historical assignments
+Relationship Overview
+Organization
+│
+├── Regions
+│      ├── Zones
+│      │      ├── Territories
+│      │      │      └── Branches
+│
+├── Departments
+│      └── Sub Departments
+│
+└── Employees
+       ├── Position
+       ├── Department
+       ├── Branch
+       ├── Region
+       ├── Manager
+       ├── Certifications
+       ├── Licenses
+       ├── Skills
+       ├── Workload
+       ├── Availability
+       └── Assignment History
+Major Relationships
+Tenant → Organization (1:1)
+Organization → Regions (1:N)
+Region → Zones (1:N)
+Zone → Territories (1:N)
+Territory → Branches (1:N)
+Organization → Departments (1:N)
+Department → Employees (1:N)
+Employee → Branch (N:1)
+Employee → Region (N:1)
+Employee → Manager (Self-referencing hierarchy)
+Employee → Certifications (1:N)
+Employee → Licenses (1:N)
+Employee → Skills (1:N)
+Employees supported
+
+This module accommodates all operational staff within a tenant, including:
+
+Administrator
+Branch Manager
+Regional Manager
+Insurance Agent
+Underwriter
+Senior Underwriter
+Claims Adjuster
+Claims Manager
+Customer Support Executive
+Sales Executive
+Finance Officer
+Compliance Officer
+Internal Auditor
+Data Analyst
+AI/ML Administrator
+IT Support Engineer
+This module establishes the organizational hierarchy used throughout the platform. Later modules such as Policy Management, Claims, Workflow, Task Assignment, Commissions, Approvals, and Analytics will reference these organizational entities for routing, ownership, permissions, and reporting.
+
+Next module: Module 4 — Customer & Party Management (approximately 45–55 tables)
+
+Module 4 — Customer & Party Management
+
+Estimated tables: 52
+
+This is one of the largest modules in the entire platform. It manages every person and organization that interacts with InsureIQ. The project distinguishes between tenant customers (insurance companies) and end customers (policyholders), while also supporting brokers, nominees, employers, hospitals, repair garages, surveyors, reinsurers, and other parties. This module forms the foundation for Policies, Claims, Billing, AI, CRM, and Marketplace functionality.
+
+A. Party Master (Universal Party Model)
+
+Instead of separate "Customer", "Company", "Hospital", etc., every entity begins as a Party.
+
+#	Table Name	Purpose
+1	parties	Universal party master
+2	party_types	Person, Organization, Hospital, Broker...
+3	party_statuses	Active, Suspended, Blacklisted
+4	party_identifiers	External IDs
+5	party_relationships	Party-to-party relationships
+6	party_tags	Classification tags
+7	party_notes	Internal notes
+8	party_attachments	Party documents
+B. Individual Persons
+#	Table Name	Purpose
+9	persons	Individual details
+10	person_names	Name history
+11	person_demographics	Gender, DOB, nationality
+12	person_marital_status	Marital information
+13	person_employment	Employment details
+14	person_income_profiles	Income information
+15	person_family_members	Family members
+16	person_emergency_contacts	Emergency contacts
+C. Organizations
+#	Table Name	Purpose
+17	organizations_master	Organization details
+18	organization_contacts	Contacts
+19	organization_industries	Industry classification
+20	organization_sizes	Company size
+21	organization_financial_profiles	Financial profile
+D. Customer Management
+#	Table Name	Purpose
+22	customers	Customer master
+23	customer_profiles	Extended profile
+24	customer_segments	Customer segmentation
+25	customer_categories	Retail, Corporate, VIP
+26	customer_status_history	Lifecycle history
+27	customer_preferences	Communication preferences
+28	customer_lifecycle	Lifecycle stage
+29	customer_risk_profiles	Current risk profile
+E. Identity & Verification
+#	Table Name	Purpose
+30	identity_documents	Aadhaar, Passport, etc.
+31	identity_verifications	Verification results
+32	kyc_applications	KYC requests
+33	kyc_verification_results	KYC outcome
+34	sanctions_screenings	AML/Sanctions
+35	pep_screenings	Politically exposed persons
+36	customer_consents	Privacy consent
+F. Addresses
+#	Table Name	Purpose
+37	addresses	Master addresses
+38	address_types	Home, Office
+39	party_addresses	Party-address mapping
+G. Contact Information
+#	Table Name	Purpose
+40	contact_methods	Phone, Email
+41	phone_numbers	Phone numbers
+42	email_addresses	Email addresses
+43	social_profiles	Social media
+44	preferred_contact_methods	Preferred communication
+H. Nominees & Beneficiaries
+#	Table Name	Purpose
+45	nominees	Insurance nominees
+46	beneficiary_allocations	Allocation percentages
+47	legal_guardians	Guardian information
+I. Marketplace Customer
+#	Table Name	Purpose
+48	marketplace_accounts	Global marketplace account
+49	marketplace_preferences	Marketplace settings
+50	marketplace_saved_quotes	Saved quote comparisons
+J. Customer History
+#	Table Name	Purpose
+51	customer_activity_history	Activity timeline
+52	customer_merge_history	Duplicate merge history
+Relationship Overview
+Party
+│
+├── Person
+│      ├── Employment
+│      ├── Income
+│      ├── Family
+│      ├── Emergency Contacts
+│      └── Identity Documents
+│
+├── Organization
+│
+├── Customer
+│      ├── Profile
+│      ├── Risk Profile
+│      ├── Preferences
+│      ├── Lifecycle
+│      ├── KYC
+│      ├── Consents
+│      ├── Nominees
+│      └── Marketplace Account
+│
+├── Addresses
+├── Phones
+├── Emails
+├── Notes
+└── Attachments
+Major Relationships
+Party → Customer (1:1 or 1:N depending on business rules)
+Party → Addresses (M:N)
+Party → Contact Methods (1:N)
+Customer → Identity Documents (1:N)
+Customer → KYC Applications (1:N)
+Customer → Risk Profiles (1:N over time)
+Customer → Nominees (1:N)
+Customer → Marketplace Account (1:1)
+Customer → Activity History (1:N)
+Customer → Policies (1:N, introduced in the Policy module)
+Why use a Universal Party Model?
+
+This is a common enterprise pattern used in large insurance and financial systems because many entities share the same core attributes (name, address, contacts, documents, relationships). Rather than duplicating those fields across separate tables for customers, hospitals, brokers, repair shops, reinsurers, and employers, they all derive from a single parties entity with specialized extensions. It reduces redundancy, simplifies integrations, and supports future expansion.
+
+This module underpins nearly every other domain in InsureIQ: Policies, Claims, Underwriting, Billing, CRM, Marketplace, AI Risk Scoring, Fraud Detection, and Analytics all reference these customer and party records.
+
+Next module: Module 5 — Insurance Product & Policy Catalog (approximately 40–50 tables).
+
+odule 5 — Insurance Product & Policy Catalog
+
+Estimated tables: 47
+
+This module defines what an insurance company sells, not what customers purchase. Every tenant (insurer) can configure its own insurance products, policy types, coverages, riders, premium bands, exclusions, underwriting rules, eligibility criteria, deductibles, waiting periods, and benefits without affecting other tenants. This aligns with the requirement that policy types, coverage rules, premium bands, and approval thresholds be configurable per tenant.
+
+A. Product Catalog
+#	Table Name	Purpose
+1	insurance_products	Product master
+2	product_categories	Motor, Health, Life, Travel
+3	product_subcategories	Hatchback, SUV, Family Health
+4	product_versions	Version history
+5	product_statuses	Draft, Published, Archived
+6	product_localizations	Multi-language product content
+B. Policy Types
+#	Table Name	Purpose
+7	policy_types	Policy master
+8	policy_type_versions	Version history
+9	policy_classes	Personal, Commercial
+10	policy_terms	Annual, Monthly
+11	policy_duration_options	Allowed durations
+C. Coverage
+#	Table Name	Purpose
+12	coverages	Coverage master
+13	coverage_categories	Liability, Medical, Theft
+14	coverage_limits	Coverage limits
+15	coverage_conditions	Conditions
+16	coverage_rules	Coverage business rules
+17	product_coverages	Product-coverage mapping
+D. Riders / Add-ons
+#	Table Name	Purpose
+18	riders	Rider master
+19	rider_categories	Rider grouping
+20	rider_rules	Rider eligibility
+21	product_riders	Product-rider mapping
+E. Benefits
+#	Table Name	Purpose
+22	benefits	Benefit catalog
+23	benefit_limits	Benefit limits
+24	product_benefits	Product-benefit mapping
+F. Exclusions
+#	Table Name	Purpose
+25	exclusions	Exclusion master
+26	exclusion_categories	Exclusion types
+27	product_exclusions	Product exclusions
+G. Premium Configuration
+#	Table Name	Purpose
+28	premium_tables	Premium master
+29	premium_bands	Premium bands
+30	premium_factors	Pricing factors
+31	premium_adjustments	Loading & discounts
+32	premium_rate_versions	Version history
+33	premium_rounding_rules	Rounding rules
+H. Eligibility Rules
+#	Table Name	Purpose
+34	eligibility_rules	Eligibility master
+35	eligibility_conditions	Rule conditions
+36	eligibility_exceptions	Rule exceptions
+I. Underwriting Configuration
+#	Table Name	Purpose
+37	underwriting_rule_sets	Rule sets
+38	underwriting_rules	Individual rules
+39	underwriting_thresholds	Auto approval thresholds
+J. Waiting Periods & Deductibles
+#	Table Name	Purpose
+40	waiting_periods	Waiting periods
+41	deductibles	Deductible master
+42	deductible_options	Deductible choices
+K. Documents
+#	Table Name	Purpose
+43	required_documents	Required documents
+44	product_document_requirements	Product-document mapping
+L. Compliance
+#	Table Name	Purpose
+45	regulatory_requirements	Regulatory compliance
+46	product_disclosures	Customer disclosures
+47	product_change_history	Product audit history
+Relationship Overview
+Insurance Product
+│
+├── Product Version
+├── Policy Type
+├── Coverages
+│      ├── Limits
+│      ├── Rules
+│      └── Conditions
+│
+├── Riders
+├── Benefits
+├── Exclusions
+├── Premium Tables
+│      ├── Premium Bands
+│      ├── Pricing Factors
+│      └── Adjustments
+│
+├── Eligibility Rules
+├── Underwriting Rules
+├── Waiting Periods
+├── Deductibles
+├── Required Documents
+└── Regulatory Requirements
+Major Relationships
+Tenant → Insurance Products (1:N)
+Product → Policy Types (1:N)
+Product → Coverages (M:N)
+Product → Riders (M:N)
+Product → Benefits (M:N)
+Product → Exclusions (M:N)
+Product → Premium Tables (1:N)
+Product → Eligibility Rules (1:N)
+Product → Underwriting Rules (1:N)
+Product → Required Documents (M:N)
+Product → Regulatory Requirements (1:N)
+Product types this module can support
+Motor Insurance
+Health Insurance
+Life Insurance
+Travel Insurance
+Home Insurance
+Property Insurance
+Marine Insurance
+Cargo Insurance
+Fire Insurance
+Cyber Insurance
+Liability Insurance
+Commercial Insurance
+Agriculture Insurance
+Pet Insurance
+Gadget Insurance
+Education Insurance
+Business Interruption Insurance
+Professional Indemnity Insurance
+Why separate the Product Catalog from Policies?
+
+In enterprise insurance platforms (such as Guidewire, Duck Creek, and Sapiens), products are templates, while policies are customer-specific contracts. A single product (e.g., Comprehensive Motor Gold Plan 2026) can be used to issue thousands of individual policies. Separating these concerns enables insurers to version products, adjust pricing and rules for future sales, and maintain historical policies without retroactively changing the contracts already issued.
+
+This module becomes the configuration backbone for Quote Generation, Underwriting, Policy Issuance, Renewals, Marketplace Comparison, Premium Calculation, and AI Risk Assessment.
+
+Next module: Module 6 — Quote, Proposal & Application Management (approximately 45–55 tables).
+
+Module 6 — Quote, Proposal & Application Management
+
+Estimated tables: 53
+
+This module manages the complete journey before a policy exists. It begins when a customer (through the insurer portal, an agent, or the B2C marketplace) requests a quote and ends when the application is either approved, rejected, or converted into an issued policy. The project specifies quote requests, application routing, underwriting review, KYC, document uploads, and marketplace lead routing.
+
+A. Quote Management
+#	Table Name	Purpose
+1	quotes	Quote master
+2	quote_versions	Version history
+3	quote_requests	Customer quote requests
+4	quote_responses	Returned quotes
+5	quote_statuses	Quote lifecycle
+6	quote_expirations	Expiry tracking
+7	quote_revisions	Quote modifications
+8	quote_notes	Internal notes
+B. Quote Comparison (Marketplace)
+#	Table Name	Purpose
+9	quote_comparisons	Comparison session
+10	compared_quotes	Compared insurers
+11	comparison_rankings	Ranking algorithm results
+12	sponsored_quote_positions	Sponsored placement
+13	comparison_filters	Customer filters
+C. Proposal Management
+#	Table Name	Purpose
+14	proposals	Proposal master
+15	proposal_versions	Version history
+16	proposal_documents	Attached documents
+17	proposal_reviews	Internal review
+18	proposal_status_history	Lifecycle history
+D. Insurance Applications
+#	Table Name	Purpose
+19	applications	Application master
+20	application_versions	Version history
+21	application_statuses	Draft, Submitted, Approved
+22	application_routes	Routing history
+23	application_assignments	Assigned employee
+24	application_priorities	Priority levels
+25	application_timelines	Timeline tracking
+26	application_notes	Internal comments
+E. Applicant Information
+#	Table Name	Purpose
+27	applicant_profiles	Snapshot of applicant
+28	applicant_dependents	Dependents
+29	applicant_assets	Assets being insured
+30	applicant_financials	Financial information
+F. Eligibility & Validation
+#	Table Name	Purpose
+31	eligibility_checks	Eligibility result
+32	validation_results	Business validations
+33	rule_execution_logs	Executed rules
+34	duplicate_checks	Duplicate detection
+G. Document Submission
+#	Table Name	Purpose
+35	application_documents	Uploaded files
+36	document_verifications	Verification results
+37	missing_documents	Outstanding documents
+38	document_requests	Request additional files
+H. KYC Workflow
+#	Table Name	Purpose
+39	application_kyc	KYC instance
+40	kyc_review_notes	Manual review
+41	kyc_decisions	Final decision
+I. Underwriting Preparation
+#	Table Name	Purpose
+42	underwriting_submissions	Submitted to UW
+43	underwriting_queue	Work queue
+44	underwriting_assignments	Assigned underwriter
+45	underwriting_prechecks	Automated pre-checks
+J. Marketplace Routing
+#	Table Name	Purpose
+46	marketplace_leads	Marketplace lead
+47	lead_distributions	Distributed insurers
+48	lead_acceptances	Insurer acceptance
+49	lead_conversions	Converted leads
+50	lead_rejections	Declined leads
+K. Final Decision
+#	Table Name	Purpose
+51	application_decisions	Approval/rejection
+52	rejection_reasons	Standard rejection reasons
+53	policy_conversion_logs	Converted to issued policy
+Relationship Overview
+Quote Request
+│
+├── Quotes
+│      ├── Versions
+│      ├── Expiry
+│      ├── Comparison
+│      └── Proposal
+│
+Proposal
+│
+└── Application
+       ├── Applicant
+       ├── Documents
+       ├── Eligibility
+       ├── KYC
+       ├── Validation
+       ├── Underwriting Queue
+       ├── Marketplace Routing
+       └── Final Decision
+                 │
+                 ▼
+             Policy Issuance
+Major Relationships
+Customer → Quote Requests (1:N)
+Quote Request → Quotes (1:N)
+Quote → Proposal (1:1)
+Proposal → Application (1:1)
+Application → Documents (1:N)
+Application → KYC (1:1)
+Application → Eligibility Checks (1:N)
+Application → Underwriting Submission (1:1)
+Application → Marketplace Leads (1:N, marketplace only)
+Application → Policy (1:1 if approved)
+Supported application channels
+
+This module supports applications originating from:
+
+Direct insurer website
+Insurance agent
+Branch office
+Customer support representative
+Mobile application
+B2C InsureIQ Marketplace
+API partner integrations (future)
+Broker portal (future)
+Why separate Quotes, Proposals, and Applications?
+
+Enterprise insurance platforms intentionally divide these into distinct business entities because they represent different stages of the customer journey:
+
+Quote – An estimated premium generated from customer inputs, with no legal commitment.
+Proposal – The customer's formal intent to purchase, including selected coverage and supporting information.
+Application – The complete submission sent into the underwriting workflow, where it is evaluated and ultimately approved, rejected, or converted into an issued policy.
+
+Keeping these stages separate provides full auditability, supports multiple quote revisions, enables marketplace comparisons, and preserves historical records even if no policy is ultimately issued.
+his module feeds directly into the next major domain.
+
+Next module: Module 7 — Policy Lifecycle Management (approximately 60–70 tables), the largest core module in the platform.
+
+Module 7 — Policy Lifecycle Management
+
+Estimated tables: 68
+
+This is the heart of the insurance platform. Every approved application becomes a policy managed by this module. It handles issuance, endorsements, renewals, cancellations, reinstatements, policy versions, beneficiaries, insured assets, premium schedules, policy documents, and the complete policy lifecycle. The project requirements emphasize policy management, renewal reminders, policy documents, premium history, and lifecycle workflows.
+
+A. Policy Master
+#	Table Name	Purpose
+1	policies	Policy master
+2	policy_versions	Version history
+3	policy_numbers	Number generation
+4	policy_statuses	Active, Expired, Cancelled
+5	policy_lifecycle_events	Lifecycle history
+6	policy_states	Current state
+7	policy_timelines	Timeline events
+8	policy_notes	Internal notes
+B. Policy Ownership
+#	Table Name	Purpose
+9	policy_holders	Primary holder
+10	policy_insured_persons	Covered individuals
+11	policy_nominees	Nominees
+12	policy_beneficiaries	Beneficiaries
+13	policy_authorized_contacts	Authorized representatives
+14	policy_relationships	Relationships
+C. Covered Risks
+#	Table Name	Purpose
+15	insured_assets	Covered asset master
+16	insured_vehicles	Vehicle insurance
+17	insured_properties	Property insurance
+18	insured_people	Life & health
+19	insured_businesses	Commercial insurance
+20	insured_travelers	Travel insurance
+21	asset_valuations	Declared values
+D. Coverage Details
+#	Table Name	Purpose
+22	policy_coverages	Purchased coverages
+23	policy_riders	Selected riders
+4	policy_benefits	Benefits
+25	policy_exclusions	Exclusions
+26	policy_limits	Coverage limits
+27	policy_deductibles	Deductibles
+E. Premium Management
+#	Table Name	Purpose
+28	policy_premiums	Premium summary
+29	premium_installments	Installment schedule
+30	premium_due_dates	Due dates
+31	premium_adjustments	Manual adjustments
+32	premium_discounts	Discounts
+33	premium_loadings	Risk loadings
+34	premium_refunds	Refunds
+F. Policy Documents
+#	Table Name	Purpose
+35	policy_documents	Issued documents
+36	policy_certificates	Insurance certificates
+37	policy_schedule_documents	Policy schedule
+38	policy_wordings	Terms & conditions
+39	policy_document_versions	Version history
+G. Endorsements
+#	Table Name	Purpose
+40	endorsements	Endorsement master
+41	endorsement_types	Type catalog
+42	endorsement_requests	Customer requests
+43	endorsement_changes	Actual changes
+44	endorsement_documents	Generated docs
+45	endorsement_approvals	Approval workflow
+H. Renewals
+#	Table Name	Purpose
+46	renewals	Renewal master
+47	renewal_quotes	Renewal pricing
+48	renewal_notifications	Reminder tracking
+49	renewal_acceptances	Customer acceptance
+50	renewal_rejections	Declined renewals
+I. Cancellation & Reinstatement
+#	Table Name	Purpose
+51	cancellations	Cancellation master
+52	cancellation_reasons	Standard reasons
+53	cancellation_refunds	Refund calculation
+54	reinstatements	Reinstated policies
+J. Suspension
+#	Table Name	Purpose
+55	policy_suspensions	Temporary suspension
+56	suspension_reasons	Reason catalog
+K. Assignment & Transfer
+#	Table Name	Purpose
+57	policy_transfers	Ownership transfer
+58	policy_assignments	Assigned rights
+59	ownership_change_history	Ownership history
+L. Compliance
+#	Table Name	Purpose
+60	policy_regulatory_checks	Compliance checks
+61	policy_audits	Audit history
+62	policy_disclosures	Customer disclosures
+M. Historical Data
+#	Table Name	Purpose
+63	policy_snapshots	Historical snapshots
+64	policy_change_logs	Change tracking
+65	policy_activity_logs	Activity timeline
+66	policy_archives	Archived policies
+67	policy_statistics	Aggregated statistics
+68	policy_sync_history	Marketplace synchronization
+Relationship Overview
+Relationship Overview
+Application
+      │
+      ▼
+Policy
+│
+├── Policy Holder
+├── Insured Assets
+│      ├── Vehicles
+│      ├── Property
+│      ├── People
+│      └── Business
+│
+├── Coverages
+├── Riders
+├── Benefits
+├── Premiums
+│      ├── Installments
+│      ├── Discounts
+│      └── Refunds
+│
+├── Documents
+├── Endorsements
+├── Renewals
+├── Cancellations
+├── Reinstatements
+├── Transfers
+└── Audit History
+Major Relationships
+Application → Policy (1:1)
+Policy → Policy Holder (N:1)
+Policy → Covered Assets (1:N)
+Policy → Coverages (M:N)
+Policy → Riders (M:N)
+Policy → Premium Installments (1:N)
+Policy → Documents (1:N)
+Policy → Endorsements (1:N)
+Policy → Renewals (1:N)
+Policy → Cancellations (0:N)
+Policy → Reinstatements (0:N)
+Policy → Claims (1:N, in the next module)
+Policy lifecycle supported
+
+This module supports the full enterprise policy lifecycle:
+
+Application Approved
+Policy Issued
+First Premium Paid
+Policy Activated
+Mid-term Endorsements
+Premium Adjustments
+Renewal Offer Generated
+Renewal Accepted or Declined
+Policy Expired
+Policy Cancelled (if applicable)
+Policy Reinstated (optional)
+Policy Archived
+Why this module is the largest
+
+In enterprise insurance systems, a policy is a long-lived legal contract that evolves over time. Rather than updating a single row, the platform preserves every endorsement, renewal, ownership change, premium adjustment, document version, and lifecycle event. This ensures regulatory compliance, complete auditability, historical reconstruction, and accurate financial reporting while allowing policies to span many years.
+
+This module is the central business domain of InsureIQ. Claims, Billing, Commissions, AI Risk Scoring, Customer Portals, Marketplace synchronization, Analytics, and Reporting all reference policy_id.
+Next module: Module 8 — Claims Management (approximately 70–80 tables), another major core domain covering FNOL, investigation, settlement, fraud, recoveries, reserves, and payouts
+
+Module 8 — Claims Management
+
+Estimated tables: 76
+
+This is the second largest module in InsureIQ after Policy Management. It manages the complete insurance claim lifecycle—from the First Notice of Loss (FNOL) until final settlement, recovery, closure, litigation, and archival. The project requirements include claims intake, document uploads, real-time claim tracking, fraud detection, OCR/NLP processing, adjuster workflows, settlement approval, and SLA monitoring.
+
+A. Claim Master
+#	Table Name	Purpose
+1	claims	Claim master
+2	claim_numbers	Claim numbering
+3	claim_versions	Version history
+4	claim_statuses	Current status
+5	claim_types	Accident, Health, Theft
+6	claim_categories	Category classification
+7	claim_priorities	Priority
+8	claim_timelines	Timeline
+9	claim_notes	Internal notes
+B. First Notice of Loss (FNOL)
+#	Table Name	Purpose
+10	fnol_reports	Initial claim report
+11	incident_details	Incident information
+12	incident_locations	Incident location
+13	incident_witnesses	Witnesses
+14	incident_participants	Participants
+15	incident_police_reports	FIR / Police report
+16	incident_weather_conditions	Weather
+17	incident_photos	Photos
+C. Claimants
+#	Table Name	Purpose
+18	claimants	Claimant
+19	claimant_relationships	Relation to policy
+20	claimant_contacts	Contact details
+21	claimant_bank_accounts	Settlement account
+D. Claim Documents
+#	Table Name	Purpose
+22	claim_documents	Uploaded documents
+23	document_requirements	Required documents
+24	document_requests	Request missing docs
+25	document_validations	Validation
+26	document_verifications	Verification
+27	document_rejections	Rejected docs
+E. Investigation
+#	Table Name	Purpose
+28	claim_investigations	Investigation
+29	investigators	Assigned investigator
+30	investigation_findings	Findings
+31	investigation_reports	Reports
+32	investigation_evidence	Evidence
+33	investigation_interviews	Interviews
+F. Claims Adjusting
+#	Table Name	Purpose
+34	claim_adjustments	Adjustment
+35	claim_adjusters	Assigned adjuster
+36	adjuster_notes	Notes
+37	adjuster_recommendations	Recommendation
+38	damage_assessments	Damage evaluation
+39	repair_estimates	Repair estimate
+G. Financial Assessment
+#	Table Name	Purpose
+40	claim_reserves	Financial reserve
+41	reserve_changes	Reserve history
+42	estimated_losses	Estimated loss
+43	assessed_losses	Final assessed loss
+44	depreciation_calculations	Depreciation
+45	settlement_calculations	Settlement computation
+H. Settlement
+#	Table Name	Purpose
+46	claim_settlements	Settlement
+47	settlement_approvals	Approval
+48	settlement_rejections	Rejection
+49	settlement_payments	Payment
+0	settlement_methods	Payment method
+51	settlement_receipts	Receipts
+I. Recovery & Salvage
+#	Table Name	Purpose
+52	recoveries	Recovery
+53	recovery_sources	Recovery source
+54	salvage_items	Salvage
+55	salvage_sales	Salvage disposal
+56	subrogation_cases	Subrogation
+J. Fraud
+#	Table Name	Purpose
+57	fraud_flags	Fraud indicators
+58	fraud_investigations	Fraud investigation
+59	fraud_scores	AI fraud score
+60	fraud_decisions	Final fraud decision
+K. Litigation
+#	Table Name	Purpose
+61	litigation_cases	Court case
+62	legal_documents	Legal files
+63	legal_representatives	Lawyer
+64	court_events	Court hearing
+L. SLA & Workflow
+#	Table Name	Purpose
+65	claim_tasks	Tasks
+66	claim_workflows	Workflow
+67	workflow_transitions	State transitions
+68	sla_tracking	SLA monitoring
+69	escalation_history	Escalations
+M. Communication
+#	Table Name	Purpose
+70	claim_notifications	Notifications
+71	claim_messages	Customer communication
+72	communication_logs	History
+. Audit
+#	Table Name	Purpose
+73	claim_activity_logs	Activity log
+74	claim_change_logs	Change history
+75	claim_snapshots	Historical snapshots
+76	closed_claim_archives	Archive
+Relationship Overview
+Policy
+   │
+   ▼
+Claim
+│
+├── FNOL
+│      ├── Incident
+│      ├── Witnesses
+│      ├── Photos
+│      └── Police Report
+│
+├── Claimant
+├── Documents
+├── Investigation
+├── Adjuster
+├── Financial Assessment
+│      ├── Reserve
+│      ├── Loss Assessment
+│      └── Settlement Calculation
+│
+├── Settlement
+├── Recovery
+├── Salvage
+├── Fraud Investigation
+├── Litigation
+├── Workflow
+├── Notifications
+└── Audit
+Major Relationships
+Policy → Claims (1:N)
+Customer → Claims (1:N)
+Claim → FNOL Report (1:1)
+Claim → Documents (1:N)
+Claim → Investigation (1:N)
+Claim → Adjuster (N:1)
+Claim → Reserve (1:N)
+Claim → Settlement (0:N)
+Claim → Recovery (0:N)
+Claim → Fraud Investigation (0:N)
+Claim → Litigation (0:N)
+Claim → Workflow Tasks (1:N)
+Claim → Notifications (1:N)
+Enterprise Claim Lifecycle
+Policyholder submits FNOL
+Claim registered
+Required documents requested
+OCR extracts document data
+AI fraud score generated
+Adjuster assigned
+Investigation initiated (if required)
+Reserve created
+Damage/loss assessed
+Settlement amount calculated
+Manager approval obtained
+Payment processed
+Recovery/Subrogation (if applicable)
+Claim closed
+Archived for audit and analytics
+Why this module is so large
+
+Claims are the most operationally intensive part of an insurance business. Every stage—document intake, investigation, fraud analysis, reserve management, approvals, settlements, recoveries, litigation, and customer communication—must be tracked independently with complete auditability. Enterprise insurers also retain claim histories for many years to satisfy regulatory, financial, and actuarial requirements.
+
+This module integrates directly with AI fraud detection, OCR/NLP document processing, policy management, billing, customer communications, and analytics, making it one of the most interconnected domains in the platform.
+
+Next module: Module 9 — Underwriting & Risk Assessment (approximately 45–55 tables), covering underwriting decisions, risk evaluation, premium recommendations, referrals, and manual review workflows.
+
+Module 9 — Underwriting & Risk Assessment
+
+Estimated tables: 54
+
+This module governs the decision-making process that determines whether an insurer should accept, reject, defer, or modify an insurance application. It combines traditional underwriting rules with AI-generated risk scores, manual reviews, referrals, premium recommendations, and audit trails. The project requirements specifically include risk scoring, underwriting review, premium adjustment within approved bounds, historical decisions, and explainable AI outputs.
+
+A. Underwriting Master
+#	Table Name	Purpose
+1	underwriting_cases	Underwriting case
+2	underwriting_statuses	Case status
+3	underwriting_decisions	Final decision
+4	underwriting_levels	Approval level
+5	underwriting_priorities	Priority
+6	underwriting_timelines	Timeline
+7	underwriting_notes	Notes
+B. Risk Assessment
+#	Table Name	Purpose
+8	risk_assessments	Risk evaluation
+9	risk_scores	Overall risk score
+10	risk_score_components	Component scores
+11	risk_categories	Low, Medium, High
+12	risk_factors	Individual factors
+13	risk_factor_values	Measured values
+14	risk_factor_weights	Weighting
+C. Underwriting Rules
+#	Table Name	Purpose
+15	underwriting_rule_sets	Rule groups
+16	underwriting_rules	Individual rules
+17	underwriting_rule_conditions	Rule conditions
+18	underwriting_rule_actions	Rule actions
+19	rule_execution_history	Execution log
+20	rule_exceptions	Exception handling
+D. Medical Underwriting
+#	Table Name	Purpose
+21	medical_assessments	Medical review
+22	medical_conditions	Existing conditions
+23	medical_history	Medical history
+24	medical_reports	Uploaded reports
+25	medical_exam_results	Examination results
+E. Financial Underwriting
+#	Table Name	Purpose
+26	financial_assessments	Financial review
+27	income_verifications	Income verification
+28	debt_assessments	Debt profile
+29	affordability_checks	Affordability
+F. Property / Vehicle Assessment
+#	Table Name	Purpose
+30	asset_risk_assessments	Asset evaluation
+31	property_inspections	Property inspection
+32	vehicle_inspections	Vehicle inspection
+33	valuation_reports	Valuation
+G. AI Decision Support
+#	Table Name	Purpose
+34	ai_risk_predictions	AI prediction
+35	premium_recommendations	AI premium
+36	ai_explanations	Explainability
+37	confidence_scores	Confidence
+38	model_prediction_logs	Prediction history
+H. Manual Review
+#	Table Name	Purpose
+39	manual_reviews	Manual review
+40	reviewer_assignments	Assigned reviewer
+41	reviewer_comments	Comments
+42	referral_cases	Referral
+43	referral_decisions	Referral outcome
+I. Approval Workflow
+#	Table Name	Purpose
+44	approval_workflows	Workflow
+45	approval_steps	Workflow steps
+46	approval_actions	Approvals
+47	approval_history	History
+48	approval_delegations	Delegated approval
+J. Audit & Compliance
+#	Table Name	Purpose
+49	underwriting_audits	Audit records
+50	underwriting_change_logs	Change history
+51	underwriting_snapshots	Historical snapshot
+52	underwriting_metrics	KPI metrics
+53	underwriting_sla_tracking	SLA monitoring
+54	underwriting_archives	Archive
+Relationship Overview
+Application
+      │
+      ▼
+Underwriting Case
+│
+├── Risk Assessment
+│      ├── Risk Factors
+│      ├── Scores
+│      └── AI Prediction
+│
+├── Medical Assessment
+├── Financial Assessment
+├── Asset Inspection
+│
+├── Manual Review
+├── Referral
+├── Approval Workflow
+│
+└── Final Decision
+        │
+        ▼
+Policy Issuance
+Major Relationships
+Application → Underwriting Case (1:1)
+Underwriting Case → Risk Assessment (1:1)
+Risk Assessment → Risk Factors (1:N)
+Risk Assessment → AI Predictions (1:N)
+Underwriting Case → Medical Assessment (0:1)
+Underwriting Case → Financial Assessment (0:1)
+Underwriting Case → Asset Assessment (0:N)
+Underwriting Case → Manual Reviews (1:N)
+Underwriting Case → Approval Workflow (1:1)
+Underwriting Case → Final Decision (1:1)
+Supported Underwriting Decisions
+Auto Approve
+Auto Reject
+Manual Review Required
+Request Additional Information
+Refer to Senior Underwriter
+Premium Loading Required
+Coverage Restriction Required
+Conditional Approval
+Defer Decision
+Decline Application
+Risk factors evaluated
+
+Depending on the insurance product, this module can evaluate:
+
+Applicant age
+Medical history
+Occupation risk
+Lifestyle habits
+Previous claims history
+Credit/financial profile
+Geographic location
+Vehicle age and value
+Property construction and location
+Business revenue and operations
+Natural disaster exposure
+Fraud indicators
+Policy coverage requested
+Sum insured
+Historical loss ratios
+Why Underwriting is its own domain
+
+Although underwriting consumes data from Applications, Products, Customers, and AI models, it represents a distinct business process with its own rules, workflows, approvals, and regulatory requirements. Enterprise insurance platforms isolate underwriting into a dedicated domain so that decision logic, risk models, referral chains, and audit trails can evolve independently while remaining fully traceable.
+
+This module serves as the bridge between application intake and policy issuance, and later integrates closely with the AI modules for risk scoring, explainability, and model governance.
+ext module: Module 10 — Billing, Premium Collection & Payment Management (approximately 50–60 tables), covering invoices, premium collection, payment gateways, refunds, receivables, and financial reconciliation.
+
+Module 10 — Billing, Premium Collection & Payment Management
+
+Estimated tables: 58
+
+This module manages the complete financial lifecycle after a policy is issued. It handles premium invoicing, installment schedules, online and offline payments, refunds, receivables, reconciliations, payment gateway integrations, accounting references, write-offs, and financial audit trails. The project requirements include premium collection, payment tracking, invoices, reminders, online payment integration, and financial reporting.
+
+A. Billing Master
+#	Table Name	Purpose
+1	billings	Billing master
+2	billing_cycles	Monthly, Quarterly, Annual
+3	billing_statuses	Current billing status
+4	billing_profiles	Customer billing profile
+5	billing_addresses	Billing address
+6	billing_notes	Internal notes
+B. Premium Invoices
+#	Table Name	Purpose
+7	invoices	Invoice master
+8	invoice_items	Invoice line items
+9	invoice_statuses	Draft, Paid, Overdue
+10	invoice_adjustments	Invoice corrections
+11	invoice_taxes	Tax calculation
+12	invoice_discounts	Invoice discounts
+13	invoice_documents	PDF invoices
+14	invoice_history	Invoice revisions
+C. Premium Installments
+#	Table Name	Purpose
+15	installment_plans	Installment plan
+16	installment_schedules	Due schedule
+17	installment_payments	Installment payments
+18	installment_revisions	Schedule revisions
+D. Payments
+#	Table Name	Purpose
+19	payments	Payment master
+20	payment_transactions	Individual transactions
+21	payment_methods	UPI, Card, Bank Transfer
+22	payment_channels	Web, Mobile, Branch
+23	payment_statuses	Success, Pending, Failed
+24	payment_confirmations	Confirmation records
+25	payment_receipts	Receipt generation
+. Payment Gateway Integration
+#	Table Name	Purpose
+26	payment_gateways	Gateway configuration
+27	gateway_transactions	Gateway transaction logs
+28	gateway_callbacks	Webhook callbacks
+29	gateway_failures	Failed gateway events
+30	gateway_retries	Retry attempts
+F. Refunds
+#	Table Name	Purpose
+31	refunds	Refund master
+32	refund_requests	Customer request
+33	refund_approvals	Approval workflow
+34	refund_transactions	Refund payment
+35	refund_reasons	Reason catalog
+G. Receivables
+#	Table Name	Purpose
+36	accounts_receivable	Outstanding balances
+37	receivable_aging	Aging buckets
+38	collection_cases	Collection process
+39	collection_actions	Follow-up actions
+40	write_offs	Bad debt write-off
+H. Reconciliation
+#	Table Name	Purpose
+41	reconciliations	Reconciliation batch
+42	reconciliation_items	Individual records
+43	bank_statements	Imported statements
+44	unmatched_transactions	Exceptions
+45	reconciliation_adjustments	Manual adjustments
+I. Financial Accounting Reference
+#	Table Name	Purpose
+46	accounting_entries	Financial entries
+47	journal_references	Journal linkage
+48	ledger_mappings	Ledger mapping
+49	tax_profiles	Tax configuration
+50	tax_transactions	Tax records
+J. Notifications & Reminders
+#	Table Name	Purpose
+51	payment_reminders	Reminder schedule
+52	reminder_deliveries	Delivery history
+53	overdue_notifications	Overdue alerts
+K. Audit & Reporting
+#	Table Name	Purpose
+54	payment_audits	Payment audit
+55	billing_change_logs	Change history
+56	financial_snapshots	Historical snapshots
+57	billing_statistics	Billing KPIs
+58	billing_archives	Archive
+Relationship Overview
+Policy
+   │
+   ▼
+Billing
+│
+├── Invoice
+│      ├── Invoice Items
+│      ├── Taxes
+│      ├── Discounts
+│      └── Documents
+│
+├── Installment Plan
+│      └── Installments
+│
+├── Payments
+│      ├── Payment Method
+│      ├── Gateway
+│      ├── Receipt
+│      └── Confirmation
+│
+├── Refunds
+├── Receivables
+├── Reconciliation
+├── Accounting Entries
+└── Audit
+Major Relationships
+Policy → Billing (1:N)
+Policy → Invoices (1:N)
+Invoice → Invoice Items (1:N)
+Invoice → Payments (1:N)
+Invoice → Refunds (0:N)
+Payment → Gateway Transaction (1:1)
+Payment → Receipt (1:1)
+Billing → Installment Plan (0:1)
+Billing → Accounts Receivable (0:1)
+Payment → Reconciliation Item (1:1)
+Accounting Entry → Ledger Mapping (N:1)
+Supported Payment Methods
+
+This schema supports both B2B insurer operations and B2C marketplace payments, including:
+
+UPI
+Credit Card
+Debit Card
+Net Banking
+IMPS
+NEFT
+RTGS
+Bank Transfer
+Wallets
+Auto-debit / eMandate
+Cash (Branch)
+Cheque
+Demand Draft
+Corporate Billing
+Third-party Payment
+Billing Lifecycle
+Policy Issued
+Invoice Generated
+Customer Notified
+Payment Attempted
+Gateway Authorization
+Payment Confirmed
+Receipt Generated
+Accounting Entry Posted
+Bank Reconciliation
+Policy Activated/Continued
+Refund Processed (if applicable)
+Financial Records Archived
+Why Billing is a separate domain
+
+Enterprise insurance systems isolate billing from policy administration because premium collection has its own financial rules, payment integrations, tax calculations, accounting requirements, reconciliation processes, and regulatory controls. A policy may remain unchanged while multiple invoices, installment schedules, payments, refunds, and reconciliations occur over its lifetime. Separating these concerns improves scalability, auditability, and integration with ERP/accounting systems.
+
+This module provides the financial backbone for InsureIQ and integrates closely with Policy Management, Claims (for claim payouts and recoveries), Commission Management, Finance, Reporting, and external payment gateways.
+
+Next module: Module 11 — Commission, Agency & Broker Management (approximately 45–55 tables), covering agents, brokers, commission plans, hierarchies, incentives, settlements, and payout calculations.
+
+

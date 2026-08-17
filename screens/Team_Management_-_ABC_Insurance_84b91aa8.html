@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InsureIQ - Team Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed-variant": "#862300",
+                    "surface-container-high": "#e7e7f5",
+                    "secondary-fixed-dim": "#cbbeff",
+                    "primary-container": "#1a56ff",
+                    "text-muted": "#8B8B90",
+                    "on-surface": "#191b25",
+                    "success-bg": "#E7F6EF",
+                    "on-secondary-fixed-variant": "#4a2ea9",
+                    "tertiary-fixed-dim": "#ffb59f",
+                    "warning-bg": "#FDF3E0",
+                    "tertiary": "#972900",
+                    "on-primary-fixed": "#001453",
+                    "bg-muted": "#F4F4F5",
+                    "warning": "#B5750A",
+                    "surface-tint": "#004af0",
+                    "primary-fixed": "#dde1ff",
+                    "primary-fixed-dim": "#b8c4ff",
+                    "inverse-primary": "#b8c4ff",
+                    "on-secondary": "#ffffff",
+                    "success": "#12805C",
+                    "on-tertiary-fixed": "#3a0a00",
+                    "danger-bg": "#FBEAEC",
+                    "secondary": "#6249c2",
+                    "surface-dim": "#d9d9e6",
+                    "text-secondary": "#5B5B60",
+                    "tertiary-container": "#c13700",
+                    "outline": "#747688",
+                    "on-primary-container": "#e6e8ff",
+                    "on-tertiary": "#ffffff",
+                    "on-background": "#191b25",
+                    "tertiary-fixed": "#ffdbd1",
+                    "on-surface-variant": "#434656",
+                    "inverse-surface": "#2e303a",
+                    "on-tertiary-container": "#ffe4dc",
+                    "error-container": "#ffdad6",
+                    "border-strong": "#D4D4D8",
+                    "surface-bright": "#fbf8ff",
+                    "on-secondary-fixed": "#1d0061",
+                    "on-error-container": "#93000a",
+                    "on-secondary-container": "#300491",
+                    "primary": "#003fd1",
+                    "danger": "#C4293A",
+                    "background": "#fbf8ff",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e1e1ef",
+                    "bg-subtle": "#FAFAFA",
+                    "surface": "#fbf8ff",
+                    "surface-container-low": "#f3f2ff",
+                    "error": "#ba1a1a",
+                    "outline-variant": "#c3c5d9",
+                    "on-primary-fixed-variant": "#0037b9",
+                    "surface-container-highest": "#e1e1ef",
+                    "inverse-on-surface": "#f0effd",
+                    "secondary-fixed": "#e6deff",
+                    "secondary-container": "#9a83ff",
+                    "surface-container": "#ededfa",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin": "32px",
+                    "max-width": "1200px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "h2": [
+                            "Inter"
+                    ],
+                    "display": [
+                            "Inter"
+                    ],
+                    "h1": [
+                            "Inter"
+                    ],
+                    "overline": [
+                            "Inter"
+                    ],
+                    "caption": [
+                            "Inter"
+                    ],
+                    "body": [
+                            "Inter"
+                    ],
+                    "h3": [
+                            "Inter"
+                    ],
+                    "mono-data": [
+                            "JetBrains Mono"
+                    ]
+            },
+            "fontSize": {
+                    "body-lg": [
+                            "16px",
+                            {
+                                    "lineHeight": "1.5",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "h2": [
+                            "24px",
+                            {
+                                    "lineHeight": "1.25",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "h1": [
+                            "36px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "overline": [
+                            "11px",
+                            {
+                                    "lineHeight": "1.3",
+                                    "letterSpacing": "0.04em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "caption": [
+                            "12px",
+                            {
+                                    "lineHeight": "1.4",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "body": [
+                            "14px",
+                            {
+                                    "lineHeight": "1.5",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "h3": [
+                            "18px",
+                            {
+                                    "lineHeight": "1.35",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "mono-data": [
+                            "14px",
+                            {
+                                    "lineHeight": "1.5",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        /* Custom utilities based on style guidance */
+        .hairline-border {
+            border-color: #E7E7E9;
+        }
+        .btn-primary {
+            @apply bg-[#1A56FF] text-white h-[40px] px-4 rounded-DEFAULT font-body text-body flex items-center justify-center hover:opacity-90 transition-opacity;
+        }
+        .btn-secondary {
+            @apply bg-white border border-[#E7E7E9] text-on-surface h-[40px] px-4 rounded-DEFAULT font-body text-body flex items-center justify-center hover:bg-bg-subtle transition-colors;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body text-body min-h-screen flex">
+<!-- SideNavBar (from JSON) -->
+<nav class="hidden md:flex docked h-screen left-0 w-64 border-r border-outline-variant bg-surface-container-low flex flex-col h-full p-4 space-y-2 flat no shadows z-10 relative">
+<div class="mb-8 px-4">
+<h1 class="font-h3 text-h3 text-on-surface">InsureIQ</h1>
+<p class="font-caption text-caption text-text-muted mt-1">Agent Portal</p>
+</div>
+<ul class="flex flex-col space-y-1 flex-grow font-caption text-caption">
+<li>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+                    Policies
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_late">assignment_late</span>
+                    Claims
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="rule">rule</span>
+                    Underwriting
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 bg-secondary-container text-on-secondary-container rounded-lg px-4 py-2 scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+<div class="mt-auto px-4 py-4 flex items-center gap-3 border-t border-outline-variant">
+<img alt="Agent Profile" class="w-8 h-8 rounded-full object-cover" data-alt="A small, professional headshot of an insurance agent looking directly at the camera, neutral light background, modern corporate style, highly detailed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbmNALi-yZg7TD8xAfmvmgUZIToZ1O_upkzj2wXsXU0XluLO7rYJrDzkU1nbl733kIdZWMS0mYnW5UU-gjFLYSRa9RLC01BLV3auMdZz5x4zU77HYU0umu9733zK3wZdvpur9ege2LpUwePR7s3kCUFHSNQnOxia1Hb7Yyj_esEZ881SzuKKvJBdw4LgYc3ksMUBmdaj6I0m1sX4mK_T00h8FomHb4xDlhUtwSoFjRnbjmpU4r6INshw"/>
+<div>
+<p class="font-body text-body text-on-surface">Alex Mercer</p>
+<p class="font-caption text-caption text-text-muted">alex@insureiq.com</p>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-x-hidden overflow-y-auto bg-background">
+<div class="max-w-max-width mx-auto p-gutter md:p-margin">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<h2 class="font-h2 text-h2 text-on-surface mb-1">Team Management</h2>
+<p class="font-body text-body text-text-secondary">Manage your team's access and roles.</p>
+</div>
+<div>
+<button class="btn-primary gap-2 shadow-xs">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                        Invite User
+                    </button>
+</div>
+</div>
+<!-- Settings Sub-Navigation (Contextual to the page intent) -->
+<div class="mb-8 border-b border-outline-variant flex gap-6">
+<a class="font-body text-body text-text-secondary pb-3 hover:text-on-surface transition-colors" href="#">General</a>
+<a class="font-body text-body text-on-surface border-b-2 border-primary pb-3 font-medium" href="#">Team Members</a>
+<a class="font-body text-body text-text-secondary pb-3 hover:text-on-surface transition-colors" href="#">Roles &amp; Permissions</a>
+<a class="font-body text-body text-text-secondary pb-3 hover:text-on-surface transition-colors" href="#">Security</a>
+</div>
+<!-- Content Card -->
+<div class="bg-surface rounded-lg shadow-xs border border-outline-variant overflow-hidden">
+<!-- Table Header/Filter Area -->
+<div class="p-6 border-b border-outline-variant flex flex-col sm:flex-row justify-between items-center gap-4 bg-surface-bright">
+<div class="relative w-full sm:w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-[18px]">search</span>
+<input class="w-full h-[40px] pl-10 pr-4 bg-white border border-outline-variant rounded-DEFAULT font-body text-body text-on-surface focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all placeholder:text-text-muted" placeholder="Search team members..." type="text"/>
+</div>
+<div class="flex gap-2 w-full sm:w-auto">
+<button class="btn-secondary gap-2 flex-1 sm:flex-none">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                            Filter
+                        </button>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-lowest">
+<th class="font-caption text-caption text-text-secondary font-medium py-3 px-6 whitespace-nowrap">Name</th>
+<th class="font-caption text-caption text-text-secondary font-medium py-3 px-6 whitespace-nowrap">Role</th>
+<th class="font-caption text-caption text-text-secondary font-medium py-3 px-6 whitespace-nowrap">Status</th>
+<th class="font-caption text-caption text-text-secondary font-medium py-3 px-6 text-right whitespace-nowrap">Last Login</th>
+<th class="font-caption text-caption text-text-secondary font-medium py-3 px-6 text-right whitespace-nowrap w-[80px]"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-bg-subtle transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<img alt="Sarah Jenkins" class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a middle-aged female executive with short hair, wearing a navy blazer, bright office background, clean corporate aesthetic, modern." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXVttuVKGb8eLqcGCZWNVjy-rBXMhrbHqBbABZUqp5sIeXbx7Mqkui5e-Qy7mpp3Owci76lnozjv_7rQulhIrh-u4T1_O5A6r2kLxMkCAyKa4joCifUnx4seRWZez-0xDMzubOmc73fbat_rAx2ROyvh2EmaG1BDyyVYQNFPyWH8POitfc86cEaDHXnx7IlW9drm9eoSIl7yoOXky3_vtGUoBaQGXGUojTu2Ns_nIXVm2a8fTZ0o7cTA"/>
+<div>
+<p class="font-body text-body text-on-surface font-medium">Sarah Jenkins</p>
+<p class="font-caption text-caption text-text-muted">sarah.j@insureiq.com</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-body text-body text-on-surface">Administrator</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-caption text-caption bg-success-bg text-success border border-success/20">
+                                        Active
+                                    </span>
+</td>
+<td class="py-4 px-6 text-right">
+<span class="font-mono-data text-mono-data text-text-secondary">2 hours ago</span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-text-muted hover:text-on-surface opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-bg-subtle transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant flex items-center justify-center font-body text-body font-medium">
+                                            MR
+                                        </div>
+<div>
+<p class="font-body text-body text-on-surface font-medium">Michael Ross</p>
+<p class="font-caption text-caption text-text-muted">m.ross@insureiq.com</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-body text-body text-on-surface">Underwriter</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-caption text-caption bg-success-bg text-success border border-success/20">
+                                        Active
+                                    </span>
+</td>
+<td class="py-4 px-6 text-right">
+<span class="font-mono-data text-mono-data text-text-secondary">Oct 12, 2023</span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-text-muted hover:text-on-surface opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-bg-subtle transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<img alt="David Chen" class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a young male professional wearing glasses and a light blue collared shirt, blurred office background, clear corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlWqGqKxWRHiAW0k-96jj1xsYkvz3xCDrg6xo6WTjSc1gqHsbpNKKXkm383lg9ZQOZjU5cNxZfJLzN2wQ9fFNnk2s7GAUQxDfm1F1TSraan1kbO5xiL59QWyB7Dw8QZbJbadb8y_NMG5LQUsk8Mwj5-ZSMVixPBMmqeYE6pjlFEpn7n-FriM_y9BntdcAh5us3UaRNanGFOscbwHlsjFsLSpcUm4XEikRh49_bp2zQh0kvUQt3vgCmOQ"/>
+<div>
+<p class="font-body text-body text-on-surface font-medium">David Chen</p>
+<p class="font-caption text-caption text-text-muted">d.chen@insureiq.com</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-body text-body text-on-surface">Adjuster</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-caption text-caption bg-success-bg text-success border border-success/20">
+                                        Active
+                                    </span>
+</td>
+<td class="py-4 px-6 text-right">
+<span class="font-mono-data text-mono-data text-text-secondary">Oct 10, 2023</span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-text-muted hover:text-on-surface opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-bg-subtle transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center font-body text-body font-medium">
+                                            EL
+                                        </div>
+<div>
+<p class="font-body text-body text-on-surface font-medium opacity-60">Elena Lopez</p>
+<p class="font-caption text-caption text-text-muted">elena.l@insureiq.com</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-body text-body text-on-surface opacity-60">Agent</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-caption text-caption bg-danger-bg text-danger border border-danger/20">
+                                        Suspended
+                                    </span>
+</td>
+<td class="py-4 px-6 text-right">
+<span class="font-mono-data text-mono-data text-text-secondary">Sep 28, 2023</span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-text-muted hover:text-on-surface opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-4 border-t border-outline-variant flex items-center justify-between bg-surface-container-lowest">
+<p class="font-caption text-caption text-text-secondary">Showing 1 to 4 of 24 members</p>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded-DEFAULT hover:bg-bg-subtle text-text-muted hover:text-on-surface disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-DEFAULT bg-primary-container text-on-primary-container font-caption text-caption">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-DEFAULT hover:bg-bg-subtle text-on-surface font-caption text-caption">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-DEFAULT hover:bg-bg-subtle text-on-surface font-caption text-caption">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-DEFAULT hover:bg-bg-subtle text-text-muted hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

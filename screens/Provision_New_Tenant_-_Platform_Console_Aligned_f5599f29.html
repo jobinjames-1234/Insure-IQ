@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tenant Provisioning Wizard - Core Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#003fd1",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#862300",
+                        "on-secondary-container": "#300491",
+                        "text-secondary": "#5B5B60",
+                        "on-background": "#191b25",
+                        "danger": "#C4293A",
+                        "warning-bg": "#FDF3E0",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "warning": "#B5750A",
+                        "surface-container": "#ededfa",
+                        "outline": "#747688",
+                        "background": "#fbf8ff",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#4a2ea9",
+                        "on-primary-container": "#e6e8ff",
+                        "tertiary": "#972900",
+                        "border-strong": "#E7E7E9",
+                        "primary-container": "#1a56ff",
+                        "on-surface": "#0A0A0A",
+                        "secondary-container": "#9a83ff",
+                        "secondary": "#6249c2",
+                        "on-tertiary-fixed": "#3a0a00",
+                        "outline-variant": "#c3c5d9",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#e1e1ef",
+                        "danger-bg": "#FBEAEC",
+                        "bg-muted": "#F4F4F5",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e1e1ef",
+                        "surface-bright": "#fbf8ff",
+                        "tertiary-fixed": "#ffdbd1",
+                        "secondary-fixed-dim": "#cbbeff",
+                        "primary-fixed": "#dde1ff",
+                        "on-secondary-fixed": "#1d0061",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#f3f2ff",
+                        "surface-dim": "#d9d9e6",
+                        "surface-tint": "#004af0",
+                        "text-muted": "#8B8B90",
+                        "tertiary-fixed-dim": "#ffb59f",
+                        "tertiary-container": "#c13700",
+                        "success-bg": "#E7F6EF",
+                        "on-primary-fixed-variant": "#0037b9",
+                        "surface": "#fbf8ff",
+                        "inverse-primary": "#b8c4ff",
+                        "bg-subtle": "#FAFAFA",
+                        "inverse-surface": "#2e303a",
+                        "on-primary-fixed": "#001453",
+                        "surface-container-high": "#e7e7f5",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#ffe4dc",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#434656",
+                        "secondary-fixed": "#e6deff",
+                        "inverse-on-surface": "#f0effd",
+                        "success": "#12805C",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "margin": "32px",
+                        "gutter": "24px",
+                        "max-width": "1200px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter"],
+                        "h1": ["Inter"],
+                        "body": ["Inter"],
+                        "mono-data": ["JetBrains Mono"],
+                        "overline": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Inter"],
+                        "caption": ["Inter"],
+                        "display": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h2": ["24px", { "lineHeight": "1.25", "fontWeight": "600" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "mono-data": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "overline": ["11px", { "lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h3": ["18px", { "lineHeight": "1.35", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .step-line {
+            transition: width 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="font-body text-body antialiased min-h-screen flex bg-bg-subtle text-on-surface">
+<!-- JSON Component: SideNavBar -->
+<nav class="h-full w-64 fixed left-0 top-0 bg-surface-container-lowest border-r border-border-strong z-50 flex flex-col h-screen p-4">
+<div class="mb-8 px-3">
+<h1 class="font-display text-h3 font-bold text-on-surface">Core Admin</h1>
+<p class="font-caption text-caption text-text-secondary mt-1">Super User</p>
+</div>
+<ul class="space-y-2 flex-grow">
+<li>
+<a class="flex items-center gap-3 text-text-secondary p-3 hover:bg-bg-muted hover:text-on-surface transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<!-- Active State (Tenants) -->
+<a class="flex items-center gap-3 bg-primary-container text-on-primary-container rounded-lg p-3 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="domain" data-weight="fill" style="font-variation-settings: 'FILL' 1;">domain</span>
+<span class="font-medium">Tenants</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-text-secondary p-3 hover:bg-bg-muted hover:text-on-surface transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span>Security</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-text-secondary p-3 hover:bg-bg-muted hover:text-on-surface transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span>Analytics</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-text-secondary p-3 hover:bg-bg-muted hover:text-on-surface transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span>Integrations</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-text-secondary p-3 hover:bg-bg-muted hover:text-on-surface transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto pt-4 border-t border-border-strong">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold font-caption text-caption">
+                    SA
+                </div>
+<div>
+<p class="font-body text-body text-on-surface">System Admin</p>
+<p class="font-caption text-caption text-text-secondary">root@core.io</p>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 flex flex-col min-h-screen">
+<!-- Top Toolbar Area -->
+<header class="h-16 px-gutter flex items-center justify-between border-b border-border-strong bg-surface-container-lowest/80 backdrop-blur-md sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<a class="text-text-secondary hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+<span class="font-caption text-caption font-medium">Back to Tenants</span>
+</a>
+<div class="h-4 w-[1px] bg-border-strong"></div>
+<h2 class="font-h3 text-h3 text-on-surface">Provision New Tenant</h2>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-mono-data text-mono-data text-text-secondary bg-bg-muted px-2 py-1 rounded border border-border-strong">Session: Active (04:12)</span>
+</div>
+</header>
+<!-- Wizard Canvas -->
+<div class="flex-1 p-gutter lg:p-margin max-w-5xl mx-auto w-full">
+<!-- Stepper -->
+<div class="mb-12 relative">
+<div class="absolute top-1/2 left-0 w-full h-0.5 bg-border-strong -z-10 -translate-y-1/2 rounded-full"></div>
+<div class="absolute top-1/2 left-0 w-1/3 h-0.5 bg-primary-container -z-10 -translate-y-1/2 rounded-full step-line"></div>
+<div class="flex justify-between items-center w-full">
+<!-- Step 1 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center border-2 border-surface-container-lowest ring-4 ring-surface-container-lowest font-body text-body font-bold">
+                            1
+                        </div>
+<span class="font-caption text-caption text-on-surface font-semibold">Details</span>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest text-text-secondary border-2 border-border-strong flex items-center justify-center font-body text-body">
+                            2
+                        </div>
+<span class="font-caption text-caption text-text-secondary">Plan &amp; Isolation</span>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest text-text-secondary border-2 border-border-strong flex items-center justify-center font-body text-body">
+                            3
+                        </div>
+<span class="font-caption text-caption text-text-secondary">Initial Admin</span>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest text-text-secondary border-2 border-border-strong flex items-center justify-center font-body text-body">
+                            4
+                        </div>
+<span class="font-caption text-caption text-text-secondary">Review</span>
+</div>
+</div>
+</div>
+<!-- Wizard Content Card -->
+<div class="bg-surface-container-lowest border border-border-strong rounded-xl shadow-sm p-margin relative overflow-hidden">
+<div class="relative z-10">
+<div class="mb-8">
+<h3 class="font-h2 text-h2 text-on-surface mb-2">Tenant Details</h3>
+<p class="font-body text-body text-text-secondary">Define the core identity and routing parameters for the new insurer workspace.</p>
+</div>
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Field: Legal Entity Name -->
+<div class="space-y-2">
+<label class="font-overline text-overline text-text-secondary uppercase tracking-wider block" for="entityName">Legal Entity Name</label>
+<input class="w-full h-11 bg-surface-container-lowest border border-border-strong rounded-DEFAULT px-4 font-body text-body text-on-surface placeholder:text-text-muted focus:outline-none focus:border-primary-container focus:ring-4 focus:ring-primary-container/20 transition-all shadow-sm" id="entityName" placeholder="e.g. Acme Insurance Corp" type="text"/>
+</div>
+<!-- Field: Tenant Display Name -->
+<div class="space-y-2">
+<label class="font-overline text-overline text-text-secondary uppercase tracking-wider block" for="displayName">Workspace Display Name</label>
+<input class="w-full h-11 bg-surface-container-lowest border border-border-strong rounded-DEFAULT px-4 font-body text-body text-on-surface placeholder:text-text-muted focus:outline-none focus:border-primary-container focus:ring-4 focus:ring-primary-container/20 transition-all shadow-sm" id="displayName" placeholder="e.g. Acme" type="text"/>
+</div>
+</div>
+<!-- Routing Section -->
+<div class="bg-bg-subtle border border-border-strong rounded-lg p-6 mt-8">
+<h4 class="font-h3 text-h3 text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary">route</span>
+                                Routing Configuration
+                            </h4>
+<div class="space-y-6">
+<!-- Subdomain Input Group -->
+<div class="space-y-2">
+<label class="font-overline text-overline text-text-secondary uppercase tracking-wider block" for="subdomain">Subdomain Prefix</label>
+<div class="flex items-center shadow-sm rounded-DEFAULT">
+<input class="flex-1 h-11 bg-surface-container-lowest border border-r-0 border-border-strong rounded-l-DEFAULT px-4 font-mono-data text-mono-data text-on-surface placeholder:text-text-muted focus:outline-none focus:border-primary-container focus:ring-4 focus:ring-primary-container/20 transition-all" id="subdomain" placeholder="acme" type="text"/>
+<div class="h-11 px-4 bg-bg-muted border border-border-strong rounded-r-DEFAULT flex items-center font-mono-data text-mono-data text-text-secondary">
+                                            .core-admin.io
+                                        </div>
+</div>
+<p class="font-caption text-caption text-text-secondary mt-1">This cannot be easily changed after provisioning.</p>
+</div>
+<!-- Environment Selection -->
+<div class="space-y-2">
+<label class="font-overline text-overline text-text-secondary uppercase tracking-wider block">Target Environment Cluster</label>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<label class="relative flex cursor-pointer rounded-lg border bg-surface-container-lowest p-4 border-border-strong hover:border-primary-container transition-colors shadow-sm">
+<input checked="" class="peer sr-only" name="cluster" type="radio" value="us-east"/>
+<div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/30 absolute inset-0 rounded-lg border-2 border-transparent transition-all"></div>
+<div class="relative z-10 flex flex-col w-full">
+<div class="flex items-center justify-between mb-2">
+<span class="font-body text-body font-semibold text-on-surface">US East (N. Virginia)</span>
+<span class="material-symbols-outlined text-primary-container peer-checked:opacity-100 opacity-0 transition-opacity text-sm">check_circle</span>
+</div>
+<div class="font-mono-data text-caption text-text-secondary flex justify-between">
+<span>us-east-1</span>
+<span class="text-success flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-success"></span> 99.99%</span>
+</div>
+</div>
+</label>
+<label class="relative flex cursor-pointer rounded-lg border bg-surface-container-lowest p-4 border-border-strong hover:border-primary-container transition-colors shadow-sm">
+<input class="peer sr-only" name="cluster" type="radio" value="eu-west"/>
+<div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/30 absolute inset-0 rounded-lg border-2 border-transparent transition-all"></div>
+<div class="relative z-10 flex flex-col w-full">
+<div class="flex items-center justify-between mb-2">
+<span class="font-body text-body font-semibold text-on-surface">EU West (Ireland)</span>
+<span class="material-symbols-outlined text-primary-container peer-checked:opacity-100 opacity-0 transition-opacity text-sm">check_circle</span>
+</div>
+<div class="font-mono-data text-caption text-text-secondary flex justify-between">
+<span>eu-west-1</span>
+<span class="text-success flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-success"></span> 99.99%</span>
+</div>
+</div>
+</label>
+<label class="relative flex cursor-pointer rounded-lg border bg-bg-muted p-4 border-border-strong opacity-60 cursor-not-allowed">
+<input class="peer sr-only" disabled="" name="cluster" type="radio" value="ap-south"/>
+<div class="relative z-10 flex flex-col w-full">
+<div class="flex items-center justify-between mb-2">
+<span class="font-body text-body font-semibold text-text-secondary">AP South (Mumbai)</span>
+<span class="bg-surface-container-highest text-[10px] px-1.5 py-0.5 rounded border border-border-strong text-text-secondary font-medium">Maintenance</span>
+</div>
+<div class="font-mono-data text-caption text-text-secondary">
+<span>ap-south-1</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+</div>
+</div>
+</form>
+</div>
+<!-- Action Footer -->
+<div class="mt-12 pt-6 border-t border-border-strong flex justify-between items-center">
+<button class="h-10 px-6 font-body text-body font-medium text-text-secondary bg-surface-container-lowest border border-border-strong rounded hover:bg-bg-muted transition-colors shadow-sm" type="button">
+                        Cancel
+                    </button>
+<button class="h-10 px-6 font-body text-body font-medium text-on-primary bg-primary-container rounded hover:bg-primary transition-colors flex items-center gap-2 shadow-sm" type="button">
+                        Next: Plan &amp; Isolation
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

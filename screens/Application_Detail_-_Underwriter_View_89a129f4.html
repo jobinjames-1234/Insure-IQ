@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Underwriting Application Detail - InsureIQ</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#747688",
+                        "surface-tint": "#004af0",
+                        "on-secondary-fixed-variant": "#4a2ea9",
+                        "on-primary-fixed": "#001453",
+                        "background": "#fbf8ff",
+                        "tertiary-container": "#c13700",
+                        "border-strong": "#D4D4D8",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#d9d9e6",
+                        "surface-container": "#ededfa",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#003fd1",
+                        "on-background": "#191b25",
+                        "on-tertiary-fixed-variant": "#862300",
+                        "surface-container-low": "#f3f2ff",
+                        "inverse-primary": "#b8c4ff",
+                        "text-muted": "#8B8B90",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#1d0061",
+                        "surface-bright": "#fbf8ff",
+                        "on-tertiary-container": "#ffe4dc",
+                        "on-primary": "#ffffff",
+                        "danger-bg": "#FBEAEC",
+                        "warning": "#B5750A",
+                        "bg-muted": "#F4F4F5",
+                        "on-secondary-container": "#300491",
+                        "inverse-surface": "#2e303a",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#cbbeff",
+                        "surface-container-high": "#e7e7f5",
+                        "on-surface": "#191b25",
+                        "tertiary-fixed": "#ffdbd1",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#1a56ff",
+                        "inverse-on-surface": "#f0effd",
+                        "danger": "#C4293A",
+                        "primary-fixed": "#dde1ff",
+                        "on-primary-container": "#e6e8ff",
+                        "secondary-fixed": "#e6deff",
+                        "surface-container-highest": "#e1e1ef",
+                        "warning-bg": "#FDF3E0",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e1e1ef",
+                        "success-bg": "#E7F6EF",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "text-secondary": "#5B5B60",
+                        "on-primary-fixed-variant": "#0037b9",
+                        "secondary": "#6249c2",
+                        "on-tertiary-fixed": "#3a0a00",
+                        "bg-subtle": "#FAFAFA",
+                        "success": "#12805C",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c3c5d9",
+                        "tertiary-fixed-dim": "#ffb59f",
+                        "surface": "#fbf8ff",
+                        "on-surface-variant": "#434656",
+                        "tertiary": "#972900",
+                        "secondary-container": "#9a83ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "max-width": "1200px",
+                        "gutter": "24px",
+                        "margin": "32px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "h1": ["Inter"],
+                        "mono-data": ["JetBrains Mono"],
+                        "overline": ["Inter"],
+                        "caption": ["Inter"],
+                        "h2": ["Inter"],
+                        "h3": ["Inter"],
+                        "display": ["Inter"],
+                        "body": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "mono-data": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "overline": ["11px", { "lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "h2": ["24px", { "lineHeight": "1.25", "fontWeight": "600" }],
+                        "h3": ["18px", { "lineHeight": "1.35", "fontWeight": "600" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "body": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom scrollbar for minimalist technical feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d9d9e6;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c3c5d9;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body antialiased min-h-screen flex selection:bg-surface-tint selection:text-white">
+<!-- SideNavBar (Shared Component) -->
+<nav class="bg-surface-container-low text-primary hidden md:flex font-caption text-caption fixed h-screen left-0 w-64 border-r border-outline-variant flex-col h-full p-4 space-y-2 z-50">
+<div class="mb-8 px-4 mt-2">
+<h1 class="font-h3 text-h3 text-on-surface">InsureIQ</h1>
+<p class="font-caption text-caption text-text-muted mt-1">Agent Portal</p>
+</div>
+<div class="space-y-1 flex-1">
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="description">description</span>
+<span>Policies</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="assignment_late">assignment_late</span>
+<span>Claims</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 bg-secondary-container text-on-secondary-container rounded-lg px-4 py-2 scale-95 duration-150 transform" href="#">
+<span class="material-symbols-outlined" data-icon="rule" data-weight="fill" style="font-variation-settings: 'FILL' 1;">rule</span>
+<span class="font-semibold">Underwriting</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<div class="mt-auto pt-4 border-t border-outline-variant">
+<div class="flex items-center gap-3 px-4 py-2">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-h3 text-h3">
+                    A
+                </div>
+<div>
+<p class="text-on-surface font-caption">Agent Profile</p>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 flex flex-col min-h-screen">
+<!-- Header -->
+<header class="h-16 border-b border-outline-variant bg-surface px-gutter flex items-center justify-between shrink-0 sticky top-0 z-40 shadow-xs">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface p-2 -ml-2 rounded-lg hover:bg-surface-container-high">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<div class="flex items-baseline gap-3">
+<h2 class="font-h2 text-h2 text-on-surface tracking-tight">APP-2023-8942A</h2>
+<span class="font-mono-data text-mono-data text-text-muted uppercase tracking-wider">Auto Insurance</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-caption text-caption border border-outline-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                    Pending Review
+                </span>
+</div>
+</header>
+<!-- Two Column Layout Container -->
+<div class="flex-1 flex flex-col lg:flex-row p-gutter gap-gutter max-w-[1400px] mx-auto w-full items-start">
+<!-- LEFT COLUMN: Comprehensive Application Data (Scrollable) -->
+<div class="flex-1 w-full space-y-6 min-w-0">
+<!-- Section: Personal Details (Bento Grid) -->
+<section>
+<h3 class="font-overline text-overline text-text-muted uppercase tracking-widest mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="person">person</span>
+                        Primary Applicant
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+<!-- Identity Card -->
+<div class="bg-surface rounded-xl border border-outline-variant p-5 shadow-xs flex flex-col justify-between">
+<div>
+<p class="font-caption text-caption text-text-muted mb-1">Full Legal Name</p>
+<p class="font-body-lg text-body-lg text-on-surface font-medium">Eleanor M. Vance</p>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant/50 grid grid-cols-2 gap-4">
+<div>
+<p class="font-caption text-caption text-text-muted mb-1">DOB</p>
+<p class="font-mono-data text-mono-data text-on-surface">1985-11-04</p>
+</div>
+<div>
+<p class="font-caption text-caption text-text-muted mb-1">SSN (Masked)</p>
+<p class="font-mono-data text-mono-data text-on-surface">***-**-8842</p>
+</div>
+</div>
+</div>
+<!-- Contact & Location Card -->
+<div class="bg-surface rounded-xl border border-outline-variant p-5 shadow-xs xl:col-span-2 flex flex-col justify-between">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<p class="font-caption text-caption text-text-muted mb-1">Primary Residence</p>
+<p class="font-body text-body text-on-surface">442 Grove Street, Apt 3B<br/>San Francisco, CA 94102</p>
+</div>
+<div>
+<p class="font-caption text-caption text-text-muted mb-1">Contact Details</p>
+<p class="font-mono-data text-mono-data text-on-surface mb-1">(415) 555-0198</p>
+<p class="font-mono-data text-mono-data text-on-surface text-surface-tint">eleanor.vance@email.com</p>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant/50 flex items-center gap-6">
+<div>
+<p class="font-caption text-caption text-text-muted mb-1">Employment</p>
+<p class="font-body text-body text-on-surface">Senior Architect at DataCorp Inc.</p>
+</div>
+<div>
+<p class="font-caption text-caption text-text-muted mb-1">Est. Income</p>
+<p class="font-mono-data text-mono-data text-on-surface">$145,000 / yr</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Vehicle Details -->
+<section>
+<h3 class="font-overline text-overline text-text-muted uppercase tracking-widest mb-3 mt-8 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="directions_car">directions_car</span>
+                        Asset Schedule
+                    </h3>
+<div class="bg-surface rounded-xl border border-outline-variant overflow-hidden shadow-xs">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="py-3 px-4 font-overline text-overline text-text-muted uppercase w-1/3">Vehicle</th>
+<th class="py-3 px-4 font-overline text-overline text-text-muted uppercase">VIN Identifier</th>
+<th class="py-3 px-4 font-overline text-overline text-text-muted uppercase">Primary Use</th>
+<th class="py-3 px-4 font-overline text-overline text-text-muted uppercase text-right">Ann. Mileage</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-bg-subtle transition-colors">
+<td class="py-4 px-4">
+<p class="font-body text-body text-on-surface font-medium">2023 Tesla Model Y</p>
+<p class="font-caption text-caption text-text-muted">Long Range Dual Motor</p>
+</td>
+<td class="py-4 px-4 font-mono-data text-mono-data text-text-secondary">5YJ3E1EA3MF<wbr/>123456</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-highest text-on-surface font-caption text-caption">
+                                            Commute
+                                        </span>
+</td>
+<td class="py-4 px-4 font-mono-data text-mono-data text-on-surface text-right">12,500 mi</td>
+</tr>
+<tr class="hover:bg-bg-subtle transition-colors">
+<td class="py-4 px-4">
+<p class="font-body text-body text-on-surface font-medium">2018 Toyota RAV4</p>
+<p class="font-caption text-caption text-text-muted">XLE Premium</p>
+</td>
+<td class="py-4 px-4 font-mono-data text-mono-data text-text-secondary">2T3F1RFV6JW<wbr/>789012</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-highest text-on-surface font-caption text-caption">
+                                            Pleasure
+                                        </span>
+</td>
+<td class="py-4 px-4 font-mono-data text-mono-data text-on-surface text-right">5,000 mi</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Section: Document Verification -->
+<section>
+<h3 class="font-overline text-overline text-text-muted uppercase tracking-widest mb-3 mt-8 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="badge">badge</span>
+                        Verification Documents
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Driver's License -->
+<div class="bg-surface rounded-xl border border-outline-variant p-4 shadow-xs flex gap-4 items-start group">
+<div class="w-24 h-16 rounded bg-surface-container-highest border border-outline-variant overflow-hidden shrink-0 relative">
+<div class="bg-cover bg-center w-full h-full opacity-60 mix-blend-multiply" data-alt="A blurred, generic placeholder representation of a California Driver's License in a highly minimalist, corporate UI style. The image uses a clean, light-mode aesthetic with crisp lines, muted pastel blues and whites, avoiding any real personal data. The lighting is flat and even, perfect for a high-trust financial software interface mockup." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCrp-B5IN81eCUKjmmjqnT69Izms3xCH4s_BDteC5SsFCH_KCUIR8ubX0utfvvmWeHEXQ6AYCWmv4OV2m3I-G2vBtfA_qi6Gy1v7VQAbaIG03SYJ5bI37gF7RZ0llZwbCTL8YdctPMdYVhAVRa4_vbw0rtyjYRs48NnT_D9CYgjkijdzXcxr5Uxf291g6iCG8WWe2CRVAPnmOaCbUYy9-ZQUAldh7Rvod35A9xrzwRE5x5QBX0zBGaptw')"></div>
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/10 backdrop-blur-sm cursor-pointer">
+<span class="material-symbols-outlined text-surface-container-lowest" data-icon="zoom_in">zoom_in</span>
+</div>
+</div>
+<div class="flex-1">
+<p class="font-body text-body text-on-surface font-medium">CA Driver's License</p>
+<p class="font-caption text-caption text-success flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle">check_circle</span>
+                                    Verified via API
+                                </p>
+<button class="text-surface-tint font-caption text-caption mt-2 hover:underline">View Full Image</button>
+</div>
+</div>
+<!-- Registration -->
+<div class="bg-surface rounded-xl border border-outline-variant p-4 shadow-xs flex gap-4 items-start group">
+<div class="w-24 h-16 rounded bg-surface-container-highest border border-outline-variant overflow-hidden shrink-0 relative flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-3xl" data-icon="description">description</span>
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/5 backdrop-blur-[2px] cursor-pointer">
+<span class="material-symbols-outlined text-on-surface" data-icon="download">download</span>
+</div>
+</div>
+<div class="flex-1">
+<p class="font-body text-body text-on-surface font-medium">Vehicle Registration (Tesla)</p>
+<p class="font-caption text-caption text-text-muted flex items-center gap-1 mt-0.5">
+                                    Uploaded 2 days ago
+                                </p>
+<button class="text-surface-tint font-caption text-caption mt-2 hover:underline">Download PDF</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom spacing for scrolling -->
+<div class="h-12"></div>
+</div>
+<!-- RIGHT COLUMN: Sticky Decision Panel -->
+<aside class="w-full lg:w-[380px] xl:w-[420px] shrink-0 lg:sticky lg:top-[calc(64px+24px)] h-fit flex flex-col gap-4">
+<!-- Core Decision Card -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-md flex flex-col overflow-hidden">
+<!-- Header / Score Area -->
+<div class="p-6 border-b border-outline-variant bg-bg-subtle relative overflow-hidden">
+<!-- Subtle ambient background hint -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-warning-bg rounded-full blur-3xl -mr-10 -mt-10 opacity-50"></div>
+<h3 class="font-overline text-overline text-text-muted uppercase tracking-widest mb-4">Risk Evaluation</h3>
+<div class="flex items-end gap-4 mb-2">
+<div class="font-display text-display text-warning leading-none tracking-tighter">61</div>
+<div class="pb-1">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-warning-bg text-warning font-caption text-caption font-semibold border border-warning/20">
+                                    Medium Risk
+                                </span>
+</div>
+</div>
+<p class="font-caption text-caption text-text-muted mt-2">Score derived from automated LexisNexis &amp; MVR pull.</p>
+</div>
+<!-- Breakdown Bars -->
+<div class="p-6 space-y-5">
+<h4 class="font-overline text-overline text-text-secondary uppercase tracking-widest mb-1">Key Drivers</h4>
+<!-- Metric 1 -->
+<div>
+<div class="flex justify-between font-caption text-caption mb-1.5">
+<span class="text-on-surface">Credit History (Insurance Score)</span>
+<span class="font-mono-data text-success">Favorable</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-success rounded-full w-[85%]"></div>
+</div>
+</div>
+<!-- Metric 2 -->
+<div>
+<div class="flex justify-between font-caption text-caption mb-1.5">
+<span class="text-on-surface">Claims History (5 yr)</span>
+<span class="font-mono-data text-warning">1 At-Fault</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-warning rounded-full w-[45%]"></div>
+</div>
+</div>
+<!-- Metric 3 -->
+<div>
+<div class="flex justify-between font-caption text-caption mb-1.5">
+<span class="text-on-surface">Garaging Location Risk</span>
+<span class="font-mono-data text-success">Low</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-success rounded-full w-[90%]"></div>
+</div>
+</div>
+</div>
+<!-- Action Area (Form) -->
+<div class="p-6 pt-2 bg-surface">
+<form onsubmit="event.preventDefault();">
+<div class="mb-5">
+<label class="block font-caption text-caption text-on-surface font-medium mb-2" for="justification">
+                                    Underwriter Justification <span class="text-danger">*</span>
+</label>
+<textarea class="w-full rounded-lg border-strong bg-background px-3 py-2 text-body font-body text-on-surface placeholder-text-muted focus:border-surface-tint focus:ring-1 focus:ring-surface-tint/20 transition-all resize-none shadow-inner" id="justification" placeholder="Detail the reasoning for this decision..." required="" rows="4"></textarea>
+<p class="font-caption text-caption text-text-muted mt-1 text-right">Required for submission</p>
+</div>
+<div class="grid grid-cols-2 gap-3 mb-3">
+<button class="flex items-center justify-center gap-2 bg-success hover:bg-success/90 text-surface-container-lowest font-body text-body font-medium h-11 rounded-lg transition-colors shadow-xs" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="check">check</span>
+                                    Approve
+                                </button>
+<button class="flex items-center justify-center gap-2 bg-danger hover:bg-danger/90 text-on-error font-body text-body font-medium h-11 rounded-lg transition-colors shadow-xs" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="close">close</span>
+                                    Reject
+                                </button>
+</div>
+<button class="w-full flex items-center justify-center gap-2 bg-surface hover:bg-surface-container-low text-on-surface border border-outline-variant font-body text-body font-medium h-11 rounded-lg transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-text-muted" data-icon="supervisor_account">supervisor_account</span>
+                                Refer to Senior Underwriter
+                            </button>
+</form>
+</div>
+</div>
+<!-- Auxiliary Data Snippet (Minimalist technical filler) -->
+<div class="bg-transparent border border-outline-variant border-dashed rounded-xl p-4">
+<div class="flex items-center gap-2 text-text-secondary mb-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="terminal">terminal</span>
+<span class="font-mono-data text-[11px] uppercase tracking-wider">System Log</span>
+</div>
+<p class="font-mono-data text-[12px] text-text-muted leading-relaxed">
+                        &gt; MVR_PULL_SUCCESS [0.42s]<br/>
+                        &gt; CLUE_REPORT_MATCH: YES<br/>
+                        &gt; IDENTITY_VERIFIED: LEVEL_2<br/>
+                        &gt; RULE_ENGINE: FLAG_04 (CLAIMS_FREQ)
+                    </p>
+</div>
+</aside>
+</div>
+</main>
+</body></html>

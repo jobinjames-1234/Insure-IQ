@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Underwriter Decision History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fbf8ff",
+                        "secondary": "#6249c2",
+                        "text-muted": "#8B8B90",
+                        "outline-variant": "#c3c5d9",
+                        "on-tertiary-fixed": "#3a0a00",
+                        "danger-bg": "#FBEAEC",
+                        "on-surface-variant": "#434656",
+                        "tertiary": "#972900",
+                        "secondary-fixed": "#e6deff",
+                        "on-tertiary-container": "#ffe4dc",
+                        "surface-container-low": "#f3f2ff",
+                        "on-primary-fixed": "#001453",
+                        "surface-dim": "#d9d9e6",
+                        "inverse-primary": "#b8c4ff",
+                        "secondary-fixed-dim": "#cbbeff",
+                        "on-primary-fixed-variant": "#0037b9",
+                        "on-primary": "#ffffff",
+                        "warning-bg": "#FDF3E0",
+                        "on-tertiary-fixed-variant": "#862300",
+                        "tertiary-fixed-dim": "#ffb59f",
+                        "on-surface": "#191b25",
+                        "success": "#12805C",
+                        "tertiary-container": "#c13700",
+                        "on-secondary-fixed": "#1d0061",
+                        "text-secondary": "#5B5B60",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#ffdbd1",
+                        "danger": "#C4293A",
+                        "bg-muted": "#F4F4F5",
+                        "secondary-container": "#9a83ff",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "bg-subtle": "#FAFAFA",
+                        "on-secondary-container": "#300491",
+                        "outline": "#747688",
+                        "on-background": "#191b25",
+                        "error-container": "#ffdad6",
+                        "primary": "#003fd1",
+                        "warning": "#B5750A",
+                        "inverse-surface": "#2e303a",
+                        "surface-bright": "#fbf8ff",
+                        "surface": "#fbf8ff",
+                        "surface-container-highest": "#e1e1ef",
+                        "primary-fixed": "#dde1ff",
+                        "on-secondary-fixed-variant": "#4a2ea9",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#1a56ff",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "border-strong": "#D4D4D8",
+                        "on-primary-container": "#e6e8ff",
+                        "surface-container-high": "#e7e7f5",
+                        "inverse-on-surface": "#f0effd",
+                        "surface-variant": "#e1e1ef",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#ededfa",
+                        "success-bg": "#E7F6EF",
+                        "surface-tint": "#004af0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "max-width": "1200px",
+                        "gutter": "24px",
+                        "margin": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "h2": ["Inter"],
+                        "h1": ["Inter"],
+                        "display": ["Inter"],
+                        "caption": ["Inter"],
+                        "h3": ["Inter"],
+                        "mono-data": ["JetBrains Mono"],
+                        "body": ["Inter"],
+                        "overline": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "1.25", "fontWeight": "600" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "h3": ["18px", { "lineHeight": "1.35", "fontWeight": "600" }],
+                        "mono-data": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "overline": ["11px", { "lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .expand-transition {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .expand-transition.expanded {
+            max-height: 200px; /* Arbitrary large max-height */
+            opacity: 1;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .rotate-transition {
+            transition: transform 0.2s ease;
+        }
+        .expanded-row-bg {
+            background-color: #FAFAFA;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased min-h-screen flex">
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden md:flex flex-col h-screen left-0 w-64 border-r border-outline-variant bg-surface-container-low p-4 space-y-2 shrink-0 sticky top-0">
+<div class="mb-8 px-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary font-h3 text-h3">I</div>
+<div>
+<div class="font-h3 text-h3 text-on-surface">InsureIQ</div>
+<div class="font-caption text-caption text-text-secondary">Agent Portal</div>
+</div>
+</div>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 rounded-lg hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body text-body">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 rounded-lg hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-body text-body">Policies</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 rounded-lg hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_late">assignment_late</span>
+<span class="font-body text-body">Claims</span>
+</a>
+<a class="flex items-center gap-3 bg-secondary-container text-on-secondary-container rounded-lg px-4 py-2 transition-all scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="rule">rule</span>
+<span class="font-body text-body font-medium">Underwriting</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 rounded-lg hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body text-body">Settings</span>
+</a>
+<div class="mt-auto pt-4 border-t border-outline-variant px-4">
+<div class="flex items-center gap-3">
+<img alt="Agent Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A small circular avatar of a professional agent in a corporate setting, looking friendly but serious. High quality headshot, bright lighting, neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9kLuRCcD3vERUIf7cR2ShbZcI5nptaKRnfSftW0MinDGl474narIjO23isrAaaNHDnFXV0ilcUBlLp6yDn72K77IzhHzHXwy9BXLw1rTYeE99GM_cJc-UvzR3nBX7LFUxjQUo4nu52ZACyCG2vB9x0uSrTd6ZBIimlWl_dZ6_B4piv1tBSBbphpA0KKsyXn1MYd2xo2xYFAr--po2IIrGpLcAZl5HthCn2XpRa7hG1iclEW96AXPI5w"/>
+<div>
+<div class="font-caption text-caption text-on-surface font-medium">Sarah Jenkins</div>
+<div class="font-caption text-caption text-text-secondary">Underwriter II</div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-auto bg-background">
+<div class="max-w-max-width mx-auto px-gutter py-8">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<h1 class="font-h1 text-h1 text-on-surface mb-2">Decision History</h1>
+<p class="font-body text-body text-text-secondary">Review past underwriting decisions and justifications.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-2 h-[40px] rounded border border-outline-variant bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none font-body text-body text-on-surface placeholder:text-text-muted w-64 shadow-xs" placeholder="Search applicant..." type="text"/>
+</div>
+<button class="h-[40px] px-4 rounded bg-surface border border-outline-variant text-on-surface font-body text-body flex items-center gap-2 hover:bg-bg-subtle transition-colors shadow-xs">
+<span class="material-symbols-outlined text-[18px]" data-icon="filter_list">filter_list</span>
+                        Filter
+                    </button>
+<button class="h-[40px] px-4 rounded bg-primary text-on-primary font-body text-body flex items-center gap-2 hover:bg-primary-container transition-colors shadow-xs">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+                        Export
+                    </button>
+</div>
+</header>
+<!-- Table Container (Bento/Card style) -->
+<div class="bg-surface rounded-lg shadow-xs border border-outline-variant overflow-hidden">
+<!-- Table Header -->
+<div class="grid grid-cols-12 gap-4 px-6 py-4 border-b border-outline-variant bg-bg-subtle">
+<div class="col-span-1"></div> <!-- Expand Icon Column -->
+<div class="col-span-2 font-caption text-caption text-text-secondary uppercase tracking-wider font-semibold">Date</div>
+<div class="col-span-3 font-caption text-caption text-text-secondary uppercase tracking-wider font-semibold">Applicant Name</div>
+<div class="col-span-2 font-caption text-caption text-text-secondary uppercase tracking-wider font-semibold">Policy Type</div>
+<div class="col-span-2 font-caption text-caption text-text-secondary uppercase tracking-wider font-semibold text-right">Risk Score</div>
+<div class="col-span-2 font-caption text-caption text-text-secondary uppercase tracking-wider font-semibold text-right">Decision</div>
+</div>
+<!-- Table Body -->
+<div class="divide-y divide-outline-variant">
+<!-- Row 1: Approved -->
+<div class="group">
+<div class="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-bg-subtle cursor-pointer transition-colors" onclick="toggleRow('row-1', 'icon-1')">
+<div class="col-span-1 flex justify-center">
+<span class="material-symbols-outlined text-text-muted rotate-transition" data-icon="expand_more" id="icon-1">expand_more</span>
+</div>
+<div class="col-span-2 font-mono-data text-mono-data text-on-surface">Oct 24, 2023</div>
+<div class="col-span-3 font-body text-body text-on-surface font-medium">Eleanor Vance</div>
+<div class="col-span-2 font-body text-body text-text-secondary">Life Term - 20Yr</div>
+<div class="col-span-2 flex justify-end">
+<span class="px-2 py-1 rounded-full bg-success-bg text-success font-caption text-caption font-semibold">A+ (92)</span>
+</div>
+<div class="col-span-2 flex justify-end items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-success"></span>
+<span class="font-body text-body text-on-surface">Approved</span>
+</div>
+</div>
+<!-- Expanded Content -->
+<div class="expand-transition bg-bg-muted px-6 border-t border-outline-variant border-dashed" id="row-1">
+<div class="grid grid-cols-12 gap-4">
+<div class="col-span-1"></div>
+<div class="col-span-11 py-2">
+<div class="mb-4">
+<h4 class="font-caption text-caption text-text-secondary uppercase tracking-wider mb-1">Underwriter Notes</h4>
+<p class="font-body text-body text-on-surface max-w-3xl">Applicant shows excellent medical history with no pre-existing conditions. Financial standing is robust, comfortably meeting premium requirements for the $1M policy limit. System risk score of 92 aligns with manual review. Approved for standard premium tier without additional riders.</p>
+</div>
+<div class="flex gap-6">
+<div>
+<span class="font-caption text-caption text-text-secondary block mb-1">Reviewed By</span>
+<span class="font-body text-body text-on-surface">Self (Sarah Jenkins)</span>
+</div>
+<div>
+<span class="font-caption text-caption text-text-secondary block mb-1">Time to Decision</span>
+<span class="font-mono-data text-mono-data text-on-surface">2h 15m</span>
+</div>
+<div>
+<span class="font-caption text-caption text-text-secondary block mb-1">ID</span>
+<span class="font-mono-data text-mono-data text-text-muted">#UD-8924-A</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 2: Rejected -->
+<div class="group">
+<div class="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-bg-subtle cursor-pointer transition-colors" onclick="toggleRow('row-2', 'icon-2')">
+<div class="col-span-1 flex justify-center">
+<span class="material-symbols-outlined text-text-muted rotate-transition" data-icon="expand_more" id="icon-2">expand_more</span>
+</div>
+<div class="col-span-2 font-mono-data text-mono-data text-on-surface">Oct 23, 2023</div>
+<div class="col-span-3 font-body text-body text-on-surface font-medium">Marcus Sterling</div>
+<div class="col-span-2 font-body text-body text-text-secondary">Commercial Prop</div>
+<div class="col-span-2 flex justify-end">
+<span class="px-2 py-1 rounded-full bg-danger-bg text-danger font-caption text-caption font-semibold">C- (45)</span>
+</div>
+<div class="col-span-2 flex justify-end items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-danger"></span>
+<span class="font-body text-body text-on-surface">Rejected</span>
+</div>
+</div>
+<!-- Expanded Content -->
+<div class="expand-transition bg-bg-muted px-6 border-t border-outline-variant border-dashed" id="row-2">
+<div class="grid grid-cols-12 gap-4">
+<div class="col-span-1"></div>
+<div class="col-span-11 py-2">
+<div class="mb-4">
+<h4 class="font-caption text-caption text-text-secondary uppercase tracking-wider mb-1">Underwriter Notes</h4>
+<p class="font-body text-body text-on-surface max-w-3xl">Property is located in a high-risk flood zone (Zone AE) without adequate modern mitigation systems installed. Previous claim history shows two significant water damage claims in the last five years. Risk score is below threshold for standard or sub-standard tiers. Decline based on unacceptable location risk profile.</p>
+</div>
+<div class="flex gap-6">
+<div>
+<span class="font-caption text-caption text-text-secondary block mb-1">Reviewed By</span>
+<span class="font-body text-body text-on-surface">David Chen (Sr. Underwriter)</span>
+</div>
+<div>
+<span class="font-caption text-caption text-text-secondary block mb-1">Time to Decision</span>
+<span class="font-mono-data text-mono-data text-on-surface">1d 4h</span>
+</div>
+<div>
+<span class="font-caption text-caption text-text-secondary block mb-1">ID</span>
+<span class="font-mono-data text-mono-data text-text-muted">#UD-8923-R</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 3: Referred -->
+<div class="group">
+<div class="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-bg-subtle cursor-pointer transition-colors" onclick="toggleRow('row-3', 'icon-3')">
+<div class="col-span-1 flex justify-center">
+<span class="material-symbols-outlined text-text-muted rotate-transition" data-icon="expand_more" id="icon-3">expand_more</span>
+</div>
+<div class="col-span-2 font-mono-data text-mono-data text-on-surface">Oct 22, 2023</div>
+<div class="col-span-3 font-body text-body text-on-surface font-medium">TechNova Inc.</div>
+<div class="col-span-2 font-body text-body text-text-secondary">Cyber Liability</div>
+<div class="col-span-2 flex justify-end">
+<span class="px-2 py-1 rounded-full bg-warning-bg text-warning font-caption text-caption font-semibold">B (78)</span>
+</div>
+<div class="col-span-2 flex justify-end items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-warning"></span>
+<span class="font-body text-body text-on-surface">Referred</span>
+</div>
+</div>
+<!-- Expanded Content -->
+<div class="expand-transition bg-bg-muted px-6 border-t border-outline-variant border-dashed" id="row-3">
+<div class="grid grid-cols-12 gap-4">
+<div class="col-span-1"></div>
+<div class="col-span-11 py-2">
+<div class="mb-4">
+<h4 class="font-caption text-caption text-text-secondary uppercase tracking-wider mb-1">Underwriter Notes</h4>
+<p class="font-body text-body text-on-surface max-w-3xl">Applicant operates in a high-target industry segment (FinTech infrastructure). While their basic security posture appears solid (SOC2 Type II verified), the requested limit of $10M exceeds my current authority level for this specific class code. Referring to Chief Underwriting Officer for final sign-off on limits and potential inclusion of a specific ransomware sub-limit.</p>
+</div>
+<div class="flex gap-6">
+<div>
+<span class="font-caption text-caption text-text-secondary block mb-1">Reviewed By</span>
+<span class="font-body text-body text-on-surface">Self (Sarah Jenkins)</span>
+</div>
+<div>
+<span class="font-caption text-caption text-text-secondary block mb-1">Referred To</span>
+<span class="font-body text-body text-on-surface">Amanda Reyes (CUO)</span>
+</div>
+<div>
+<span class="font-caption text-caption text-text-secondary block mb-1">Time to Decision</span>
+<span class="font-mono-data text-mono-data text-on-surface">4h 30m</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 4: Approved -->
+<div class="group">
+<div class="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-bg-subtle cursor-pointer transition-colors" onclick="toggleRow('row-4', 'icon-4')">
+<div class="col-span-1 flex justify-center">
+<span class="material-symbols-outlined text-text-muted rotate-transition" data-icon="expand_more" id="icon-4">expand_more</span>
+</div>
+<div class="col-span-2 font-mono-data text-mono-data text-on-surface">Oct 21, 2023</div>
+<div class="col-span-3 font-body text-body text-on-surface font-medium">Oakridge Farm LLC</div>
+<div class="col-span-2 font-body text-body text-text-secondary">Agri Business</div>
+<div class="col-span-2 flex justify-end">
+<span class="px-2 py-1 rounded-full bg-success-bg text-success font-caption text-caption font-semibold">A (88)</span>
+</div>
+<div class="col-span-2 flex justify-end items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-success"></span>
+<span class="font-body text-body text-on-surface">Approved</span>
+</div>
+</div>
+<!-- Expanded Content -->
+<div class="expand-transition bg-bg-muted px-6 border-t border-outline-variant border-dashed" id="row-4">
+<div class="grid grid-cols-12 gap-4">
+<div class="col-span-1"></div>
+<div class="col-span-11 py-2">
+<div class="mb-4">
+<h4 class="font-caption text-caption text-text-secondary uppercase tracking-wider mb-1">Underwriter Notes</h4>
+<p class="font-body text-body text-on-surface max-w-3xl">Standard renewal. No claims in the past 3 years. Equipment schedule updated and depreciation factored correctly. Approved with a slight 3% premium increase in line with regional rate adjustments.</p>
+</div>
+<div class="flex gap-6">
+<div>
+<span class="font-caption text-caption text-text-secondary block mb-1">Reviewed By</span>
+<span class="font-body text-body text-on-surface">Self (Sarah Jenkins)</span>
+</div>
+<div>
+<span class="font-caption text-caption text-text-secondary block mb-1">Time to Decision</span>
+<span class="font-mono-data text-mono-data text-on-surface">45m</span>
+</div>
+<div>
+<span class="font-caption text-caption text-text-secondary block mb-1">ID</span>
+<span class="font-mono-data text-mono-data text-text-muted">#UD-8921-A</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-outline-variant bg-surface flex items-center justify-between">
+<span class="font-body text-body text-text-secondary">Showing 1 to 4 of 128 decisions</span>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded flex items-center justify-center border border-outline-variant text-text-muted hover:bg-bg-subtle transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded flex items-center justify-center bg-primary text-on-primary font-body text-body transition-colors">1</button>
+<button class="w-8 h-8 rounded flex items-center justify-center border border-outline-variant text-on-surface font-body text-body hover:bg-bg-subtle transition-colors">2</button>
+<button class="w-8 h-8 rounded flex items-center justify-center border border-outline-variant text-on-surface font-body text-body hover:bg-bg-subtle transition-colors">3</button>
+<span class="font-body text-body text-text-muted px-1">...</span>
+<button class="w-8 h-8 rounded flex items-center justify-center border border-outline-variant text-on-surface hover:bg-bg-subtle transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        function toggleRow(rowId, iconId) {
+            const row = document.getElementById(rowId);
+            const icon = document.getElementById(iconId);
+            
+            if (row.classList.contains('expanded')) {
+                row.classList.remove('expanded');
+                icon.style.transform = 'rotate(0deg)';
+                row.parentElement.classList.remove('expanded-row-bg');
+            } else {
+                row.classList.add('expanded');
+                icon.style.transform = 'rotate(180deg)';
+                row.parentElement.classList.add('expanded-row-bg');
+            }
+        }
+    </script>
+</body></html>

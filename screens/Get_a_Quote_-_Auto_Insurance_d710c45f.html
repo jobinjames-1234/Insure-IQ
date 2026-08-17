@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Auto Insurance Quote - InsureMarket</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#cbbeff",
+                      "on-secondary-fixed-variant": "#4a2ea9",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error": "#ffffff",
+                      "surface-bright": "#fbf8ff",
+                      "on-background": "#191b25",
+                      "danger-bg": "#FBEAEC",
+                      "surface-container-high": "#e7e7f5",
+                      "outline-variant": "#c3c5d9",
+                      "on-secondary-container": "#300491",
+                      "warning-bg": "#FDF3E0",
+                      "inverse-surface": "#2e303a",
+                      "primary": "#003fd1",
+                      "error": "#ba1a1a",
+                      "on-tertiary-container": "#ffe4dc",
+                      "error-container": "#ffdad6",
+                      "tertiary-container": "#c13700",
+                      "text-secondary": "#5B5B60",
+                      "bg-muted": "#F4F4F5",
+                      "primary-container": "#1a56ff",
+                      "success-bg": "#E7F6EF",
+                      "bg-subtle": "#FAFAFA",
+                      "tertiary": "#972900",
+                      "on-error-container": "#93000a",
+                      "warning": "#B5750A",
+                      "tertiary-fixed-dim": "#ffb59f",
+                      "success": "#12805C",
+                      "surface-dim": "#d9d9e6",
+                      "tertiary-fixed": "#ffdbd1",
+                      "on-surface": "#191b25",
+                      "on-primary-fixed-variant": "#0037b9",
+                      "surface-container-highest": "#e1e1ef",
+                      "surface": "#fbf8ff",
+                      "inverse-primary": "#b8c4ff",
+                      "background": "#fbf8ff",
+                      "on-tertiary-fixed-variant": "#862300",
+                      "primary-fixed-dim": "#b8c4ff",
+                      "surface-variant": "#e1e1ef",
+                      "on-primary-container": "#e6e8ff",
+                      "on-tertiary-fixed": "#3a0a00",
+                      "border-strong": "#D4D4D8",
+                      "secondary-fixed": "#e6deff",
+                      "secondary": "#6249c2",
+                      "on-secondary-fixed": "#1d0061",
+                      "primary-fixed": "#dde1ff",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed": "#001453",
+                      "text-muted": "#8B8B90",
+                      "outline": "#747688",
+                      "surface-container": "#ededfa",
+                      "secondary-container": "#9a83ff",
+                      "surface-tint": "#004af0",
+                      "on-surface-variant": "#434656",
+                      "danger": "#C4293A",
+                      "on-tertiary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f3f2ff",
+                      "inverse-on-surface": "#f0effd"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "margin": "32px",
+                      "max-width": "1200px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "body": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "h2": [
+                              "Inter"
+                      ],
+                      "overline": [
+                              "Inter"
+                      ],
+                      "mono-data": [
+                              "JetBrains Mono"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "h1": [
+                              "Inter"
+                      ],
+                      "h3": [
+                              "Inter"
+                      ],
+                      "display": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h2": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.25",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "overline": [
+                              "11px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "letterSpacing": "0.04em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "mono-data": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "h1": [
+                              "36px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "h3": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.35",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+          .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+          }
+      </style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen flex flex-col antialiased">
+<!-- TopNavBar (Nav suppressed for transactional flow, keeping brand only) -->
+<header class="bg-surface dark:bg-on-surface border-b border-outline-variant flat no shadows h-16 flex items-center justify-between px-base max-w-max-width mx-auto w-full">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-2xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+<span class="font-display text-h2 font-black text-primary">InsureMarket</span>
+</div>
+<div>
+<button class="text-text-secondary hover:text-primary transition-colors text-sm font-medium">Cancel</button>
+</div>
+</header>
+<main class="flex-grow flex justify-center py-12 px-4 sm:px-6 lg:px-8">
+<div class="max-w-4xl w-full flex flex-col md:flex-row gap-gutter">
+<!-- Main Content Area (Narrow Column) -->
+<div class="flex-1 max-w-2xl">
+<!-- Progress -->
+<div class="mb-8">
+<p class="font-overline text-overline text-text-secondary uppercase tracking-wider mb-2">Step 1 of 3: Vehicle &amp; Driver</p>
+<div class="w-full bg-surface-container-highest rounded-full h-1.5">
+<div class="bg-primary-container h-1.5 rounded-full" style="width: 33%"></div>
+</div>
+</div>
+<div class="mb-10">
+<h1 class="font-h1 text-h1 text-on-surface mb-2">Let's get your quote started.</h1>
+<p class="font-body-lg text-body-lg text-text-secondary">We need a few details about your vehicle and driving habits to give you the most accurate rate.</p>
+</div>
+<form class="space-y-8">
+<!-- Vehicle Details Section -->
+<section class="bg-surface-container-lowest rounded-xl shadow-xs border border-surface-container-highest p-6 md:p-8">
+<h2 class="font-h2 text-h2 text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">directions_car</span>
+                            Vehicle Details
+                        </h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="flex flex-col">
+<label class="font-caption text-caption text-on-surface mb-1" for="year">Year</label>
+<select class="h-11 rounded-DEFAULT border-outline-variant focus:border-primary focus:ring-4 focus:ring-primary/20 text-on-surface bg-transparent font-body text-body" id="year" name="year">
+<option disabled="" selected="" value="">Select Year</option>
+<option value="2024">2024</option>
+<option value="2023">2023</option>
+<option value="2022">2022</option>
+<option value="2021">2021</option>
+</select>
+</div>
+<div class="flex flex-col">
+<label class="font-caption text-caption text-on-surface mb-1" for="make">Make</label>
+<select class="h-11 rounded-DEFAULT border-outline-variant focus:border-primary focus:ring-4 focus:ring-primary/20 text-on-surface bg-transparent font-body text-body" disabled="" id="make" name="make">
+<option disabled="" selected="" value="">Select Make</option>
+</select>
+</div>
+<div class="flex flex-col sm:col-span-2">
+<label class="font-caption text-caption text-on-surface mb-1" for="model">Model</label>
+<select class="h-11 rounded-DEFAULT border-outline-variant focus:border-primary focus:ring-4 focus:ring-primary/20 text-on-surface bg-transparent font-body text-body" disabled="" id="model" name="model">
+<option disabled="" selected="" value="">Select Model</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Primary Action -->
+<div class="flex justify-end pt-4">
+<button class="h-10 px-6 bg-primary-container text-on-primary-container font-body text-body font-medium rounded-DEFAULT hover:bg-primary transition-colors flex items-center gap-2" type="button">
+                            Continue to Coverages
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</main>
+</body></html>

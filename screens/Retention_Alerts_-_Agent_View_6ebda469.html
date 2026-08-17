@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Retention Alerts - InsureIQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#1d0061",
+                        "tertiary-fixed": "#ffdbd1",
+                        "on-tertiary-fixed": "#3a0a00",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "on-primary-fixed-variant": "#0037b9",
+                        "danger-bg": "#FBEAEC",
+                        "success-bg": "#E7F6EF",
+                        "on-background": "#191b25",
+                        "surface-container-low": "#f3f2ff",
+                        "background": "#fbf8ff",
+                        "outline-variant": "#c3c5d9",
+                        "surface-container": "#ededfa",
+                        "surface-variant": "#e1e1ef",
+                        "primary-container": "#1a56ff",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#004af0",
+                        "on-secondary-container": "#300491",
+                        "danger": "#C4293A",
+                        "text-muted": "#8B8B90",
+                        "tertiary-container": "#c13700",
+                        "secondary-fixed-dim": "#cbbeff",
+                        "on-secondary-fixed-variant": "#4a2ea9",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2e303a",
+                        "warning": "#B5750A",
+                        "surface-container-high": "#e7e7f5",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#fbf8ff",
+                        "on-secondary": "#ffffff",
+                        "bg-subtle": "#FAFAFA",
+                        "warning-bg": "#FDF3E0",
+                        "on-surface": "#191b25",
+                        "surface": "#fbf8ff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed": "#001453",
+                        "inverse-on-surface": "#f0effd",
+                        "on-primary-container": "#e6e8ff",
+                        "inverse-primary": "#b8c4ff",
+                        "on-surface-variant": "#434656",
+                        "on-tertiary-container": "#ffe4dc",
+                        "tertiary": "#972900",
+                        "bg-muted": "#F4F4F5",
+                        "secondary": "#6249c2",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#003fd1",
+                        "surface-dim": "#d9d9e6",
+                        "primary-fixed": "#dde1ff",
+                        "secondary-container": "#9a83ff",
+                        "on-tertiary-fixed-variant": "#862300",
+                        "tertiary-fixed-dim": "#ffb59f",
+                        "surface-container-highest": "#e1e1ef",
+                        "success": "#12805C",
+                        "text-secondary": "#5B5B60",
+                        "on-error-container": "#93000a",
+                        "border-strong": "#D4D4D8",
+                        "outline": "#747688",
+                        "secondary-fixed": "#e6deff",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "gutter": "24px",
+                        "margin": "32px",
+                        "max-width": "1200px"
+                    },
+                    "fontFamily": {
+                        "mono-data": ["JetBrains Mono"],
+                        "h2": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body": ["Inter"],
+                        "caption": ["Inter"],
+                        "overline": ["Inter"],
+                        "h1": ["Inter"],
+                        "display": ["Inter"],
+                        "h3": ["Inter"]
+                    },
+                    "fontSize": {
+                        "mono-data": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "1.25", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "overline": ["11px", { "lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "h3": ["18px", { "lineHeight": "1.35", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body text-body min-h-screen flex antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- SideNavBar Component -->
+<nav class="bg-surface-container-low dark:bg-surface-container-low docked h-screen left-0 w-64 border-r border-outline-variant flat no shadows flex flex-col h-full p-4 space-y-2 hidden md:flex shrink-0">
+<div class="mb-8 px-4 py-2">
+<h1 class="font-h3 text-h3 text-on-surface dark:text-on-surface">InsureIQ</h1>
+<p class="font-caption text-caption text-text-muted mt-1">Agent Portal</p>
+</div>
+<div class="flex-1 space-y-1">
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface-variant px-4 py-2 hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-all rounded-lg font-caption text-caption" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface-variant px-4 py-2 hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-all rounded-lg font-caption text-caption" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">description</span>
+<span>Policies</span>
+</a>
+<a class="flex items-center gap-3 bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container rounded-lg px-4 py-2 transition-all Active: scale-95 duration-150 font-caption text-caption font-semibold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">assignment_late</span>
+<span>Claims</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface-variant px-4 py-2 hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-all rounded-lg font-caption text-caption" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">rule</span>
+<span>Underwriting</span>
+</a>
+</div>
+<div class="mt-auto">
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface-variant px-4 py-2 hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-all rounded-lg font-caption text-caption" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col w-full h-screen overflow-y-auto">
+<!-- Header -->
+<header class="px-gutter py-margin border-b border-outline-variant bg-surface sticky top-0 z-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+<div>
+<h1 class="font-h1 text-h1 text-on-surface tracking-tight">Retention Alerts</h1>
+<p class="font-body-lg text-body-lg text-text-muted mt-2 max-w-2xl">Proactive outreach to prevent customer lapse.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="h-10 px-4 flex items-center justify-center gap-2 bg-white border border-outline-variant text-on-surface font-caption text-caption rounded-lg hover:bg-bg-subtle transition-colors shadow-xs">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                    Filter
+                </button>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="p-gutter lg:p-margin max-w-max-width mx-auto w-full flex-1 flex flex-col gap-gutter">
+<!-- Metrics Row -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+<!-- Metric Card 1 -->
+<div class="bg-surface border border-outline-variant rounded-xl p-6 shadow-xs flex flex-col">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-caption text-caption text-text-muted uppercase tracking-wider">Total Alerts</h3>
+<span class="material-symbols-outlined text-outline-variant" style="font-variation-settings: 'FILL' 0;">notifications_active</span>
+</div>
+<div class="flex items-baseline gap-2 mt-auto">
+<span class="font-display text-display text-on-surface">12</span>
+<span class="font-caption text-caption text-text-muted">customers</span>
+</div>
+</div>
+<!-- Metric Card 2 -->
+<div class="bg-surface border border-outline-variant rounded-xl p-6 shadow-xs flex flex-col relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-danger"></div>
+<div class="flex items-center justify-between mb-2 pl-2">
+<h3 class="font-caption text-caption text-text-muted uppercase tracking-wider">High Risk</h3>
+<span class="material-symbols-outlined text-danger" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex items-baseline gap-2 mt-auto pl-2">
+<span class="font-display text-display text-danger">4</span>
+<span class="font-caption text-caption text-text-muted">requires immediate action</span>
+</div>
+</div>
+<!-- Metric Card 3 -->
+<div class="bg-surface border border-outline-variant rounded-xl p-6 shadow-xs flex flex-col">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-caption text-caption text-text-muted uppercase tracking-wider">Outreach Logged Today</h3>
+<span class="material-symbols-outlined text-success" style="font-variation-settings: 'FILL' 0;">check_circle</span>
+</div>
+<div class="flex items-baseline gap-2 mt-auto">
+<span class="font-display text-display text-on-surface">8</span>
+<span class="font-caption text-caption text-success flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+                            2 vs yesterday
+                        </span>
+</div>
+</div>
+</div>
+<!-- Alerts List -->
+<div class="flex flex-col gap-4 mt-4">
+<h2 class="font-h3 text-h3 text-on-surface mb-2">Requires Outreach</h2>
+<!-- List Item 1 -->
+<div class="bg-surface border border-outline-variant rounded-xl p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col md:flex-row md:items-center gap-6 group">
+<!-- Customer Info -->
+<div class="flex items-center gap-4 min-w-[240px]">
+<img class="w-12 h-12 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a middle-aged man with short brown hair, wearing a casual light blue button-down shirt. The lighting is soft and natural, suggesting an approachable and friendly demeanor. Set against a clean, neutral white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaGt8-d_89yYTV8Ir6jd9Z2abQAMTo4EIPmR_UoMuhpFOSjexya4AW1ApMdYrsyhvw3clfqO6cIUQUPAvXHNHzDU-w9RD8w8ZCdU16JC9c8p3Heh0yGp85GjUboW-W5K_KHk1JPj3DvAqn0qIMCsD5DfROaf5Hfdjz_4oklcG1ceg5y-ewSSPd30dLKdXP4Ooto3nCB1ubDLsVljVo0fSbwe9pO8n5JQraIwnSL9MrkdyYm-NfOOWAVA"/>
+<div>
+<h4 class="font-h3 text-h3 text-on-surface">Robert Chen</h4>
+<p class="font-caption text-caption text-text-muted mt-1">Auto &amp; Home Bundle</p>
+</div>
+</div>
+<!-- Divider for Mobile -->
+<div class="h-px w-full bg-outline-variant md:hidden"></div>
+<!-- Churn Driver -->
+<div class="flex-1 flex flex-col justify-center">
+<span class="font-overline text-overline text-danger mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+                            Risk Factor
+                        </span>
+<p class="font-body text-body text-on-surface">Premium increased 18% upon recent renewal.</p>
+</div>
+<!-- Divider for Mobile -->
+<div class="h-px w-full bg-outline-variant md:hidden"></div>
+<!-- Action -->
+<div class="flex items-center justify-end shrink-0">
+<button class="h-10 px-6 bg-primary-container text-on-primary font-caption text-caption font-medium rounded-lg hover:bg-surface-tint transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">phone_in_talk</span>
+                            Log Outreach
+                        </button>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="bg-surface border border-outline-variant rounded-xl p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col md:flex-row md:items-center gap-6 group">
+<!-- Customer Info -->
+<div class="flex items-center gap-4 min-w-[240px]">
+<img class="w-12 h-12 rounded-full object-cover border border-outline-variant" data-alt="A vibrant portrait of a young woman with curly dark hair, wearing a mustard yellow sweater. She has a subtle, thoughtful expression. The lighting is warm and cinematic, set against a muted grey background to emphasize her features." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHNzy9D3sx7RDF0kwxqKIZEPOEsdBOIiCn6ajM1k925Fvz1q4crWgaQfo7SsKCzNlTvTwzTGdlpmfj0mABUpCU4Q0kwsXMZUge4gVZnHNyYPJW09Mxi2q-_MKEbI1TN6L8qxkQxZMRaTbpVjI0MkCZxnvqrtaWQtzQ9vLQ7CO155tdey0sizMCb7eBBxXdl113_s4ff6TRqjAQMPl4zcAcVeyTGd4LqO0bkmUA-owXnTMqiRn6E9v-Fw"/>
+<div>
+<h4 class="font-h3 text-h3 text-on-surface">Sarah Jenkins</h4>
+<p class="font-caption text-caption text-text-muted mt-1">Life Insurance - Term</p>
+</div>
+</div>
+<!-- Divider for Mobile -->
+<div class="h-px w-full bg-outline-variant md:hidden"></div>
+<!-- Churn Driver -->
+<div class="flex-1 flex flex-col justify-center">
+<span class="font-overline text-overline text-warning mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">history</span>
+                            Risk Factor
+                        </span>
+<p class="font-body text-body text-on-surface">No portal login in 120 days. Missed last quarterly review.</p>
+</div>
+<!-- Divider for Mobile -->
+<div class="h-px w-full bg-outline-variant md:hidden"></div>
+<!-- Action -->
+<div class="flex items-center justify-end shrink-0">
+<button class="h-10 px-6 bg-primary-container text-on-primary font-caption text-caption font-medium rounded-lg hover:bg-surface-tint transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">phone_in_talk</span>
+                            Log Outreach
+                        </button>
+</div>
+</div>
+<!-- List Item 3 -->
+<div class="bg-surface border border-outline-variant rounded-xl p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col md:flex-row md:items-center gap-6 group">
+<!-- Customer Info -->
+<div class="flex items-center gap-4 min-w-[240px]">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface font-h2 text-h2 border border-outline-variant">
+                            EM
+                        </div>
+<div>
+<h4 class="font-h3 text-h3 text-on-surface">Elena Martinez</h4>
+<p class="font-caption text-caption text-text-muted mt-1">Commercial Property</p>
+</div>
+</div>
+<!-- Divider for Mobile -->
+<div class="h-px w-full bg-outline-variant md:hidden"></div>
+<!-- Churn Driver -->
+<div class="flex-1 flex flex-col justify-center">
+<span class="font-overline text-overline text-warning mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">support_agent</span>
+                            Risk Factor
+                        </span>
+<p class="font-body text-body text-on-surface">Recent claim denied. Sentiment score decreased.</p>
+</div>
+<!-- Divider for Mobile -->
+<div class="h-px w-full bg-outline-variant md:hidden"></div>
+<!-- Action -->
+<div class="flex items-center justify-end shrink-0">
+<button class="h-10 px-6 bg-primary-container text-on-primary font-caption text-caption font-medium rounded-lg hover:bg-surface-tint transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">phone_in_talk</span>
+                            Log Outreach
+                        </button>
+</div>
+</div>
+</div>
+<!-- Empty State (Hidden by default, shown for demonstration structure) -->
+<div class="hidden flex flex-col items-center justify-center py-24 text-center">
+<div class="w-16 h-16 rounded-full bg-success-bg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-success text-[32px]" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+</div>
+<h3 class="font-h2 text-h2 text-on-surface mb-2">All Caught Up</h3>
+<p class="font-body text-body text-text-muted max-w-sm">No customers need outreach right now. Great job keeping your portfolio healthy.</p>
+</div>
+</div>
+</main>
+</body></html>

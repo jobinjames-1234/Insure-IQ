@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Underwriter Model Performance | InsureIQ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fbf8ff",
+                        "secondary": "#6249c2",
+                        "text-muted": "#8B8B90",
+                        "outline-variant": "#c3c5d9",
+                        "on-tertiary-fixed": "#3a0a00",
+                        "danger-bg": "#FBEAEC",
+                        "on-surface-variant": "#434656",
+                        "tertiary": "#972900",
+                        "secondary-fixed": "#e6deff",
+                        "on-tertiary-container": "#ffe4dc",
+                        "surface-container-low": "#f3f2ff",
+                        "on-primary-fixed": "#001453",
+                        "surface-dim": "#d9d9e6",
+                        "inverse-primary": "#b8c4ff",
+                        "secondary-fixed-dim": "#cbbeff",
+                        "on-primary-fixed-variant": "#0037b9",
+                        "on-primary": "#ffffff",
+                        "warning-bg": "#FDF3E0",
+                        "on-tertiary-fixed-variant": "#862300",
+                        "tertiary-fixed-dim": "#ffb59f",
+                        "on-surface": "#191b25",
+                        "success": "#12805C",
+                        "tertiary-container": "#c13700",
+                        "on-secondary-fixed": "#1d0061",
+                        "text-secondary": "#5B5B60",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#ffdbd1",
+                        "danger": "#C4293A",
+                        "bg-muted": "#F4F4F5",
+                        "secondary-container": "#9a83ff",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "bg-subtle": "#FAFAFA",
+                        "on-secondary-container": "#300491",
+                        "outline": "#747688",
+                        "on-background": "#191b25",
+                        "error-container": "#ffdad6",
+                        "primary": "#003fd1",
+                        "warning": "#B5750A",
+                        "inverse-surface": "#2e303a",
+                        "surface-bright": "#fbf8ff",
+                        "surface": "#fbf8ff",
+                        "surface-container-highest": "#e1e1ef",
+                        "primary-fixed": "#dde1ff",
+                        "on-secondary-fixed-variant": "#4a2ea9",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#1a56ff",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "border-strong": "#D4D4D8",
+                        "on-primary-container": "#e6e8ff",
+                        "surface-container-high": "#e7e7f5",
+                        "inverse-on-surface": "#f0effd",
+                        "surface-variant": "#e1e1ef",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#ededfa",
+                        "success-bg": "#E7F6EF",
+                        "surface-tint": "#004af0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "max-width": "1200px",
+                        "gutter": "24px",
+                        "margin": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "h2": ["Inter"],
+                        "h1": ["Inter"],
+                        "display": ["Inter"],
+                        "caption": ["Inter"],
+                        "h3": ["Inter"],
+                        "mono-data": ["JetBrains Mono"],
+                        "body": ["Inter"],
+                        "overline": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "1.25", "fontWeight": "600" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "h3": ["18px", { "lineHeight": "1.35", "fontWeight": "600" }],
+                        "mono-data": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "overline": ["11px", { "lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body text-body min-h-screen flex antialiased">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-screen left-0 w-64 bg-surface-container-low border-r border-outline-variant p-4 space-y-2 sticky top-0 shrink-0 z-50">
+<div class="mb-8 px-4 py-2">
+<h1 class="font-h3 text-h3 text-on-surface">InsureIQ</h1>
+<p class="font-caption text-caption text-on-surface-variant mt-1">Agent Portal</p>
+</div>
+<div class="flex-1 space-y-2">
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="description">description</span>
+<span>Policies</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="assignment_late">assignment_late</span>
+<span>Claims</span>
+</a>
+<a aria-current="page" class="flex items-center gap-3 bg-secondary-container text-on-secondary-container rounded-lg px-4 py-2 transform scale-95 duration-150 shadow-sm" href="#">
+<span class="material-symbols-outlined" data-icon="rule" data-weight="fill">rule</span>
+<span class="font-medium">Underwriting</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<div class="mt-auto border-t border-outline-variant pt-4 px-4 py-2">
+<div class="flex items-center gap-3">
+<img alt="Agent Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A small, professional headshot of an insurance agent looking confident and approachable, set against a clean, light studio background. Soft, flattering lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzgSvat5aDHCiHRiHgZI4VQdlH24lqxMeO0fpslkVQtYOWBe04JF77Vsmy0CLt9LTy6B85y58JTiHZ5Z31ZtdM4v7X1tQj97LTnx6QSzEz6hCPZyWX2sctxALhyRebOXuY-ds4oEOp34zABpilFaN-o4uWNmZnL3pGQ1Pl_tx9SeAC12C73wAM4kKu-W_ZKGO33C0vMy9On-nmrInVEnlD-G4aU2QHvRrs-6z_GoHPUehTJgsyQ5wJRw"/>
+<div>
+<p class="font-caption text-caption font-medium text-on-surface">Agent Profile</p>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 w-full max-w-max-width mx-auto px-margin py-margin md:px-gutter md:py-8 overflow-y-auto">
+<!-- Header Section -->
+<header class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<h2 class="font-h1 text-h1 text-on-background">Model Performance</h2>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success-bg text-success font-caption text-caption">
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle" data-weight="fill">check_circle</span>
+                        Healthy
+                    </span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                    The AI risk model is currently accurately predicting claims frequency across all major product lines. Confidence intervals remain within expected tolerances.
+                </p>
+</div>
+<div class="flex items-center gap-4">
+<button class="h-10 px-4 bg-white border border-outline-variant text-on-surface font-body text-body rounded hover:bg-surface-container-high transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="calendar_today">calendar_today</span>
+                    Last 30 Days
+                </button>
+<button class="h-10 px-4 bg-primary-container text-on-primary font-body text-body rounded hover:bg-primary transition-colors shadow-xs">
+                    Export Report
+                </button>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Key Metrics Overview (Spans 8 cols) -->
+<div class="md:col-span-8 bg-surface-container-lowest border border-[#E7E7E9] rounded-xl shadow-xs p-6 flex flex-col justify-between">
+<div>
+<h3 class="font-h3 text-h3 text-on-surface mb-6">Prediction Accuracy Summary</h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+<div class="border-l-2 border-primary pl-4">
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-wider mb-1">Global Accuracy</p>
+<p class="font-display text-display text-on-surface mb-1">94.2%</p>
+<p class="font-caption text-caption text-success flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="trending_up">trending_up</span>
+                                +1.2% vs last month
+                            </p>
+</div>
+<div class="border-l-2 border-outline-variant pl-4">
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-wider mb-1">False Positives</p>
+<p class="font-display text-display text-on-surface mb-1">2.8%</p>
+<p class="font-caption text-caption text-success flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="trending_down">trending_down</span>
+                                -0.4% vs last month
+                            </p>
+</div>
+<div class="border-l-2 border-outline-variant pl-4">
+<p class="font-caption text-caption text-on-surface-variant uppercase tracking-wider mb-1">Model Drift</p>
+<p class="font-display text-display text-on-surface mb-1">0.03</p>
+<p class="font-caption text-caption text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="horizontal_rule">horizontal_rule</span>
+                                Stable
+                            </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Alerts (Spans 4 cols) -->
+<div class="md:col-span-4 bg-surface-container-lowest border border-[#E7E7E9] rounded-xl shadow-xs p-6 flex flex-col h-full">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-h3 text-h3 text-on-surface">System Alerts</h3>
+<span class="material-symbols-outlined text-outline" data-icon="notifications">notifications</span>
+</div>
+<div class="space-y-4 flex-1">
+<div class="p-3 bg-surface-container rounded-lg border border-outline-variant flex gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5" data-icon="info">info</span>
+<div>
+<p class="font-body text-body font-medium text-on-surface">Auto-Retraining Scheduled</p>
+<p class="font-caption text-caption text-on-surface-variant mt-1">Model will undergo standard monthly retraining on Friday at 02:00 UTC.</p>
+</div>
+</div>
+<div class="p-3 bg-warning-bg rounded-lg border border-warning/20 flex gap-3">
+<span class="material-symbols-outlined text-warning mt-0.5" data-icon="warning">warning</span>
+<div>
+<p class="font-body text-body font-medium text-on-surface text-warning">Minor Regional Drift detected</p>
+<p class="font-caption text-caption text-warning/80 mt-1">Slight variance in coastal property predictions. Currently under investigation.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Predicted vs Actual Chart Area (Spans full width) -->
+<div class="md:col-span-12 bg-surface-container-lowest border border-[#E7E7E9] rounded-xl shadow-xs p-6">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">Risk Tier Validation</h3>
+<p class="font-body text-body text-on-surface-variant mt-1">Comparing predicted claim likelihood against actual claims filed within 12 months.</p>
+</div>
+<div class="flex items-center gap-4 font-caption text-caption">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-sm bg-primary-container"></div>
+<span class="text-on-surface-variant">Predicted Risk</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-sm bg-secondary"></div>
+<span class="text-on-surface-variant">Actual Claims Rate</span>
+</div>
+</div>
+</div>
+<!-- Simulated Bar Chart -->
+<div class="w-full h-64 flex items-end gap-2 sm:gap-4 md:gap-8 pb-8 border-b border-outline-variant relative">
+<!-- Y-Axis Labels -->
+<div class="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-on-surface-variant font-mono-data text-mono-data pr-4 border-r border-outline-variant h-full">
+<span>25%</span>
+<span>20%</span>
+<span>15%</span>
+<span>10%</span>
+<span>5%</span>
+<span>0%</span>
+</div>
+<!-- Chart Bars Container (offset for y-axis) -->
+<div class="w-full h-full flex justify-around items-end pl-12">
+<!-- Tier 1 -->
+<div class="flex flex-col items-center gap-2 w-full max-w-[60px] group">
+<div class="flex items-end gap-1 w-full h-full justify-center">
+<div class="w-1/2 bg-primary-container rounded-t-sm transition-all duration-300 group-hover:opacity-80" style="height: 15%;"></div>
+<div class="w-1/2 bg-secondary rounded-t-sm transition-all duration-300 group-hover:opacity-80" style="height: 18%;"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Tier 1</span>
+</div>
+<!-- Tier 2 -->
+<div class="flex flex-col items-center gap-2 w-full max-w-[60px] group">
+<div class="flex items-end gap-1 w-full h-full justify-center">
+<div class="w-1/2 bg-primary-container rounded-t-sm transition-all duration-300 group-hover:opacity-80" style="height: 35%;"></div>
+<div class="w-1/2 bg-secondary rounded-t-sm transition-all duration-300 group-hover:opacity-80" style="height: 32%;"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Tier 2</span>
+</div>
+<!-- Tier 3 -->
+<div class="flex flex-col items-center gap-2 w-full max-w-[60px] group">
+<div class="flex items-end gap-1 w-full h-full justify-center">
+<div class="w-1/2 bg-primary-container rounded-t-sm transition-all duration-300 group-hover:opacity-80" style="height: 60%;"></div>
+<div class="w-1/2 bg-secondary rounded-t-sm transition-all duration-300 group-hover:opacity-80" style="height: 65%;"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Tier 3</span>
+</div>
+<!-- Tier 4 -->
+<div class="flex flex-col items-center gap-2 w-full max-w-[60px] group">
+<div class="flex items-end gap-1 w-full h-full justify-center">
+<div class="w-1/2 bg-primary-container rounded-t-sm transition-all duration-300 group-hover:opacity-80" style="height: 85%;"></div>
+<div class="w-1/2 bg-secondary rounded-t-sm transition-all duration-300 group-hover:opacity-80" style="height: 80%;"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Tier 4</span>
+</div>
+<!-- Tier 5 -->
+<div class="flex flex-col items-center gap-2 w-full max-w-[60px] group">
+<div class="flex items-end gap-1 w-full h-full justify-center">
+<div class="w-1/2 bg-primary-container rounded-t-sm transition-all duration-300 group-hover:opacity-80" style="height: 95%;"></div>
+<div class="w-1/2 bg-secondary rounded-t-sm transition-all duration-300 group-hover:opacity-80" style="height: 100%;"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Tier 5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Core Admin - Tenant Directory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#cbbeff",
+                      "on-secondary-fixed-variant": "#4a2ea9",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error": "#ffffff",
+                      "surface-bright": "#fbf8ff",
+                      "on-background": "#191b25",
+                      "danger-bg": "#FBEAEC",
+                      "surface-container-high": "#e7e7f5",
+                      "outline-variant": "#c3c5d9",
+                      "on-secondary-container": "#300491",
+                      "warning-bg": "#FDF3E0",
+                      "inverse-surface": "#2e303a",
+                      "primary": "#003fd1",
+                      "error": "#ba1a1a",
+                      "on-tertiary-container": "#ffe4dc",
+                      "error-container": "#ffdad6",
+                      "tertiary-container": "#c13700",
+                      "text-secondary": "#5B5B60",
+                      "bg-muted": "#F4F4F5",
+                      "primary-container": "#1a56ff",
+                      "success-bg": "#E7F6EF",
+                      "bg-subtle": "#FAFAFA",
+                      "tertiary": "#972900",
+                      "on-error-container": "#93000a",
+                      "warning": "#B5750A",
+                      "tertiary-fixed-dim": "#ffb59f",
+                      "success": "#12805C",
+                      "surface-dim": "#d9d9e6",
+                      "tertiary-fixed": "#ffdbd1",
+                      "on-surface": "#191b25",
+                      "on-primary-fixed-variant": "#0037b9",
+                      "surface-container-highest": "#e1e1ef",
+                      "surface": "#fbf8ff",
+                      "inverse-primary": "#b8c4ff",
+                      "background": "#fbf8ff",
+                      "on-tertiary-fixed-variant": "#862300",
+                      "primary-fixed-dim": "#b8c4ff",
+                      "surface-variant": "#e1e1ef",
+                      "on-primary-container": "#e6e8ff",
+                      "on-tertiary-fixed": "#3a0a00",
+                      "border-strong": "#D4D4D8",
+                      "secondary-fixed": "#e6deff",
+                      "secondary": "#6249c2",
+                      "on-secondary-fixed": "#1d0061",
+                      "primary-fixed": "#dde1ff",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed": "#001453",
+                      "text-muted": "#8B8B90",
+                      "outline": "#747688",
+                      "surface-container": "#ededfa",
+                      "secondary-container": "#9a83ff",
+                      "surface-tint": "#004af0",
+                      "on-surface-variant": "#434656",
+                      "danger": "#C4293A",
+                      "on-tertiary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f3f2ff",
+                      "inverse-on-surface": "#f0effd"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "margin": "32px",
+                      "max-width": "1200px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "body": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "h2": [
+                              "Inter"
+                      ],
+                      "overline": [
+                              "Inter"
+                      ],
+                      "mono-data": [
+                              "JetBrains Mono"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "h1": [
+                              "Inter"
+                      ],
+                      "h3": [
+                              "Inter"
+                      ],
+                      "display": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h2": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.25",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "overline": [
+                              "11px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "letterSpacing": "0.04em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "mono-data": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "h1": [
+                              "36px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "h3": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.35",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0f111a; /* Darker than inverse-surface for contrast */
+            color: #fbf8ff; /* surface-bright */
+        }
+        
+        .dark .bg-inverse-surface {
+            background-color: #191b25; /* mapped to dark:bg-on-surface in JSON, using hex for consistency if needed, but tailwind classes are better */
+        }
+    </style>
+</head>
+<body class="font-body text-body bg-on-surface text-surface-bright flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<nav class="h-full w-64 fixed left-0 top-0 bg-inverse-surface dark:bg-on-surface flex flex-col h-screen p-4 border-r border-[#2e303a] z-50">
+<div class="mb-8 px-3">
+<h1 class="font-display text-h3 font-bold text-surface-container-lowest">Core Admin</h1>
+<p class="font-caption text-caption text-primary-fixed-dim mt-1">Super User</p>
+</div>
+<div class="flex-1 overflow-y-auto space-y-2">
+<!-- Dashboard -->
+<a class="flex items-center gap-3 text-surface-variant p-3 hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-surface-variant group-hover:text-surface-bright transition-colors duration-200">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Tenants (Active) -->
+<a class="flex items-center gap-3 bg-primary-container text-on-primary-container rounded-lg p-3 transition-colors duration-200 group" href="#">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">domain</span>
+<span class="font-medium">Tenants</span>
+</a>
+<!-- Security -->
+<a class="flex items-center gap-3 text-surface-variant p-3 hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-surface-variant group-hover:text-surface-bright transition-colors duration-200">security</span>
+<span>Security</span>
+</a>
+<!-- Analytics -->
+<a class="flex items-center gap-3 text-surface-variant p-3 hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-surface-variant group-hover:text-surface-bright transition-colors duration-200">monitoring</span>
+<span>Analytics</span>
+</a>
+<!-- Integrations -->
+<a class="flex items-center gap-3 text-surface-variant p-3 hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-surface-variant group-hover:text-surface-bright transition-colors duration-200">hub</span>
+<span>Integrations</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center gap-3 text-surface-variant p-3 hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200 rounded-lg group mt-auto" href="#">
+<span class="material-symbols-outlined text-surface-variant group-hover:text-surface-bright transition-colors duration-200">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="ml-64 flex-1 flex flex-col h-full bg-[#0f111a] overflow-hidden">
+<!-- Top Bar -->
+<header class="h-16 border-b border-[#2e303a] flex items-center justify-between px-gutter shrink-0">
+<div class="flex items-center">
+<h2 class="font-h2 text-h2 text-surface-container-lowest">Tenant Directory</h2>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-inverse-surface border border-[#434656] text-surface-bright rounded-lg pl-10 pr-4 py-2 focus:border-primary-fixed-dim focus:ring-1 focus:ring-primary-fixed-dim font-body text-body placeholder:text-outline transition-all" placeholder="Search tenants..." type="text"/>
+</div>
+<button class="bg-primary-container text-surface-container-lowest font-body-lg text-body-lg font-medium h-[40px] px-6 rounded hover:bg-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                    Provision New Tenant
+                </button>
+</div>
+</header>
+<!-- Table Container -->
+<div class="flex-1 p-gutter overflow-auto">
+<div class="bg-inverse-surface rounded-xl border border-[#2e303a] overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-[#2e303a] bg-[#1d1f2b]">
+<th class="py-4 px-6 font-overline text-overline text-outline uppercase tracking-wider">Tenant Name</th>
+<th class="py-4 px-6 font-overline text-overline text-outline uppercase tracking-wider">Plan Tier</th>
+<th class="py-4 px-6 font-overline text-overline text-outline uppercase tracking-wider">Isolation Mode</th>
+<th class="py-4 px-6 font-overline text-overline text-outline uppercase tracking-wider">Status</th>
+<th class="py-4 px-6 font-overline text-overline text-outline uppercase tracking-wider text-right">MRR</th>
+<th class="py-4 px-6 font-overline text-overline text-outline uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#2e303a]">
+<!-- Row 1 -->
+<tr class="hover:bg-[#1d1f2b] transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden flex items-center justify-center border border-[#434656]">
+<img class="w-full h-full object-cover" data-alt="A sleek, modern geometric logo representing a forward-thinking insurance company. The logo uses a minimalist, flat design with a dark navy blue and vibrant electric blue color palette. The background is a stark, clean white to ensure high contrast. The mood is corporate, trustworthy, and technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXAOkhrbOX7DRP0yJrVxjlndovnFNjmJP2WXUQR13asUzotGA5TJxVtNhvf2BXukN5JJdJ2YrtjWd8s-Bso3Jop3sXolboD3usW0QjV-rtuqeDPAC8Z9L6WyDsWanrenQ9bGH2F2Ov7Zdsf_JE2NvIP8Q9HeS1IWZhoQgTsoLsEw2BrER2gqrH_sbVOeX1B40FXkIEzl3zxjXBCVFjaCuxwmC4vLtTWn2GF_wK-s5TIlThhNQxSpK3YQ"/>
+</div>
+<span class="font-body-lg text-body-lg font-medium text-surface-bright">Acme Insurance Group</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-caption text-caption font-medium bg-[#1a56ff]/20 text-primary-fixed-dim border border-[#1a56ff]/30">Enterprise</span>
+</td>
+<td class="py-4 px-6 text-surface-variant font-body text-body">Dedicated Schema</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-caption text-caption font-medium bg-[#12805C]/20 text-[#4ade80] border border-[#12805C]/30">
+<span class="w-1.5 h-1.5 rounded-full bg-[#4ade80]"></span>
+                                    Active
+                                </span>
+</td>
+<td class="py-4 px-6 text-right font-mono-data text-mono-data text-surface-bright">$12,500</td>
+<td class="py-4 px-6 text-right">
+<button class="text-outline hover:text-surface-bright transition-colors p-1 rounded hover:bg-[#2e303a]">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-[#1d1f2b] transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden flex items-center justify-center border border-[#434656]">
+<img class="w-full h-full object-cover" data-alt="A bold, stylized letter 'N' logo design for a tech-focused insurance startup. The design features a gradient from deep purple to bright magenta, set against a dark, moody background. The style is sharp, dynamic, and distinctly modern, conveying agility and innovation in the insuretech space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWfFqKgY-kMM705cN7M5NLgBg1yvxns8i55x42CaiD1ZvojDe9DuAJ-Od2eJUOQ2bVc-7WQOiHZowrPNUs33WoTMJr9qcG5lxUmthXn9nhBKWm-tUNGVVj38MX4gykgPZeH4FPuzygmLRLSyP6w4OHRLqEiDyRR9YVmRf3kdJG1wq1oIllvip2PWOsyIdJCvcqtXxmmmas9b6Ux7J8H_ce1ifkYSbvTKczmmwfgxeGdr6vD32Dyp9RoA"/>
+</div>
+<span class="font-body-lg text-body-lg font-medium text-surface-bright">Nexus Underwriting</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-caption text-caption font-medium bg-surface-variant/20 text-surface-variant border border-surface-variant/30">Professional</span>
+</td>
+<td class="py-4 px-6 text-surface-variant font-body text-body">Shared</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-caption text-caption font-medium bg-[#B5750A]/20 text-[#fbbf24] border border-[#B5750A]/30">
+<span class="w-1.5 h-1.5 rounded-full bg-[#fbbf24] animate-pulse"></span>
+                                    Provisioning
+                                </span>
+</td>
+<td class="py-4 px-6 text-right font-mono-data text-mono-data text-surface-bright">$2,400</td>
+<td class="py-4 px-6 text-right">
+<button class="text-outline hover:text-surface-bright transition-colors p-1 rounded hover:bg-[#2e303a]">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-[#1d1f2b] transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden flex items-center justify-center border border-[#434656]">
+<div class="w-full h-full bg-[#2e303a] flex items-center justify-center font-display text-h3 text-outline">G</div>
+</div>
+<span class="font-body-lg text-body-lg font-medium text-surface-bright">Global Risk Partners</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-caption text-caption font-medium bg-[#1a56ff]/20 text-primary-fixed-dim border border-[#1a56ff]/30">Enterprise</span>
+</td>
+<td class="py-4 px-6 text-surface-variant font-body text-body">Dedicated DB</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-caption text-caption font-medium bg-[#ba1a1a]/20 text-[#f87171] border border-[#ba1a1a]/30">
+<span class="w-1.5 h-1.5 rounded-full bg-[#f87171]"></span>
+                                    Suspended
+                                </span>
+</td>
+<td class="py-4 px-6 text-right font-mono-data text-mono-data text-surface-bright">$0</td>
+<td class="py-4 px-6 text-right">
+<button class="text-outline hover:text-surface-bright transition-colors p-1 rounded hover:bg-[#2e303a]">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-[#1d1f2b] transition-colors group">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden flex items-center justify-center border border-[#434656]">
+<div class="w-full h-full bg-[#2e303a] flex items-center justify-center font-display text-h3 text-outline">S</div>
+</div>
+<span class="font-body-lg text-body-lg font-medium text-surface-bright">Swift Claims Inc.</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-caption text-caption font-medium bg-[#e6deff]/10 text-secondary-fixed-dim border border-[#e6deff]/20">Starter</span>
+</td>
+<td class="py-4 px-6 text-surface-variant font-body text-body">Shared</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-caption text-caption font-medium bg-[#12805C]/20 text-[#4ade80] border border-[#12805C]/30">
+<span class="w-1.5 h-1.5 rounded-full bg-[#4ade80]"></span>
+                                    Active
+                                </span>
+</td>
+<td class="py-4 px-6 text-right font-mono-data text-mono-data text-surface-bright">$499</td>
+<td class="py-4 px-6 text-right">
+<button class="text-outline hover:text-surface-bright transition-colors p-1 rounded hover:bg-[#2e303a]">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-[#2e303a] flex items-center justify-between bg-[#191b25]">
+<span class="font-caption text-caption text-outline">Showing 1 to 4 of 42 entries</span>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-[#434656] text-outline hover:text-surface-bright hover:border-surface-bright transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary-container text-surface-container-lowest font-caption text-caption">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-[#434656] text-outline hover:text-surface-bright hover:border-surface-bright transition-colors font-caption text-caption">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-[#434656] text-outline hover:text-surface-bright hover:border-surface-bright transition-colors font-caption text-caption">3</button>
+<span class="text-outline">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-[#434656] text-outline hover:text-surface-bright hover:border-surface-bright transition-colors font-caption text-caption">11</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-[#434656] text-outline hover:text-surface-bright hover:border-surface-bright transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

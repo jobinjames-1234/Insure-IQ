@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tenant Provisioning Wizard - Core Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#191b25",
+                        "surface-container": "#ededfa",
+                        "secondary-container": "#9a83ff",
+                        "on-secondary-fixed": "#1d0061",
+                        "surface-container-highest": "#e1e1ef",
+                        "surface-variant": "#e1e1ef",
+                        "on-secondary-fixed-variant": "#4a2ea9",
+                        "on-primary-fixed-variant": "#0037b9",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb59f",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#972900",
+                        "on-error": "#ffffff",
+                        "text-secondary": "#5B5B60",
+                        "bg-subtle": "#FAFAFA",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "danger": "#C4293A",
+                        "text-muted": "#8B8B90",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "inverse-primary": "#b8c4ff",
+                        "secondary": "#6249c2",
+                        "warning-bg": "#FDF3E0",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#191b25",
+                        "on-tertiary-fixed-variant": "#862300",
+                        "danger-bg": "#FBEAEC",
+                        "bg-muted": "#F4F4F5",
+                        "surface-dim": "#d9d9e6",
+                        "on-secondary-container": "#300491",
+                        "on-primary-container": "#e6e8ff",
+                        "success": "#12805C",
+                        "surface-container-high": "#e7e7f5",
+                        "tertiary-container": "#c13700",
+                        "primary": "#003fd1",
+                        "surface": "#fbf8ff",
+                        "inverse-on-surface": "#f0effd",
+                        "success-bg": "#E7F6EF",
+                        "outline-variant": "#c3c5d9",
+                        "on-tertiary-fixed": "#3a0a00",
+                        "surface-tint": "#004af0",
+                        "primary-fixed": "#dde1ff",
+                        "secondary-fixed-dim": "#cbbeff",
+                        "on-primary-fixed": "#001453",
+                        "primary-container": "#1a56ff",
+                        "background": "#fbf8ff",
+                        "on-surface-variant": "#434656",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#fbf8ff",
+                        "surface-container-low": "#f3f2ff",
+                        "border-strong": "#D4D4D8",
+                        "inverse-surface": "#2e303a",
+                        "tertiary-fixed": "#ffdbd1",
+                        "warning": "#B5750A",
+                        "on-tertiary-container": "#ffe4dc",
+                        "error": "#ba1a1a",
+                        "outline": "#747688",
+                        "secondary-fixed": "#e6deff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "base": "4px",
+                        "max-width": "1200px",
+                        "margin": "32px"
+                    },
+                    "fontFamily": {
+                        "caption": ["Inter", "sans-serif"],
+                        "h3": ["Inter", "sans-serif"],
+                        "mono-data": ["JetBrains Mono", "monospace"],
+                        "overline": ["Inter", "sans-serif"],
+                        "display": ["Inter", "sans-serif"],
+                        "h2": ["Inter", "sans-serif"],
+                        "h1": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "h3": ["18px", { "lineHeight": "1.35", "fontWeight": "600" }],
+                        "mono-data": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "overline": ["11px", { "lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "h2": ["24px", { "lineHeight": "1.25", "fontWeight": "600" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #fbf8ff; /* Light mode surface */
+            color: #191b25; /* Light mode on-surface */
+        }
+        
+        /* Dark mode overrides for technical console feel */
+        html.dark body {
+            background-color: #1a1a24; /* Custom very dark blue/grey for super-admin */
+            color: #e1e1ef;
+        }
+        
+        .dark .bg-surface-elevated {
+            background-color: #242533;
+        }
+        
+        .dark .border-subtle {
+            border-color: #3b3c4a;
+        }
+        
+        .dark .text-muted-dark {
+            color: #8B8B90;
+        }
+        
+        .step-line {
+            transition: width 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="font-body text-body antialiased min-h-screen flex">
+<!-- JSON Component: SideNavBar -->
+<nav class="h-full w-64 fixed left-0 top-0 bg-inverse-surface dark:bg-on-surface border-r border-subtle z-50 flex flex-col h-screen p-4">
+<div class="mb-8 px-3">
+<h1 class="font-display text-h3 font-bold text-surface-container-lowest">Core Admin</h1>
+<p class="font-caption text-caption text-text-secondary mt-1">Super User</p>
+</div>
+<ul class="space-y-2 flex-grow">
+<li>
+<a class="flex items-center gap-3 text-surface-variant p-3 hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<!-- Active State (Tenants) -->
+<a class="flex items-center gap-3 bg-primary-container text-on-primary-container rounded-lg p-3 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="domain" data-weight="fill" style="font-variation-settings: 'FILL' 1;">domain</span>
+<span>Tenants</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant p-3 hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span>Security</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant p-3 hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span>Analytics</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant p-3 hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span>Integrations</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant p-3 hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto pt-4 border-t border-subtle">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold font-caption text-caption">
+                    SA
+                </div>
+<div>
+<p class="font-body text-body text-surface-container-lowest">System Admin</p>
+<p class="font-caption text-caption text-text-secondary">root@core.io</p>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 flex flex-col min-h-screen">
+<!-- Top Toolbar Area (Suppressed TopNav, using minimal context bar) -->
+<header class="h-16 px-gutter flex items-center justify-between border-b border-subtle bg-surface-elevated/50 backdrop-blur-md sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<a class="text-muted-dark hover:text-primary-fixed-dim transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+<span class="font-caption text-caption">Back to Tenants</span>
+</a>
+<div class="h-4 w-[1px] bg-subtle"></div>
+<h2 class="font-h3 text-h3 text-surface-container-lowest">Provision New Tenant</h2>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-mono-data text-mono-data text-muted-dark bg-inverse-surface px-2 py-1 rounded border border-subtle">Session: Active (04:12)</span>
+</div>
+</header>
+<!-- Wizard Canvas -->
+<div class="flex-1 p-gutter lg:p-margin max-w-5xl mx-auto w-full">
+<!-- Stepper -->
+<div class="mb-12 relative">
+<div class="absolute top-1/2 left-0 w-full h-0.5 bg-subtle -z-10 -translate-y-1/2 rounded-full"></div>
+<div class="absolute top-1/2 left-0 w-1/3 h-0.5 bg-primary-container -z-10 -translate-y-1/2 rounded-full step-line"></div>
+<div class="flex justify-between items-center w-full">
+<!-- Step 1 (Completed/Active visual mix for demo) -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center border-2 border-surface-elevated ring-4 ring-bg-surface-elevated font-body text-body font-bold">
+                            1
+                        </div>
+<span class="font-caption text-caption text-surface-container-lowest">Details</span>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-elevated text-muted-dark border-2 border-subtle flex items-center justify-center font-body text-body">
+                            2
+                        </div>
+<span class="font-caption text-caption text-muted-dark">Plan &amp; Isolation</span>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-elevated text-muted-dark border-2 border-subtle flex items-center justify-center font-body text-body">
+                            3
+                        </div>
+<span class="font-caption text-caption text-muted-dark">Initial Admin</span>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-elevated text-muted-dark border-2 border-subtle flex items-center justify-center font-body text-body">
+                            4
+                        </div>
+<span class="font-caption text-caption text-muted-dark">Review</span>
+</div>
+</div>
+</div>
+<!-- Wizard Content Card (Glass/Modern Technical) -->
+<div class="bg-surface-elevated border border-subtle rounded-xl shadow-lg p-margin relative overflow-hidden">
+<!-- Subtle grid background accent -->
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9IiMzYjNjNGEiIGZpbGwtb3BhY2l0eT0iMC41Ii8+PC9zdmc+')] opacity-20 pointer-events-none"></div>
+<div class="relative z-10">
+<div class="mb-8">
+<h3 class="font-h2 text-h2 text-surface-container-lowest mb-2">Tenant Details</h3>
+<p class="font-body text-body text-muted-dark">Define the core identity and routing parameters for the new insurer workspace.</p>
+</div>
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Field: Legal Entity Name -->
+<div class="space-y-2">
+<label class="font-overline text-overline text-surface-container-highest uppercase tracking-wider block" for="entityName">Legal Entity Name</label>
+<input class="w-full h-11 bg-inverse-surface border border-subtle rounded-DEFAULT px-4 font-body text-body text-surface-container-lowest placeholder:text-muted-dark focus:outline-none focus:border-primary-container focus:ring-4 focus:ring-primary-container/20 transition-all" id="entityName" placeholder="e.g. Acme Insurance Corp" type="text"/>
+</div>
+<!-- Field: Tenant Display Name -->
+<div class="space-y-2">
+<label class="font-overline text-overline text-surface-container-highest uppercase tracking-wider block" for="displayName">Workspace Display Name</label>
+<input class="w-full h-11 bg-inverse-surface border border-subtle rounded-DEFAULT px-4 font-body text-body text-surface-container-lowest placeholder:text-muted-dark focus:outline-none focus:border-primary-container focus:ring-4 focus:ring-primary-container/20 transition-all" id="displayName" placeholder="e.g. Acme" type="text"/>
+</div>
+</div>
+<!-- Routing Section (Bento-style layout for technical inputs) -->
+<div class="bg-inverse-surface/50 border border-subtle rounded-lg p-6 mt-8">
+<h4 class="font-h3 text-h3 text-surface-container-lowest mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-fixed-dim">route</span>
+                                Routing Configuration
+                            </h4>
+<div class="space-y-6">
+<!-- Subdomain Input Group -->
+<div class="space-y-2">
+<label class="font-overline text-overline text-surface-container-highest uppercase tracking-wider block" for="subdomain">Subdomain Prefix</label>
+<div class="flex items-center">
+<input class="flex-1 h-11 bg-inverse-surface border border-r-0 border-subtle rounded-l-DEFAULT px-4 font-mono-data text-mono-data text-surface-container-lowest placeholder:text-muted-dark focus:outline-none focus:border-primary-container focus:ring-4 focus:ring-primary-container/20 transition-all" id="subdomain" placeholder="acme" type="text"/>
+<div class="h-11 px-4 bg-[#2e303a] border border-subtle rounded-r-DEFAULT flex items-center font-mono-data text-mono-data text-muted-dark">
+                                            .core-admin.io
+                                        </div>
+</div>
+<p class="font-caption text-caption text-muted-dark mt-1">This cannot be easily changed after provisioning.</p>
+</div>
+<!-- Environment Selection -->
+<div class="space-y-2">
+<label class="font-overline text-overline text-surface-container-highest uppercase tracking-wider block">Target Environment Cluster</label>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<label class="relative flex cursor-pointer rounded-lg border bg-inverse-surface p-4 border-subtle hover:border-primary-fixed-dim transition-colors">
+<input checked="" class="peer sr-only" name="cluster" type="radio" value="us-east"/>
+<div class="peer-checked:border-primary-container peer-checked:bg-primary-container/10 absolute inset-0 rounded-lg border-2 border-transparent transition-all"></div>
+<div class="relative z-10 flex flex-col w-full">
+<div class="flex items-center justify-between mb-2">
+<span class="font-body text-body font-semibold text-surface-container-lowest">US East (N. Virginia)</span>
+<span class="material-symbols-outlined text-primary-fixed-dim peer-checked:opacity-100 opacity-0 transition-opacity text-sm">check_circle</span>
+</div>
+<div class="font-mono-data text-caption text-muted-dark flex justify-between">
+<span>us-east-1</span>
+<span class="text-success flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-success"></span> 99.99%</span>
+</div>
+</div>
+</label>
+<label class="relative flex cursor-pointer rounded-lg border bg-inverse-surface p-4 border-subtle hover:border-primary-fixed-dim transition-colors">
+<input class="peer sr-only" name="cluster" type="radio" value="eu-west"/>
+<div class="peer-checked:border-primary-container peer-checked:bg-primary-container/10 absolute inset-0 rounded-lg border-2 border-transparent transition-all"></div>
+<div class="relative z-10 flex flex-col w-full">
+<div class="flex items-center justify-between mb-2">
+<span class="font-body text-body font-semibold text-surface-container-lowest">EU West (Ireland)</span>
+<span class="material-symbols-outlined text-primary-fixed-dim peer-checked:opacity-100 opacity-0 transition-opacity text-sm">check_circle</span>
+</div>
+<div class="font-mono-data text-caption text-muted-dark flex justify-between">
+<span>eu-west-1</span>
+<span class="text-success flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-success"></span> 99.99%</span>
+</div>
+</div>
+</label>
+<label class="relative flex cursor-pointer rounded-lg border bg-inverse-surface p-4 border-subtle opacity-50 cursor-not-allowed">
+<input class="peer sr-only" disabled="" name="cluster" type="radio" value="ap-south"/>
+<div class="relative z-10 flex flex-col w-full">
+<div class="flex items-center justify-between mb-2">
+<span class="font-body text-body font-semibold text-surface-container-lowest">AP South (Mumbai)</span>
+<span class="bg-surface-elevated text-[10px] px-1.5 py-0.5 rounded border border-subtle">Maintenance</span>
+</div>
+<div class="font-mono-data text-caption text-muted-dark">
+<span>ap-south-1</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+</div>
+</div>
+</form>
+</div>
+<!-- Action Footer -->
+<div class="mt-12 pt-6 border-t border-subtle flex justify-between items-center">
+<button class="h-10 px-6 font-body text-body font-medium text-surface-container-lowest bg-transparent border border-subtle rounded hover:bg-inverse-surface transition-colors" type="button">
+                        Cancel
+                    </button>
+<button class="h-10 px-6 font-body text-body font-medium text-on-primary bg-primary-container rounded hover:bg-primary transition-colors flex items-center gap-2" type="button">
+                        Next: Plan &amp; Isolation
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

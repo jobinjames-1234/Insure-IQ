@@ -1,0 +1,424 @@
+[
+  {
+    "type": "html",
+    "title": "Get a Quote - Auto Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Get_a_Quote_-_Auto_Insurance_d710c45f.html",
+    "screen_id": "d710c45f10a34d709809c1869f2f786b"
+  },
+  {
+    "type": "markdown",
+    "title": "InsureIQ UX Gap Analysis & Checklist",
+    "file": "docs/InsureIQ_UX_Gap_Analysis_Checklist.md",
+    "screen_id": "cef7f41a64424d7db3935ac067ca38e6"
+  },
+  {
+    "type": "html",
+    "title": "Retention Alerts - Agent View",
+    "device": "DESKTOP",
+    "file": "screens/Retention_Alerts_-_Agent_View_6ebda469.html",
+    "screen_id": "6ebda4691b1941de9d3a9be04caa4e58"
+  },
+  {
+    "type": "html",
+    "title": "Plan Details (Mobile)",
+    "device": "MOBILE",
+    "file": "screens/Plan_Details_Mobile_f82c2c3b.html",
+    "screen_id": "f82c2c3bf64a486ea566b98407fafbbb"
+  },
+  {
+    "type": "html",
+    "title": "Tenant Directory - Platform Console (Aligned)",
+    "device": "DESKTOP",
+    "file": "screens/Tenant_Directory_-_Platform_Console_Aligned_5dc1f48c.html",
+    "screen_id": "5dc1f48cd674481681cce11994b324d0"
+  },
+  {
+    "type": "markdown",
+    "title": "07_InsureIQ_UI_MarketplaceCustomer.md",
+    "file": "docs/07_InsureIQ_UI_MarketplaceCustomer.md",
+    "screen_id": "5359364689774679772"
+  },
+  {
+    "type": "html",
+    "title": "SLA Tracker - Adjuster View",
+    "device": "DESKTOP",
+    "file": "screens/SLA_Tracker_-_Adjuster_View_5dcbad41.html",
+    "screen_id": "5dcbad4166b54827beb83c096b4baa20"
+  },
+  {
+    "type": "html",
+    "title": "Provision New Tenant - Platform Console (Aligned)",
+    "device": "DESKTOP",
+    "file": "screens/Provision_New_Tenant_-_Platform_Console_Aligned_6ad4916d.html",
+    "screen_id": "6ad4916dd4154ca2a167fb10e858c01e"
+  },
+  {
+    "type": "html",
+    "title": "Marketplace - Compare Quotes",
+    "device": "DESKTOP",
+    "file": "screens/Marketplace_-_Compare_Quotes_951cd8f1.html",
+    "screen_id": "951cd8f16f164fdfa244003ea08ffc02"
+  },
+  {
+    "type": "html",
+    "title": "Underwriter Dashboard - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Underwriter_Dashboard_-_ABC_Insurance_54c44c2d.html",
+    "screen_id": "54c44c2d3b9f4a11816162affd1034ec"
+  },
+  {
+    "type": "html",
+    "title": "Tenant Directory - Platform Console",
+    "device": "DESKTOP",
+    "file": "screens/Tenant_Directory_-_Platform_Console_4581de29.html",
+    "screen_id": "4581de29efa64e1989aa4a9aa43861ba"
+  },
+  {
+    "type": "html",
+    "title": "Super-Admin Platform Console",
+    "device": "DESKTOP",
+    "file": "screens/Super-Admin_Platform_Console_5602239e.html",
+    "screen_id": "5602239ecf7b41ebb12a6d207ca99517"
+  },
+  {
+    "type": "markdown",
+    "title": "project_ui.md",
+    "file": "docs/project_ui.md",
+    "screen_id": "5359364689774678526"
+  },
+  {
+    "type": "markdown",
+    "title": "05_InsureIQ_UI_TenantAdministrator.md",
+    "file": "docs/05_InsureIQ_UI_TenantAdministrator.md",
+    "screen_id": "5359364689774679416"
+  },
+  {
+    "type": "html",
+    "title": "InsureIQ Marketplace - Home",
+    "device": "DESKTOP",
+    "file": "screens/InsureIQ_Marketplace_-_Home_8a910c07.html",
+    "screen_id": "8a910c07d78343f5ae86fa4e718b4cfc"
+  },
+  {
+    "type": "html",
+    "title": "Policy Configuration - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Policy_Configuration_-_ABC_Insurance_986b1077.html",
+    "screen_id": "986b107785d1478685dda9d94520282d"
+  },
+  {
+    "type": "markdown",
+    "title": "Google_Stitch_Optimized_Prompt.md",
+    "file": "docs/Google_Stitch_Optimized_Prompt.md",
+    "screen_id": "15160099926303739962"
+  },
+  {
+    "type": "html",
+    "title": "Tenant Administrator - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Tenant_Administrator_-_ABC_Insurance_88ade514.html",
+    "screen_id": "88ade5145cf346c098c6cfc653183f7f"
+  },
+  {
+    "type": "html",
+    "title": "Agent Profile & Settings",
+    "device": "DESKTOP",
+    "file": "screens/Agent_Profile_Settings_7978f177.html",
+    "screen_id": "7978f1775a8f4b26a5d7cb68cffbda55"
+  },
+  {
+    "type": "markdown",
+    "title": "01_InsureIQ_UI_EndCustomer.md",
+    "file": "docs/01_InsureIQ_UI_EndCustomer.md",
+    "screen_id": "5359364689774678704"
+  },
+  {
+    "type": "html",
+    "title": "Policy Detail - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Policy_Detail_-_ABC_Insurance_47f23067.html",
+    "screen_id": "47f23067fa504cc5b5803e9f5be6e893"
+  },
+  {
+    "type": "html",
+    "title": "File a Claim (Mobile)",
+    "device": "MOBILE",
+    "file": "screens/File_a_Claim_Mobile_53d3203b.html",
+    "screen_id": "53d3203b741c4629ad513e73bc41340e"
+  },
+  {
+    "type": "html",
+    "title": "Home - ABC Insurance (Mobile)",
+    "device": "MOBILE",
+    "file": "screens/Home_-_ABC_Insurance_Mobile_4a126183.html",
+    "screen_id": "4a12618304ab490498ea3b9f48ed9254"
+  },
+  {
+    "type": "html",
+    "title": "Commission Tracker - Agent View",
+    "device": "DESKTOP",
+    "file": "screens/Commission_Tracker_-_Agent_View_5fc8ba9d.html",
+    "screen_id": "5fc8ba9d13b043f88bda83bb2d608aff"
+  },
+  {
+    "type": "html",
+    "title": "Application Status - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Application_Status_-_ABC_Insurance_8352babc.html",
+    "screen_id": "8352babc49d84cba8dfa718d35aed336"
+  },
+  {
+    "type": "html",
+    "title": "Decision History - Underwriter View",
+    "device": "DESKTOP",
+    "file": "screens/Decision_History_-_Underwriter_View_01d16b84.html",
+    "screen_id": "01d16b84604c423b92a4984bd635ffb0"
+  },
+  {
+    "type": "html",
+    "title": "Customer Detail - Agent View",
+    "device": "DESKTOP",
+    "file": "screens/Customer_Detail_-_Agent_View_ed85f04c.html",
+    "screen_id": "ed85f04c9de74c568fe322c397b65958"
+  },
+  {
+    "type": "markdown",
+    "title": "InsureIQ_Software_Design.md",
+    "file": "docs/InsureIQ_Software_Design.md",
+    "screen_id": "5359364689774679950"
+  },
+  {
+    "type": "html",
+    "title": "Claims Dashboard - Adjuster View",
+    "device": "DESKTOP",
+    "file": "screens/Claims_Dashboard_-_Adjuster_View_cd8e643a.html",
+    "screen_id": "cd8e643ae13b4332bbf70528e7b5f5cd"
+  },
+  {
+    "type": "html",
+    "title": "Customer Detail (Mobile)",
+    "device": "MOBILE",
+    "file": "screens/Customer_Detail_Mobile_da832619.html",
+    "screen_id": "da832619a70b4459be081fbd94d91443"
+  },
+  {
+    "type": "html",
+    "title": "Application Detail - Underwriter View",
+    "device": "DESKTOP",
+    "file": "screens/Application_Detail_-_Underwriter_View_89a129f4.html",
+    "screen_id": "89a129f45ce543caae82b654537dd070"
+  },
+  {
+    "type": "html",
+    "title": "File a Claim - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/File_a_Claim_-_ABC_Insurance_adc01a06.html",
+    "screen_id": "adc01a0670be4920a61933e6144f3989"
+  },
+  {
+    "type": "html",
+    "title": "Marketplace Home (Mobile)",
+    "device": "MOBILE",
+    "file": "screens/Marketplace_Home_Mobile_dfbeed1f.html",
+    "screen_id": "dfbeed1fda974074ac8064108ebcfd0e"
+  },
+  {
+    "type": "html",
+    "title": "Model Performance - Underwriter View",
+    "device": "DESKTOP",
+    "file": "screens/Model_Performance_-_Underwriter_View_43ff4f5c.html",
+    "screen_id": "43ff4f5cdf324c6f9ec853bf32f2e8a2"
+  },
+  {
+    "type": "markdown",
+    "title": "InsureIQ_UI_Design.md",
+    "file": "docs/InsureIQ_UI_Design.md",
+    "screen_id": "5359364689774680128"
+  },
+  {
+    "type": "html",
+    "title": "Customer Portfolio - Agent View",
+    "device": "DESKTOP",
+    "file": "screens/Customer_Portfolio_-_Agent_View_ba4bcf2a.html",
+    "screen_id": "ba4bcf2a1ad748d99be53d3b73e796a6"
+  },
+  {
+    "type": "markdown",
+    "title": "04_InsureIQ_UI_ClaimsAdjuster.md",
+    "file": "docs/04_InsureIQ_UI_ClaimsAdjuster.md",
+    "screen_id": "5359364689774679238"
+  },
+  {
+    "type": "html",
+    "title": "Provision New Tenant - Platform Console",
+    "device": "DESKTOP",
+    "file": "screens/Provision_New_Tenant_-_Platform_Console_ca8da1a5.html",
+    "screen_id": "ca8da1a522c349a4899f8cab973f6f76"
+  },
+  {
+    "type": "html",
+    "title": "Agent Dashboard - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Agent_Dashboard_-_ABC_Insurance_9184920c.html",
+    "screen_id": "9184920c3a3e431c864203805e9a7966"
+  },
+  {
+    "type": "html",
+    "title": "Tenant Directory - Platform Console",
+    "device": "DESKTOP",
+    "file": "screens/Tenant_Directory_-_Platform_Console_3f5386e5.html",
+    "screen_id": "3f5386e587ea42ddb1bab325943f842c"
+  },
+  {
+    "type": "html",
+    "title": "Agent Dashboard (Mobile) - Restored",
+    "device": "MOBILE",
+    "file": "screens/Agent_Dashboard_Mobile_-_Restored_a20229dc.html",
+    "screen_id": "a20229dce90b4494a944c50cb1d5a079"
+  },
+  {
+    "type": "html",
+    "title": "Compare Quotes (Mobile)",
+    "device": "MOBILE",
+    "file": "screens/Compare_Quotes_Mobile_378daac5.html",
+    "screen_id": "378daac5941941ffa6b2721a1b076469"
+  },
+  {
+    "type": "markdown",
+    "title": "06_InsureIQ_UI_SuperAdmin.md",
+    "file": "docs/06_InsureIQ_UI_SuperAdmin.md",
+    "screen_id": "5359364689774679594"
+  },
+  {
+    "type": "html",
+    "title": "Browse & Apply - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Browse_Apply_-_ABC_Insurance_07372d6e.html",
+    "screen_id": "07372d6e9a464d3799e330022c86d89b"
+  },
+  {
+    "type": "markdown",
+    "title": "03_InsureIQ_UI_Underwriter.md",
+    "file": "docs/03_InsureIQ_UI_Underwriter.md",
+    "screen_id": "5359364689774679060"
+  },
+  {
+    "type": "html",
+    "title": "Billing & Invoices - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Billing_Invoices_-_ABC_Insurance_b7a67999.html",
+    "screen_id": "b7a6799940804181841d1a6606ab38a4"
+  },
+  {
+    "type": "markdown",
+    "title": "02_InsureIQ_UI_Agent.md",
+    "file": "docs/02_InsureIQ_UI_Agent.md",
+    "screen_id": "5359364689774678882"
+  },
+  {
+    "type": "html",
+    "title": "InsureIQ Marketplace - Home",
+    "device": "DESKTOP",
+    "file": "screens/InsureIQ_Marketplace_-_Home_8a8b9795.html",
+    "screen_id": "8a8b97950f3f4a3c9dea9def04bac566"
+  },
+  {
+    "type": "html",
+    "title": "Claim Tracker - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Claim_Tracker_-_ABC_Insurance_0cbac09d.html",
+    "screen_id": "0cbac09dd8b44069a853ad79863534d0"
+  },
+  {
+    "type": "html",
+    "title": "Team Management - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Team_Management_-_ABC_Insurance_84b91aa8.html",
+    "screen_id": "84b91aa89648407ea7248e0ae938262b"
+  },
+  {
+    "type": "html",
+    "title": "Apply for Policy - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Apply_for_Policy_-_ABC_Insurance_1fd93b24.html",
+    "screen_id": "1fd93b2454f14762a568e56b7fcad5a4"
+  },
+  {
+    "type": "html",
+    "title": "Provision New Tenant - Platform Console",
+    "device": "DESKTOP",
+    "file": "screens/Provision_New_Tenant_-_Platform_Console_ee726fc1.html",
+    "screen_id": "ee726fc10011431cb39b4112d5c52bb2"
+  },
+  {
+    "type": "html",
+    "title": "Claims Adjuster Workspace - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Claims_Adjuster_Workspace_-_ABC_Insurance_240ea6c6.html",
+    "screen_id": "240ea6c659034ba68f11b03dc804e533"
+  },
+  {
+    "type": "html",
+    "title": "Investigation View - Claims Adjuster",
+    "device": "DESKTOP",
+    "file": "screens/Investigation_View_-_Claims_Adjuster_bd403332.html",
+    "screen_id": "bd403332953345cfaa21d9608cddfab1"
+  },
+  {
+    "type": "html",
+    "title": "Sign up / KYC - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Sign_up_KYC_-_ABC_Insurance_1c2d5183.html",
+    "screen_id": "1c2d51836f404bda90d8eb968798f436"
+  },
+  {
+    "type": "html",
+    "title": "Agent Dashboard (Mobile)",
+    "device": "MOBILE",
+    "file": "screens/Agent_Dashboard_Mobile_7c45f538.html",
+    "screen_id": "7c45f538bd6b4b1dbf4b86f920811fdc"
+  },
+  {
+    "type": "html",
+    "title": "Provision New Tenant - Platform Console (Aligned)",
+    "device": "DESKTOP",
+    "file": "screens/Provision_New_Tenant_-_Platform_Console_Aligned_f5599f29.html",
+    "screen_id": "f5599f29cdeb4383a6b1ff0328c0f06d"
+  },
+  {
+    "type": "html",
+    "title": "Get a Quote - Auto Insurance",
+    "device": "DESKTOP",
+    "file": "screens/Get_a_Quote_-_Auto_Insurance_ce763cf5.html",
+    "screen_id": "ce763cf521c34b74835a68f6433a2dca"
+  },
+  {
+    "type": "html",
+    "title": "Customer Detail - Agent View (Restored)",
+    "device": "DESKTOP",
+    "file": "screens/Customer_Detail_-_Agent_View_Restored_5544ea43.html",
+    "screen_id": "5544ea43367d4ea986ccdbfb82e272af"
+  },
+  {
+    "type": "html",
+    "title": "Get a Quote (Mobile)",
+    "device": "MOBILE",
+    "file": "screens/Get_a_Quote_Mobile_6c08d8ad.html",
+    "screen_id": "6c08d8adeffb453e89b66ef762e06852"
+  },
+  {
+    "type": "html",
+    "title": "Tenant Directory - Platform Console (Aligned)",
+    "device": "DESKTOP",
+    "file": "screens/Tenant_Directory_-_Platform_Console_Aligned_c9bbfed7.html",
+    "screen_id": "c9bbfed7aa3f40f2abc07fd709ff5930"
+  },
+  {
+    "type": "html",
+    "title": "End-Customer Home - ABC Insurance",
+    "device": "DESKTOP",
+    "file": "screens/End-Customer_Home_-_ABC_Insurance_398f056c.html",
+    "screen_id": "398f056c95834dae80a789918ee240a6"
+  }
+]

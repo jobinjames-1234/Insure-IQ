@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InsureIQ | Comparison Results</title>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "text-secondary": "#5B5B60",
+                        "border-strong": "#D4D4D8",
+                        "tertiary": "#972900",
+                        "bg-muted": "#F4F4F5",
+                        "on-secondary-fixed": "#1d0061",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "surface-container-low": "#f3f2ff",
+                        "inverse-primary": "#b8c4ff",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#0037b9",
+                        "on-primary-fixed": "#001453",
+                        "warning": "#B5750A",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e7e7f5",
+                        "on-background": "#191b25",
+                        "on-tertiary-fixed": "#3a0a00",
+                        "surface-dim": "#d9d9e6",
+                        "warning-bg": "#FDF3E0",
+                        "on-tertiary-container": "#ffe4dc",
+                        "secondary-container": "#9a83ff",
+                        "secondary": "#6249c2",
+                        "on-error-container": "#93000a",
+                        "success-bg": "#E7F6EF",
+                        "background": "#fbf8ff",
+                        "surface-container": "#ededfa",
+                        "primary": "#003fd1",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c3c5d9",
+                        "tertiary-fixed": "#ffdbd1",
+                        "danger": "#C4293A",
+                        "success": "#12805C",
+                        "tertiary-fixed-dim": "#ffb59f",
+                        "outline": "#747688",
+                        "on-surface-variant": "#434656",
+                        "surface-container-highest": "#e1e1ef",
+                        "on-surface": "#191b25",
+                        "inverse-on-surface": "#f0effd",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#cbbeff",
+                        "primary-container": "#1a56ff",
+                        "danger-bg": "#FBEAEC",
+                        "primary-fixed": "#dde1ff",
+                        "on-secondary-container": "#300491",
+                        "bg-subtle": "#FAFAFA",
+                        "surface-bright": "#fbf8ff",
+                        "error-container": "#ffdad6",
+                        "surface": "#fbf8ff",
+                        "secondary-fixed": "#e6deff",
+                        "tertiary-container": "#c13700",
+                        "surface-tint": "#004af0",
+                        "text-muted": "#8B8B90",
+                        "on-secondary-fixed-variant": "#4a2ea9",
+                        "on-tertiary-fixed-variant": "#862300",
+                        "on-primary-container": "#e6e8ff",
+                        "inverse-surface": "#2e303a",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e1e1ef"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "base": "4px",
+                        "margin": "32px",
+                        "max-width": "1200px"
+                    },
+                    "fontFamily": {
+                        "body": ["Inter"],
+                        "mono-data": ["JetBrains Mono"],
+                        "display": ["Inter"],
+                        "h2": ["Inter"],
+                        "h1": ["Inter"],
+                        "h3": ["Inter"],
+                        "overline": ["Inter"],
+                        "caption": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "mono-data": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "display": ["48px", {"lineHeight": "1.1", "fontWeight": "600"}],
+                        "h2": ["24px", {"lineHeight": "1.25", "fontWeight": "600"}],
+                        "h1": ["36px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "h3": ["18px", {"lineHeight": "1.35", "fontWeight": "600"}],
+                        "overline": ["11px", {"lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .trust-badge-glow {
+            box-shadow: 0 0 12px rgba(18, 128, 92, 0.1);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(225, 225, 239, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar (Shared Component Identity) -->
+<header class="bg-surface sticky top-0 z-50 border-b border-outline-variant h-16 flex items-center">
+<div class="flex justify-between items-center px-gutter w-full h-10 max-w-max-width mx-auto">
+<div class="flex items-center gap-8">
+<span class="font-h2 text-h2 text-primary font-extrabold tracking-tight">InsureIQ</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body text-body" href="#">Home</a>
+<a class="text-primary border-b-2 border-primary pb-1 font-body text-body" href="#">Compare</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body text-body" href="#">My Insurance</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container text-sm" data-icon="person">person</span>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-max-width mx-auto px-gutter py-10">
+<!-- Search Criteria Summary -->
+<section class="mb-12">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-sm">
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-text-muted">
+<span class="material-symbols-outlined text-[18px]" data-icon="directions_car">directions_car</span>
+<span class="font-overline text-overline uppercase tracking-widest">Selected Vehicle</span>
+</div>
+<h1 class="font-h1 text-h1 text-on-surface">Auto Insurance for 2022 Honda City</h1>
+<p class="text-text-secondary font-body text-body">Comprehensive Cover • New Delhi • 10,000 km/year</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-5 py-2.5 rounded-lg border border-border-strong text-on-surface hover:bg-bg-muted transition-all font-body text-body flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+                        Modify Search
+                    </button>
+<div class="h-10 w-px bg-outline-variant hidden md:block"></div>
+<div class="flex flex-col items-end">
+<span class="text-text-muted font-caption text-caption">Sorted by</span>
+<span class="text-primary font-body text-body font-semibold">Best Match</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Content Area: Filter Sidebar + Quote Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Filters Sidebar (B2C friendly) -->
+<aside class="lg:col-span-3 space-y-6">
+<div class="space-y-4">
+<h3 class="font-h3 text-h3 text-on-surface">Quick Filters</h3>
+<div class="p-4 bg-white rounded-lg border border-outline-variant space-y-4">
+<div>
+<label class="font-caption text-caption text-text-muted block mb-2">Plan Type</label>
+<div class="space-y-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-outline text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
+<span class="font-body text-body text-on-surface-variant group-hover:text-primary">Comprehensive</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-outline text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
+<span class="font-body text-body text-on-surface-variant group-hover:text-primary">Third Party Only</span>
+</label>
+</div>
+</div>
+<hr class="border-outline-variant"/>
+<div>
+<label class="font-caption text-caption text-text-muted block mb-2">Insurers</label>
+<div class="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-outline text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
+<span class="font-body text-body text-on-surface-variant group-hover:text-primary">SafeGuard General</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-outline text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
+<span class="font-body text-body text-on-surface-variant group-hover:text-primary">BlueShield</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-outline text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
+<span class="font-body text-body text-on-surface-variant group-hover:text-primary">EverLife</span>
+</label>
+</div>
+</div>
+</div>
+<div class="p-5 bg-primary-fixed rounded-xl relative overflow-hidden">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-primary mb-2" data-icon="verified_user">verified_user</span>
+<p class="font-h3 text-h3 text-on-primary-fixed leading-tight mb-2">Need Expert Help?</p>
+<p class="font-caption text-caption text-on-primary-fixed-variant mb-4">Our advisors are available 24/7 to guide you.</p>
+<button class="w-full py-2 bg-primary text-white rounded-lg font-body text-body font-semibold hover:opacity-90 transition-opacity">Request Callback</button>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[100px]" data-icon="support_agent">support_agent</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Quotes Results Grid -->
+<div class="lg:col-span-9">
+<div class="flex items-center justify-between mb-6">
+<span class="font-body text-body text-text-secondary"><strong class="text-on-surface">12 Quotes</strong> found for your Honda City</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-success" data-icon="bolt">bolt</span>
+<span class="font-caption text-caption text-success font-bold">Instant Policy Issuance Available</span>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-6">
+<!-- QUOTE CARD 1: BEST MATCH -->
+<div class="group relative bg-white border-2 border-primary rounded-2xl overflow-hidden shadow-lg transition-transform hover:-translate-y-1">
+<!-- Best Match Ribbon -->
+<div class="absolute top-0 right-0 bg-primary text-white px-6 py-1 rounded-bl-xl font-overline text-overline z-10 flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+                            BEST MATCH
+                        </div>
+<div class="p-6 md:p-8 flex flex-col md:flex-row gap-8">
+<!-- Insurer Branding -->
+<div class="md:w-1/4 flex flex-col items-center justify-center space-y-4 border-r border-outline-variant pr-8">
+<div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center overflow-hidden">
+<img class="w-12 h-12 object-contain" data-alt="A clean, minimalist logo of a modern insurance company named SafeGuard. The logo uses a stylized shield icon in deep navy blue and emerald green against a crisp white background. The aesthetic is professional, reliable, and high-trust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFElfKC3WmQpEgua41IAwgwk9DNQs8Sp5SMzWtUM4TCc7vcHMEd16OrCQDxOOut95GIA8OL3n6EhhTAy32F0OJ38ykr_CgrGOw21iKrXXJhVY7Crez3HRvzjrx8RXXWZqkUsdB5PsZhnVfBzCDcvQyPlXR3tuGiyBS-i9SxcAruScZXpCe2xeuT9KC3xFW8Ptd1MTwCjIyUeH8FJMQOoUkc1KVfenL-_HIsce8dmc-9jyreZr9XQppKA"/>
+</div>
+<div class="text-center">
+<h4 class="font-h3 text-h3 text-on-surface">SafeGuard</h4>
+<span class="inline-block px-2 py-0.5 bg-bg-muted rounded text-[10px] font-bold text-text-muted border border-border-strong">SPONSORED</span>
+</div>
+</div>
+<!-- Plan Details & Trust Strip -->
+<div class="flex-grow space-y-6">
+<div class="flex flex-wrap items-center gap-4">
+<div class="flex items-center gap-1 bg-success-bg text-success px-2 py-1 rounded-full trust-badge-glow">
+<span class="material-symbols-outlined text-[16px]" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-caption text-caption font-bold">98.4% Settlement</span>
+</div>
+<div class="flex items-center gap-1 text-warning">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-body text-body font-bold">4.8</span>
+<span class="text-text-muted font-caption text-caption">(2.4k reviews)</span>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="home_repair_service">home_repair_service</span>
+<span class="font-body text-body text-on-surface-variant">Zero Dep Cover</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="local_gas_station">local_gas_station</span>
+<span class="font-body text-body text-on-surface-variant">Roadside Assist</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="medical_services">medical_services</span>
+<span class="font-body text-body text-on-surface-variant">PA Cover Incl.</span>
+</div>
+</div>
+<button class="text-primary font-body text-body font-semibold flex items-center gap-1 hover:underline">
+                                    View 14 more features
+                                    <span class="material-symbols-outlined text-[16px]" data-icon="expand_more">expand_more</span>
+</button>
+</div>
+<!-- Pricing & CTA -->
+<div class="md:w-1/4 flex flex-col items-center md:items-end justify-center space-y-4">
+<div class="text-center md:text-right">
+<span class="text-text-muted font-caption text-caption line-through">₹18,450</span>
+<div class="flex items-baseline gap-1">
+<span class="text-on-surface font-h2 text-h2 font-extrabold">₹15,299</span>
+<span class="text-text-muted font-caption text-caption">/year</span>
+</div>
+<p class="text-success font-caption text-caption font-bold">Save ₹3,151 today</p>
+</div>
+<button class="w-full py-4 bg-primary text-white rounded-xl font-h3 text-h3 shadow-md hover:bg-primary-container transition-all active:scale-[0.98]">
+                                    Buy Now
+                                </button>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded border-outline text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
+<span class="font-caption text-caption text-text-secondary">Compare</span>
+</label>
+</div>
+</div>
+</div>
+<!-- QUOTE CARD 2: VALUE CHOICE -->
+<div class="group bg-white border border-outline-variant rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+<div class="p-6 md:p-8 flex flex-col md:flex-row gap-8">
+<div class="md:w-1/4 flex flex-col items-center justify-center space-y-4 border-r border-outline-variant pr-8">
+<div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center overflow-hidden">
+<img class="w-12 h-12 object-contain" data-alt="A modern corporate logo for BlueShield insurance. The design features a bold, navy blue geometric shield composed of interconnected lines, symbolizing strength and connectivity. It is presented on a clean white background with a premium, corporate financial feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsqGk9ypvTQRivoS7c1em5I7lR6JtYmdiEp4ToC1Lq3zKuYVSOQXkvnZ8LpEuQGIJa76IFG57D9iDFL5WBbCcPJEyJYAKnRgThf2m36rJRzdKbZMTaSysinnkdv0naPAce7OEarsSF44Lmk-zEcdbFMgPUMeVBujTabveKiEz3dhdh9nXyM6VUbLan5YXbfbe_IWnPDHQrwvm7Ay52E2QqSYC3iyMMRj4kqRFJyKoomq_TVtmIV3bjjw"/>
+</div>
+<div class="text-center">
+<h4 class="font-h3 text-h3 text-on-surface">BlueShield</h4>
+</div>
+</div>
+<div class="flex-grow space-y-6">
+<div class="flex flex-wrap items-center gap-4">
+<div class="flex items-center gap-1 bg-success-bg text-success px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[16px]" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-caption text-caption font-bold">96.1% Settlement</span>
+</div>
+<div class="flex items-center gap-1 text-warning">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-body text-body font-bold">4.5</span>
+<span class="text-text-muted font-caption text-caption">(1.1k reviews)</span>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<div class="flex items-center gap-2 text-text-muted">
+<span class="material-symbols-outlined text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body text-body">Glass Cover</span>
+</div>
+<div class="flex items-center gap-2 text-text-muted">
+<span class="material-symbols-outlined text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body text-body">24/7 Support</span>
+</div>
+<div class="flex items-center gap-2 text-text-muted">
+<span class="text-error" data-icon="cancel">cancel</span>
+<span class="font-body text-body">No Zero-Dep</span>
+</div>
+</div>
+</div>
+<div class="md:w-1/4 flex flex-col items-center md:items-end justify-center space-y-4">
+<div class="text-center md:text-right">
+<div class="flex items-baseline gap-1">
+<span class="text-on-surface font-h2 text-h2 font-extrabold">₹12,450</span>
+<span class="text-text-muted font-caption text-caption">/year</span>
+</div>
+<p class="text-text-muted font-caption text-caption">Best Value Choice</p>
+</div>
+<button class="w-full py-4 border-2 border-primary text-primary rounded-xl font-h3 text-h3 hover:bg-primary hover:text-white transition-all active:scale-[0.98]">
+                                    Buy Now
+                                </button>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded border-outline text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
+<span class="font-caption text-caption text-text-secondary">Compare</span>
+</label>
+</div>
+</div>
+</div>
+<!-- QUOTE CARD 3 -->
+<div class="group bg-white border border-outline-variant rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all opacity-90 grayscale-[20%] hover:grayscale-0 hover:opacity-100">
+<div class="p-6 md:p-8 flex flex-col md:flex-row gap-8">
+<div class="md:w-1/4 flex flex-col items-center justify-center space-y-4 border-r border-outline-variant pr-8">
+<div class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center overflow-hidden">
+<img class="w-12 h-12 object-contain" data-alt="A contemporary logo for EverLife insurance. The design utilizes a stylized leaf and sun combination in warm shades of orange and soft gold. The look is friendly, inviting, and community-focused, presented in a minimal vector style on a soft white backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgNxIOHQupYPUUZ2DusWZfVfnvxhKi2AU06EAOZTzZ6U24HTP0ED1--H32qVrFf7Acs1nRExSc0Y_4folSgqttnz6d4_SocJ8et-3rdpBeVp6tkeDVdDmjt0-GqdxK4jqD5oVI6Et5W88Za3yx8P8QpioJtZ2gSrwhDKLj9sDPTwFGBP3cNXXZ_Zmxvda9VUbz_V_3mLFGxU5RhQCQZYtfYHBKVLIWWNyLU-_Rz5BMvVXdosjduIr46Q"/>
+</div>
+<div class="text-center">
+<h4 class="font-h3 text-h3 text-on-surface">EverLife</h4>
+</div>
+</div>
+<div class="flex-grow space-y-6">
+<div class="flex flex-wrap items-center gap-4">
+<div class="flex items-center gap-1 bg-success-bg text-success px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[16px]" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-caption text-caption font-bold">92.8% Settlement</span>
+</div>
+<div class="flex items-center gap-1 text-warning">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-body text-body font-bold">4.2</span>
+<span class="text-text-muted font-caption text-caption">(840 reviews)</span>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<div class="flex items-center gap-2 text-text-muted">
+<span class="material-symbols-outlined text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body text-body">Cashless Garages</span>
+</div>
+</div>
+</div>
+<div class="md:w-1/4 flex flex-col items-center md:items-end justify-center space-y-4">
+<div class="text-center md:text-right">
+<div class="flex items-baseline gap-1">
+<span class="text-on-surface font-h2 text-h2 font-extrabold">₹13,800</span>
+<span class="text-text-muted font-caption text-caption">/year</span>
+</div>
+</div>
+<button class="w-full py-4 border-2 border-primary text-primary rounded-xl font-h3 text-h3 hover:bg-primary hover:text-white transition-all active:scale-[0.98]">
+                                    Buy Now
+                                </button>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded border-outline text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
+<span class="font-caption text-caption text-text-secondary">Compare</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination/Load More -->
+<div class="mt-12 text-center">
+<button class="px-8 py-3 bg-white border border-border-strong text-on-surface rounded-full font-body text-body-lg font-semibold hover:bg-bg-muted transition-all shadow-sm">
+                        Load More Quotes
+                    </button>
+</div>
+</div>
+</div>
+<!-- Sticky Comparison Bar (Floating Interaction) -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 transition-all transform translate-y-32" id="compareBar">
+<div class="bg-inverse-surface text-inverse-on-surface p-4 rounded-2xl shadow-2xl flex items-center justify-between gap-6">
+<div class="flex items-center gap-4">
+<div class="flex -space-x-2">
+<div class="w-10 h-10 rounded-full border-2 border-inverse-surface bg-white flex items-center justify-center overflow-hidden">
+<img class="w-6 h-6 object-contain" data-alt="Small insurer logo icon for SafeGuard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBert1s1npJCC7nIKKpw3yPVc9uXNbbiejvX3fdQHvNfepEDcstjLaO_lDumACeuZETUvJmzdBf2vP9IDaToRurZl7jzwB7RWzdnPwSd1z5DFO1F2pQ9ji0t2TakJgG3-qoodPgK6-nL7qQVjXe8BSSHLBapZ_P6lfJ-x2EQgcmFOEHGWfkJ1Ook9UqZFJc82QhtFY2yw9gGefT3ikio0_DnaUzCqDS-uhl7iKGz5ksl1wg8dhfMy_iAQ"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-inverse-surface bg-white flex items-center justify-center overflow-hidden">
+<img class="w-6 h-6 object-contain" data-alt="Small insurer logo icon for BlueShield." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcY9P16WhF5SQ2VSIvGu9yeP48PMehURURiYG0qYNe7E11ur3aV8HO_HX9bCfMM3y0_fi5T2vTMqM7N6EiQLkD4YrA50pfsActN6R7AEPBBcrMMSI5i1FLV_HzSd36iJedrCSrOcRJ0fwFAGl7ncq1Mye5O_XVHN1OMzQFFJoh_OtG3wmv6Whfo3zFPGKEAuFjXBc1Iy0fl2dJKM9S-oL5c55FAiuuc0kHN6gB0v27kc2KgS7rAdeJAg"/>
+</div>
+</div>
+<span class="font-body text-body font-medium">2 plans selected to compare</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-inverse-on-surface font-body text-body hover:underline" onclick="toggleCompare(false)">Clear</button>
+<button class="px-6 py-2 bg-primary text-white rounded-lg font-body text-body font-bold hover:bg-primary-container transition-colors">Compare Now</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Trust Section -->
+<footer class="bg-surface-container border-t border-outline-variant py-12 mt-20">
+<div class="max-w-max-width mx-auto px-gutter grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="space-y-4">
+<span class="font-h2 text-h2 text-primary font-extrabold tracking-tight">InsureIQ</span>
+<p class="text-text-secondary font-body text-body">India's most trusted insurance marketplace. Serving over 10 million customers with transparent, reliable comparisons.</p>
+</div>
+<div class="space-y-4">
+<h5 class="font-h3 text-h3 text-on-surface">Insurance</h5>
+<ul class="space-y-2 text-on-surface-variant font-body text-body">
+<li><a class="hover:text-primary" href="#">Car Insurance</a></li>
+<li><a class="hover:text-primary" href="#">Health Insurance</a></li>
+<li><a class="hover:text-primary" href="#">Term Insurance</a></li>
+<li><a class="hover:text-primary" href="#">Two Wheeler Insurance</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h5 class="font-h3 text-h3 text-on-surface">Support</h5>
+<ul class="space-y-2 text-on-surface-variant font-body text-body">
+<li><a class="hover:text-primary" href="#">Claims Support</a></li>
+<li><a class="hover:text-primary" href="#">Contact Us</a></li>
+<li><a class="hover:text-primary" href="#">FAQs</a></li>
+<li><a class="hover:text-primary" href="#">Articles</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h5 class="font-h3 text-h3 text-on-surface">Accreditation</h5>
+<div class="flex gap-4 items-center">
+<div class="p-2 bg-white rounded border border-outline-variant w-16 h-10 flex items-center justify-center">
+<img class="h-6 object-contain" data-alt="A stylized IRDAI official regulatory logo in a small, clean rectangular frame. The design is official and minimalist, colored in deep maroon and gold to symbolize regulatory trust and authority for an insurance platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsZvyD3xgYKunJD7ip8Tf5mTVaKbCIhgXlZcKeuEwqD3UA01RpmSy1LCHNRMlVhGzl_80KWpMucixVbxMAOE6H-57vrWGgMPLAdRAm32TNznrtznsL4ufLQWoKNxhQQbvwtWnKnJprpME4tqjTMjkI-pU10E9eGB7msv_d-PIrr8uHDLBnZy7SorRE65cW1f7GvpGeiOAx9OB7j0rG8LdaIm32Ky5nJ0hJBB5aBJa3cSPLvb_ZsQFe5g"/>
+</div>
+<span class="font-caption text-caption text-text-muted">Licensed Insurance Broker<br/>IRDAI/DB/2023/123</span>
+</div>
+</div>
+</div>
+<div class="max-w-max-width mx-auto px-gutter pt-12 mt-12 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="text-text-muted font-caption text-caption">© 2024 InsureIQ Financial Services. All rights reserved.</p>
+<div class="flex gap-6 text-text-muted font-caption text-caption">
+<a class="hover:text-on-surface" href="#">Privacy Policy</a>
+<a class="hover:text-on-surface" href="#">Terms of Service</a>
+<a class="hover:text-on-surface" href="#">Cookie Policy</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple micro-interaction for the comparison bar
+        function toggleCompare(show) {
+            const bar = document.getElementById('compareBar');
+            if (show) {
+                bar.classList.remove('translate-y-32');
+                bar.classList.add('translate-y-0');
+            } else {
+                bar.classList.remove('translate-y-0');
+                bar.classList.add('translate-y-32');
+            }
+        }
+
+        // Logic to show bar when checkboxes are clicked
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        let selectedCount = 0;
+        
+        checkboxes.forEach(cb => {
+            if (cb.parentNode.textContent.includes('Compare')) {
+                cb.addEventListener('change', () => {
+                    if (cb.checked) selectedCount++;
+                    else selectedCount--;
+                    
+                    if (selectedCount >= 1) {
+                        toggleCompare(true);
+                    } else {
+                        toggleCompare(false);
+                    }
+                });
+            }
+        });
+    </script>
+</body></html>

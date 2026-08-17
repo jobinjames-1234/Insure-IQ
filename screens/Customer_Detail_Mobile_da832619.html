@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Detail - InsureIQ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#4a2ea9",
+                        "surface-variant": "#e1e1ef",
+                        "warning": "#B5750A",
+                        "on-primary-fixed": "#001453",
+                        "primary": "#003fd1",
+                        "text-secondary": "#5B5B60",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f3f2ff",
+                        "surface-bright": "#fbf8ff",
+                        "on-secondary-container": "#300491",
+                        "secondary-container": "#9a83ff",
+                        "background": "#fbf8ff",
+                        "on-surface-variant": "#434656",
+                        "danger-bg": "#FBEAEC",
+                        "inverse-on-surface": "#f0effd",
+                        "surface": "#fbf8ff",
+                        "on-tertiary-fixed-variant": "#862300",
+                        "inverse-surface": "#2e303a",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "warning-bg": "#FDF3E0",
+                        "tertiary-fixed": "#ffdbd1",
+                        "tertiary-container": "#c13700",
+                        "on-error": "#ffffff",
+                        "on-surface": "#191b25",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#191b25",
+                        "border-strong": "#D4D4D8",
+                        "secondary-fixed": "#e6deff",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#b8c4ff",
+                        "success": "#12805C",
+                        "outline-variant": "#c3c5d9",
+                        "surface-container": "#ededfa",
+                        "secondary-fixed-dim": "#cbbeff",
+                        "tertiary-fixed-dim": "#ffb59f",
+                        "on-tertiary-container": "#ffe4dc",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#972900",
+                        "bg-subtle": "#FAFAFA",
+                        "outline": "#747688",
+                        "danger": "#C4293A",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#d9d9e6",
+                        "primary-fixed": "#dde1ff",
+                        "on-tertiary-fixed": "#3a0a00",
+                        "on-primary-container": "#e6e8ff",
+                        "surface-tint": "#004af0",
+                        "on-secondary-fixed": "#1d0061",
+                        "surface-container-highest": "#e1e1ef",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#1a56ff",
+                        "surface-container-high": "#e7e7f5",
+                        "text-muted": "#8B8B90",
+                        "success-bg": "#E7F6EF",
+                        "bg-muted": "#F4F4F5",
+                        "on-primary-fixed-variant": "#0037b9",
+                        "secondary": "#6249c2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "max-width": "1200px",
+                        "gutter": "24px",
+                        "margin": "32px",
+                        "safe": "env(safe-area-inset-bottom)"
+                    },
+                    "fontFamily": {
+                        "h1": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Inter"],
+                        "overline": ["Inter"],
+                        "h2": ["Inter"],
+                        "mono-data": ["JetBrains Mono"],
+                        "caption": ["Inter"],
+                        "display": ["Inter"],
+                        "body": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h3": ["18px", { "lineHeight": "1.35", "fontWeight": "600" }],
+                        "overline": ["11px", { "lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600" }],
+                        "h2": ["24px", { "lineHeight": "1.25", "fontWeight": "600" }],
+                        "mono-data": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "body": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Hide scrollbar for clean look but allow scrolling */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased md:bg-surface-container-low min-h-screen pb-20">
+<!-- Top Navigation (Mobile) -->
+<header class="w-full sticky top-0 z-50 bg-surface border-b border-surface-variant flex justify-between items-center h-16 px-4 md:hidden">
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out p-2 rounded-full" onclick="history.back()">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="font-h3 text-h3 font-bold text-primary">Customer Detail</div>
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out p-2 rounded-full">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</header>
+<!-- Main Container -->
+<main class="w-full max-w-md mx-auto md:my-8 bg-surface md:shadow-md md:rounded-xl overflow-hidden min-h-screen md:min-h-0 relative">
+<!-- Desktop Header Anchor (Only visible on web) -->
+<div class="hidden md:flex justify-between items-center px-6 py-4 border-b border-surface-variant bg-surface sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out p-2 rounded-full -ml-2">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<span class="font-h3 text-h3 font-bold text-on-surface">Customer Profile</span>
+</div>
+</div>
+<!-- Profile Hero Section -->
+<section class="p-6 pb-8 border-b border-surface-variant bg-surface-bright">
+<div class="flex justify-between items-start mb-6">
+<div class="flex gap-4 items-center">
+<div class="relative">
+<img class="w-16 h-16 rounded-full object-cover shadow-sm border border-surface-variant" data-alt="A professional headshot of a middle-aged woman with a warm smile, wearing a modern business casual blazer. The background is slightly blurred showing a brightly lit office environment. The lighting is soft and flattering, creating a high-trust, corporate modern aesthetic consistent with a financial services app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDE3fi6hbNn7LSMsVbchnUltfWGu3pooADFwhtusV03duHt3gGZgaCloK5X6QlIyGsujo-MmmHmQKRjuHQ5eiAgihPtWWeWyYoYXmuSsoha_5ttLJDE9Au3vmVIq2zoTzV27o0nJBxxFU46o3ovNDiAsaXzZOfhTcHe2bRAUSc5RMCD0o_2Q-VVyPF-kbQEqZ1t4bwpIkZucIqZphRa43tm2dTvE5zugXUzu5KXzEu3OnDY1xjK0Wkcow"/>
+<!-- Status Indicator -->
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-success border-2 border-surface-bright rounded-full"></div>
+</div>
+<div>
+<h1 class="font-h2 text-h2 text-on-surface">Eleanor Vance</h1>
+<p class="font-body text-body text-text-secondary mt-0.5">ID: <span class="font-mono-data text-mono-data text-on-surface-variant">CUST-8492</span></p>
+</div>
+</div>
+<!-- Retention Risk Badge -->
+<div class="flex items-center gap-1.5 px-2.5 py-1 bg-warning-bg rounded-full border border-warning/20">
+<span class="material-symbols-outlined text-[14px] text-warning icon-fill">warning</span>
+<span class="font-caption text-caption text-warning font-semibold">High Risk</span>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="grid grid-cols-2 gap-3 mt-4">
+<button class="flex items-center justify-center gap-2 bg-primary text-on-primary py-2.5 px-4 rounded-lg font-body-lg text-body-lg font-medium hover:bg-primary-container transition-colors shadow-xs">
+<span class="material-symbols-outlined text-[20px]">call</span>
+                    Call
+                </button>
+<button class="flex items-center justify-center gap-2 bg-surface text-on-surface border border-surface-variant py-2.5 px-4 rounded-lg font-body-lg text-body-lg font-medium hover:bg-surface-container-low transition-colors shadow-xs">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+                    Email
+                </button>
+</div>
+<!-- Contact Info Summary -->
+<div class="mt-6 flex flex-col gap-2">
+<div class="flex items-center gap-3 text-text-secondary font-body text-body">
+<span class="material-symbols-outlined text-[18px]">phone_iphone</span>
+<span>(555) 019-2834</span>
+</div>
+<div class="flex items-center gap-3 text-text-secondary font-body text-body">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>1423 Oakwood Dr, Seattle, WA</span>
+</div>
+</div>
+</section>
+<!-- Insights Bento (Desktop Only) -->
+<section class="hidden md:grid grid-cols-3 gap-4 p-6 bg-bg-subtle border-b border-surface-variant">
+<div class="bg-surface p-4 rounded-lg border border-surface-variant shadow-xs">
+<div class="font-overline text-overline text-text-secondary uppercase mb-1">Lifetime Value</div>
+<div class="font-h3 text-h3 text-on-surface font-mono-data">$42,500</div>
+</div>
+<div class="bg-surface p-4 rounded-lg border border-surface-variant shadow-xs">
+<div class="font-overline text-overline text-text-secondary uppercase mb-1">Tenure</div>
+<div class="font-h3 text-h3 text-on-surface">8 Years</div>
+</div>
+<div class="bg-surface p-4 rounded-lg border border-surface-variant shadow-xs">
+<div class="font-overline text-overline text-text-secondary uppercase mb-1">Next Renewal</div>
+<div class="font-h3 text-h3 text-on-surface">Oct 12, 2024</div>
+</div>
+</section>
+<!-- Content Canvas -->
+<div class="bg-surface">
+<!-- Active Policies Section -->
+<div class="border-b border-surface-variant">
+<button class="w-full px-6 py-4 flex justify-between items-center hover:bg-surface-container-low transition-colors" onclick="toggleSection('policies-content', 'policies-icon')">
+<h3 class="font-h3 text-h3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">shield</span>
+                        Active Policies <span class="bg-surface-container-high text-on-surface-variant font-caption text-caption px-2 py-0.5 rounded-full ml-1">2</span>
+</h3>
+<span class="material-symbols-outlined text-text-secondary transition-transform duration-200 rotate-180" id="policies-icon">expand_more</span>
+</button>
+<div class="px-6 pb-4 space-y-4" id="policies-content">
+<!-- Policy Card 1 -->
+<div class="border border-surface-variant rounded-lg p-4 bg-surface hover:shadow-xs transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<div>
+<div class="font-body-lg text-body-lg font-semibold text-on-surface">Auto Comprehensive</div>
+<div class="font-mono-data text-mono-data text-text-secondary mt-0.5">POL-992-BCA</div>
+</div>
+<div class="bg-success-bg text-success font-caption text-caption px-2 py-1 rounded-full font-medium">Active</div>
+</div>
+<div class="flex justify-between items-end mt-4 pt-3 border-t border-surface-variant">
+<div>
+<div class="font-overline text-overline text-text-secondary uppercase">Premium</div>
+<div class="font-body text-body text-on-surface font-mono-data">$1,240 / yr</div>
+</div>
+<button class="text-primary font-body text-body font-medium hover:underline">View Details</button>
+</div>
+</div>
+<!-- Policy Card 2 -->
+<div class="border border-surface-variant rounded-lg p-4 bg-surface hover:shadow-xs transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<div>
+<div class="font-body-lg text-body-lg font-semibold text-on-surface">Homeowners</div>
+<div class="font-mono-data text-mono-data text-text-secondary mt-0.5">POL-441-HXA</div>
+</div>
+<div class="bg-success-bg text-success font-caption text-caption px-2 py-1 rounded-full font-medium">Active</div>
+</div>
+<div class="flex justify-between items-end mt-4 pt-3 border-t border-surface-variant">
+<div>
+<div class="font-overline text-overline text-text-secondary uppercase">Premium</div>
+<div class="font-body text-body text-on-surface font-mono-data">$2,100 / yr</div>
+</div>
+<button class="text-primary font-body text-body font-medium hover:underline">View Details</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Claims Section -->
+<div class="border-b border-surface-variant">
+<button class="w-full px-6 py-4 flex justify-between items-center hover:bg-surface-container-low transition-colors" onclick="toggleSection('claims-content', 'claims-icon')">
+<h3 class="font-h3 text-h3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-warning">assignment_late</span>
+                        Recent Claims
+                    </h3>
+<span class="material-symbols-outlined text-text-secondary transition-transform duration-200" id="claims-icon">expand_more</span>
+</button>
+<div class="px-6 pb-4 hidden" id="claims-content">
+<div class="border border-surface-variant rounded-lg p-4 bg-surface">
+<div class="flex justify-between items-start mb-2">
+<div>
+<div class="font-body-lg text-body-lg font-semibold text-on-surface">Fender Bender - Rear End</div>
+<div class="font-mono-data text-mono-data text-text-secondary mt-0.5">CLM-2023-881</div>
+</div>
+<div class="bg-surface-dim text-on-surface-variant font-caption text-caption px-2 py-1 rounded-full font-medium">Closed</div>
+</div>
+<div class="mt-2 font-body text-body text-text-secondary">
+                            Date of Loss: <span class="font-mono-data text-mono-data text-on-surface">Aug 14, 2023</span>
+</div>
+<div class="flex justify-between items-end mt-4 pt-3 border-t border-surface-variant">
+<div>
+<div class="font-overline text-overline text-text-secondary uppercase">Payout</div>
+<div class="font-body text-body text-on-surface font-mono-data">$3,450.00</div>
+</div>
+<button class="text-primary font-body text-body font-medium hover:underline">View Claim</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Notes Section -->
+<div class="p-6">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-h3 text-h3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary">note_alt</span>
+                        Agent Notes
+                    </h3>
+<button class="text-primary font-body text-body font-medium hover:underline">Add Note</button>
+</div>
+<div class="bg-surface-container-lowest border border-surface-variant rounded-lg p-4">
+<p class="font-body text-body text-on-surface-variant leading-relaxed">
+                        Client called expressing concern about rising auto premium. Explained state-wide rate increases. Mentioned she might shop around next renewal. Marked as High Risk for retention. Follow up in 30 days before renewal date.
+                    </p>
+<div class="mt-3 font-caption text-caption text-text-secondary">
+                        Added by System Agent • 2 days ago
+                    </div>
+</div>
+</div>
+</div>
+</main>
+<!-- Suppressing BottomNav because this is a Detail/Task view with back navigation, prioritizing canvas content -->
+<script>
+        function toggleSection(contentId, iconId) {
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+    </script>
+</body></html>

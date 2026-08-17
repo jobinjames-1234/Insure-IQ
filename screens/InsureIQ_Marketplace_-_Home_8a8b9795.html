@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InsureMarket - Compare Insurance with Confidence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#cbbeff",
+                      "on-secondary-fixed-variant": "#4a2ea9",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error": "#ffffff",
+                      "surface-bright": "#fbf8ff",
+                      "on-background": "#191b25",
+                      "danger-bg": "#FBEAEC",
+                      "surface-container-high": "#e7e7f5",
+                      "outline-variant": "#c3c5d9",
+                      "on-secondary-container": "#300491",
+                      "warning-bg": "#FDF3E0",
+                      "inverse-surface": "#2e303a",
+                      "primary": "#003fd1",
+                      "error": "#ba1a1a",
+                      "on-tertiary-container": "#ffe4dc",
+                      "error-container": "#ffdad6",
+                      "tertiary-container": "#c13700",
+                      "text-secondary": "#5B5B60",
+                      "bg-muted": "#F4F4F5",
+                      "primary-container": "#1a56ff",
+                      "success-bg": "#E7F6EF",
+                      "bg-subtle": "#FAFAFA",
+                      "tertiary": "#972900",
+                      "on-error-container": "#93000a",
+                      "warning": "#B5750A",
+                      "tertiary-fixed-dim": "#ffb59f",
+                      "success": "#12805C",
+                      "surface-dim": "#d9d9e6",
+                      "tertiary-fixed": "#ffdbd1",
+                      "on-surface": "#191b25",
+                      "on-primary-fixed-variant": "#0037b9",
+                      "surface-container-highest": "#e1e1ef",
+                      "surface": "#fbf8ff",
+                      "inverse-primary": "#b8c4ff",
+                      "background": "#fbf8ff",
+                      "on-tertiary-fixed-variant": "#862300",
+                      "primary-fixed-dim": "#b8c4ff",
+                      "surface-variant": "#e1e1ef",
+                      "on-primary-container": "#e6e8ff",
+                      "on-tertiary-fixed": "#3a0a00",
+                      "border-strong": "#D4D4D8",
+                      "secondary-fixed": "#e6deff",
+                      "secondary": "#6249c2",
+                      "on-secondary-fixed": "#1d0061",
+                      "primary-fixed": "#dde1ff",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed": "#001453",
+                      "text-muted": "#8B8B90",
+                      "outline": "#747688",
+                      "surface-container": "#ededfa",
+                      "secondary-container": "#9a83ff",
+                      "surface-tint": "#004af0",
+                      "on-surface-variant": "#434656",
+                      "danger": "#C4293A",
+                      "on-tertiary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f3f2ff",
+                      "inverse-on-surface": "#f0effd"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "margin": "32px",
+                      "max-width": "1200px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "body": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "h2": [
+                              "Inter"
+                      ],
+                      "overline": [
+                              "Inter"
+                      ],
+                      "mono-data": [
+                              "JetBrains Mono"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "h1": [
+                              "Inter"
+                      ],
+                      "h3": [
+                              "Inter"
+                      ],
+                      "display": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h2": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.25",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "overline": [
+                              "11px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "letterSpacing": "0.04em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "mono-data": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "h1": [
+                              "36px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "h3": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.35",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+      </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body text-body antialiased min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-on-surface border-b border-outline-variant w-full sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-base max-w-max-width mx-auto h-16 px-gutter md:px-margin">
+<div class="flex items-center gap-8">
+<a class="font-display text-h2 font-black text-primary hover:text-primary-container transition-colors" href="#">InsureMarket</a>
+<nav class="hidden md:flex gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body text-body scale-95 active:opacity-80" href="#">Browse</a>
+<a class="text-text-secondary pb-1 font-body text-body hover:text-primary transition-colors scale-95 active:opacity-80" href="#">My Policies</a>
+<a class="text-text-secondary pb-1 font-body text-body hover:text-primary transition-colors scale-95 active:opacity-80" href="#">Claims</a>
+<a class="text-text-secondary pb-1 font-body text-body hover:text-primary transition-colors scale-95 active:opacity-80" href="#">Support</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="h-10 pl-9 pr-4 rounded bg-surface-container border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none font-body text-body w-48 text-on-surface" placeholder="Search..." type="text"/>
+</div>
+<button class="bg-primary-container text-on-primary h-10 px-4 rounded font-body text-body hover:bg-primary transition-colors flex items-center gap-2">
+                    Get Quote
+                </button>
+<button class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center overflow-hidden hover:border-primary transition-colors">
+<img alt="Customer Avatar" class="w-full h-full object-cover" data-alt="A small, professional headshot of a diverse individual smiling warmly, well-lit with a bright, solid background suitable for a UI avatar icon. The image should convey trust and friendliness in a modern, high-key setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD13KrDz_qfChSUDS1mHkjUbYrDBp9xh8-87qJSd2v_rsg3MvA3xLTAo35FE8SAS-xfBdSe_33REh-yd1qAkH2r24FXCVIESt-sPaKpJdngL3z0hggSQxwsBuq3SsX9c0a6TB7xoKetmxUwN8GiPNt3INmWJ4RuZTkRzQidL4XrPsCgM0yp21K2jqrM-1zlDmk2vtTOSgBf5wg2xiZ-ORyTfJmrze2ZRJipbxeiRWBz9wVv_enrOILZkQ"/>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col">
+<!-- Hero Section -->
+<section class="relative w-full overflow-hidden bg-surface-container-low min-h-[600px] flex items-center pt-8 pb-16">
+<div class="absolute inset-0 z-0">
+<div class="bg-cover bg-center w-full h-full opacity-40" data-alt="A wide, bright, professional photograph of a happy, diverse modern family standing in front of their beautiful, contemporary suburban home on a sunny day. The lighting is warm and optimistic, conveying a strong sense of security, happiness, and trust. The overall aesthetic is clean, high-key, and perfectly suited for a premium corporate lifestyle brand." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDpo3b4Ry_HIex5xGHB5tVDQfJB5e__1u393lj9Grh5fIvAja5Dhaq7nQx9ZVehycIJFgI5zon4MBpk4sXKk_2afES1NgToQHt5BBOEYOnq1TVEsC9GLyLz28Oo8KReCobfKLuUU2iLeNeY0bi8oah0DLvuOEKTYoEe00aib-iRgn521gA106K8-t2xaiPZhf6CKLFzAHKVC8MP87-d9g6Z873soi0drvM0hJSNwRsITY45oJi--79NRw')"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-transparent"></div>
+</div>
+<div class="max-w-max-width mx-auto px-gutter md:px-margin w-full relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<!-- Hero Text -->
+<div class="flex flex-col gap-6 max-w-xl">
+<span class="inline-flex items-center gap-2 text-primary font-overline text-overline uppercase tracking-wider bg-primary-fixed px-3 py-1 rounded-full w-fit">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+                            Marketplace Leader
+                        </span>
+<h1 class="font-display text-display text-on-surface leading-tight">
+                            Compare insurance with <span class="text-primary relative inline-block">confidence
+                                <svg class="absolute w-full h-3 -bottom-1 left-0 text-secondary-fixed-dim" preserveaspectratio="none" viewbox="0 0 100 10"><path d="M0 5 Q 50 10 100 5" fill="none" stroke="currentColor" stroke-width="4"></path></svg>
+</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                            Find the perfect coverage for your life, home, and family. We compare over 30 top-rated insurers in seconds so you can make the right choice.
+                        </p>
+<div class="flex flex-wrap gap-4 mt-2">
+<button class="bg-primary-container text-on-primary h-[44px] px-6 rounded font-body text-body-lg shadow-md hover:bg-primary transition-all active:scale-95 flex items-center gap-2">
+                                Start Your Quote
+                                <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<button class="bg-surface text-on-surface h-[44px] px-6 rounded font-body text-body-lg border border-outline-variant hover:bg-surface-container-high transition-all active:scale-95">
+                                Browse Categories
+                            </button>
+</div>
+<div class="mt-4 flex items-center gap-4 text-text-muted font-caption text-caption">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-success text-[16px]" style="font-variation-settings: 'FILL' 1;">format_image_left</span>
+                                100% Secure
+                            </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-success text-[16px]" style="font-variation-settings: 'FILL' 1;">speed</span>
+                                Fast Results
+                            </div>
+</div>
+</div>
+<!-- Category Grid (Bento style) -->
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4 h-full">
+<a class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center gap-3 hover:-translate-y-1 transition-transform group cursor-pointer shadow-xs" href="#">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center group-hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-on-secondary-fixed-variant group-hover:text-primary text-[24px]">directions_car</span>
+</div>
+<span class="font-h3 text-h3 text-on-surface text-center">Auto</span>
+</a>
+<a class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center gap-3 hover:-translate-y-1 transition-transform group cursor-pointer shadow-xs" href="#">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center group-hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-on-secondary-fixed-variant group-hover:text-primary text-[24px]">favorite</span>
+</div>
+<span class="font-h3 text-h3 text-on-surface text-center">Health</span>
+</a>
+<a class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center gap-3 hover:-translate-y-1 transition-transform group cursor-pointer shadow-xs md:col-span-1 col-span-2 md:row-span-2 bg-gradient-to-br from-surface to-surface-container-low border-primary/20 relative overflow-hidden" href="#">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary-fixed-dim rounded-bl-full -mr-4 -mt-4 opacity-50"></div>
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center mb-2 z-10">
+<span class="material-symbols-outlined text-primary text-[32px]">home</span>
+</div>
+<span class="font-h2 text-h2 text-on-surface text-center z-10">Home &amp;<br/>Property</span>
+<div class="mt-4 flex items-center text-primary font-caption text-caption uppercase tracking-wider z-10">
+                                Popular <span class="material-symbols-outlined text-[14px] ml-1">trending_up</span>
+</div>
+</a>
+<a class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center gap-3 hover:-translate-y-1 transition-transform group cursor-pointer shadow-xs" href="#">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center group-hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-on-secondary-fixed-variant group-hover:text-primary text-[24px]">family_restroom</span>
+</div>
+<span class="font-h3 text-h3 text-on-surface text-center">Life</span>
+</a>
+<a class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center gap-3 hover:-translate-y-1 transition-transform group cursor-pointer shadow-xs" href="#">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary text-[24px]">more_horiz</span>
+</div>
+<span class="font-body text-body text-on-surface text-center">View All</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust Section -->
+<section class="bg-surface border-y border-outline-variant py-8">
+<div class="max-w-max-width mx-auto px-gutter md:px-margin flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-4">
+<div class="flex -space-x-3">
+<img class="w-10 h-10 rounded-full border-2 border-surface object-cover bg-surface-container" data-alt="Small circular logo icon of a well-known insurance brand, clean and modern on a white background, suitable for a UI trust bar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbXJ0pXyM-uWox7bFumbDX_9YLSu7cEwOeMVUVuy3R4r7tX5AvEUW7NXEJ3geEmzXuHlxdxQj56eGMcF0goWlC4526xESjhrRTYxX4twER1GqB9zA8M3T6_ULqjbg0oTLh6WT9DkclwrPaIVwZjGN5oBCi5kv2z_V5pHEmMxIAW-5AudbJr5usesLJFFDuLJmtx_adTKy4K8A0dq8T5hE_xQOjnu-iM5esSOnQR5lxytBi5qtMOkNs4A"/>
+<img class="w-10 h-10 rounded-full border-2 border-surface object-cover bg-surface-container" data-alt="Small circular logo icon of a well-known insurance brand, clean and modern on a white background, suitable for a UI trust bar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe9QgXAif-PAVyv5bbOLsIxftX98mNjkBgIOjUTn2b7U44Qzo-recBiE7x__Ave3k6ojfNNnpxA3AC-uL1o_9MrwOZQ1jKYNIN2aYeKYfy05QE5HNG7WcNgCrbD5U-1SsmDNACeTbd5mv-H2b_ayU1XH7Je2cKr5EjPWPUoioEfys_8WNwrxbA8KlomdvpDJtW8PxAQdh3meomAizRdPbIBffbocrRjqS3CE_91ML1CAgIsSV54Tgq8Q"/>
+<img class="w-10 h-10 rounded-full border-2 border-surface object-cover bg-surface-container" data-alt="Small circular logo icon of a well-known insurance brand, clean and modern on a white background, suitable for a UI trust bar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3nP0ed-s8eh5LgbaDBkCPDlRZdmdYQGktOozodYq3FnIGep4L4Dcgjf3vutvfNgZCYTtDcZfORu6RGud6DO5w0zvNVc3tr3VoqVTs0TYkIcw-OK1olP_OvSSwzqLA7LHMOuxaGRnyThG7SN3ky2uqUfoWWI5IhvfNoo3_SpjuKtiFqEiZONxJW85IVKegJarP9NHUk1i_FPDAseRjYsxiaahK8iXn9YWV01A-OEJpb62fN8qYneULtQ"/>
+<div class="w-10 h-10 rounded-full border-2 border-surface bg-surface-container-high flex items-center justify-center font-caption text-caption text-on-surface-variant">+27</div>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-semibold text-on-surface">30+ Insurers compared</p>
+<p class="font-caption text-caption text-text-muted">Top tier providers only</p>
+</div>
+</div>
+<div class="w-px h-12 bg-outline-variant hidden md:block"></div>
+<div class="flex items-center gap-4">
+<div class="flex text-warning text-[24px]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star_half</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-semibold text-on-surface">4.8/5 Customer Rating</p>
+<p class="font-caption text-caption text-text-muted">Based on 10,000+ reviews</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>

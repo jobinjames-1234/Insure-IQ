@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tenant Provisioning Wizard - Step 1</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#cbbeff",
+                        "on-secondary-fixed-variant": "#4a2ea9",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#fbf8ff",
+                        "on-background": "#191b25",
+                        "danger-bg": "#FBEAEC",
+                        "surface-container-high": "#e7e7f5",
+                        "outline-variant": "#c3c5d9",
+                        "on-secondary-container": "#300491",
+                        "warning-bg": "#FDF3E0",
+                        "inverse-surface": "#2e303a",
+                        "primary": "#003fd1",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#ffe4dc",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#c13700",
+                        "text-secondary": "#5B5B60",
+                        "bg-muted": "#F4F4F5",
+                        "primary-container": "#1a56ff",
+                        "success-bg": "#E7F6EF",
+                        "bg-subtle": "#FAFAFA",
+                        "tertiary": "#972900",
+                        "on-error-container": "#93000a",
+                        "warning": "#B5750A",
+                        "tertiary-fixed-dim": "#ffb59f",
+                        "success": "#12805C",
+                        "surface-dim": "#d9d9e6",
+                        "tertiary-fixed": "#ffdbd1",
+                        "on-surface": "#191b25",
+                        "on-primary-fixed-variant": "#0037b9",
+                        "surface-container-highest": "#e1e1ef",
+                        "surface": "#fbf8ff",
+                        "inverse-primary": "#b8c4ff",
+                        "background": "#fbf8ff",
+                        "on-tertiary-fixed-variant": "#862300",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "surface-variant": "#e1e1ef",
+                        "on-primary-container": "#e6e8ff",
+                        "on-tertiary-fixed": "#3a0a00",
+                        "border-strong": "#D4D4D8",
+                        "secondary-fixed": "#e6deff",
+                        "secondary": "#6249c2",
+                        "on-secondary-fixed": "#1d0061",
+                        "primary-fixed": "#dde1ff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001453",
+                        "text-muted": "#8B8B90",
+                        "outline": "#747688",
+                        "surface-container": "#ededfa",
+                        "secondary-container": "#9a83ff",
+                        "surface-tint": "#004af0",
+                        "on-surface-variant": "#434656",
+                        "danger": "#C4293A",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f3f2ff",
+                        "inverse-on-surface": "#f0effd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin": "32px",
+                        "max-width": "1200px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "body": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h2": ["Inter"],
+                        "overline": ["Inter"],
+                        "mono-data": ["JetBrains Mono"],
+                        "caption": ["Inter"],
+                        "h1": ["Inter"],
+                        "h3": ["Inter"],
+                        "display": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "1.25", "fontWeight": "600" }],
+                        "overline": ["11px", { "lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600" }],
+                        "mono-data": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "h3": ["18px", { "lineHeight": "1.35", "fontWeight": "600" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Form Field Styles */
+        .form-input {
+            height: 44px;
+            @apply w-full rounded border border-outline-variant bg-surface px-3 py-2 text-on-surface transition-all duration-200 focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/20 font-body text-body;
+        }
+        .form-label {
+            @apply mb-1 block text-text-secondary font-caption text-caption;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body text-body flex min-h-screen">
+<!-- JSON Component: SideNavBar -->
+<nav class="bg-inverse-surface dark:bg-on-surface text-primary-fixed-dim font-body text-body h-full w-64 fixed left-0 top-0 hidden md:flex flex-col p-4 shadow-none">
+<div class="mb-8 px-3">
+<h1 class="font-display text-h3 font-bold text-surface-container-lowest">Core Admin</h1>
+<p class="font-body text-caption text-surface-variant opacity-80 mt-1">Super User</p>
+</div>
+<ul class="flex flex-col gap-2 flex-grow">
+<li>
+<a class="flex items-center gap-3 text-surface-variant p-3 rounded-lg hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 bg-primary-container text-on-primary-container rounded-lg p-3 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="domain" data-weight="fill" style="font-variation-settings: 'FILL' 1;">domain</span>
+                    Tenants
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant p-3 rounded-lg hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+                    Security
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant p-3 rounded-lg hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+                    Analytics
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant p-3 rounded-lg hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+                    Integrations
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-surface-variant p-3 rounded-lg hover:bg-on-surface-variant hover:text-surface-bright transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 bg-background min-h-screen">
+<!-- Header -->
+<header class="h-20 border-b border-outline-variant flex items-center px-gutter md:px-margin bg-surface">
+<div class="flex items-center gap-4">
+<a class="text-text-secondary hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">arrow_back</span>
+</a>
+<h2 class="font-h2 text-h2 text-on-surface">Provision New Tenant</h2>
+</div>
+</header>
+<div class="max-w-max-width mx-auto p-gutter md:p-margin">
+<!-- Progress Stepper -->
+<div class="mb-12">
+<div class="flex items-center justify-between w-full relative">
+<!-- Progress Line Background -->
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-outline-variant z-0"></div>
+<!-- Active Progress Line -->
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-[0%] h-[2px] bg-primary z-0 transition-all duration-500"></div>
+<!-- Step 1: Active -->
+<div class="relative z-10 flex flex-col items-center gap-2 bg-background px-2">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-body text-body font-bold ring-4 ring-primary-container/20">
+                            1
+                        </div>
+<span class="font-overline text-overline text-primary">Details</span>
+</div>
+<!-- Step 2: Inactive -->
+<div class="relative z-10 flex flex-col items-center gap-2 bg-background px-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-text-secondary flex items-center justify-center font-body text-body font-bold border border-outline-variant">
+                            2
+                        </div>
+<span class="font-overline text-overline text-text-secondary">Plan &amp; Isolation</span>
+</div>
+<!-- Step 3: Inactive -->
+<div class="relative z-10 flex flex-col items-center gap-2 bg-background px-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-text-secondary flex items-center justify-center font-body text-body font-bold border border-outline-variant">
+                            3
+                        </div>
+<span class="font-overline text-overline text-text-secondary">Initial Admin</span>
+</div>
+<!-- Step 4: Inactive -->
+<div class="relative z-10 flex flex-col items-center gap-2 bg-background px-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-text-secondary flex items-center justify-center font-body text-body font-bold border border-outline-variant">
+                            4
+                        </div>
+<span class="font-overline text-overline text-text-secondary">Review</span>
+</div>
+</div>
+</div>
+<!-- Form Card -->
+<div class="bg-surface rounded-xl shadow-xs border border-outline-variant p-gutter md:p-margin max-w-3xl mx-auto">
+<div class="mb-8">
+<h3 class="font-h3 text-h3 text-on-surface">Tenant Details</h3>
+<p class="font-body text-body text-text-secondary mt-2">Enter the foundational details for the new tenant workspace. These values will be used to generate the initial environment.</p>
+</div>
+<form class="space-y-6">
+<!-- Legal Name -->
+<div>
+<label class="form-label" for="legalName">Legal Organization Name</label>
+<input class="form-input" id="legalName" placeholder="e.g., Acme Corporation" required="" type="text"/>
+</div>
+<!-- Workspace Subdomain -->
+<div>
+<label class="form-label" for="subdomain">Workspace Subdomain</label>
+<div class="flex">
+<input class="form-input rounded-r-none border-r-0 focus:z-10" id="subdomain" placeholder="e.g., acme" required="" type="text"/>
+<span class="inline-flex items-center px-4 rounded-r border border-outline-variant bg-surface-container-low text-text-muted font-mono-data text-mono-data">
+                                .coreadmin.io
+                            </span>
+</div>
+<p class="font-caption text-caption text-text-secondary mt-1">This will be the unique URL for the tenant's workspace.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Industry -->
+<div>
+<label class="form-label" for="industry">Industry Classification</label>
+<div class="relative">
+<select class="form-input appearance-none pr-10" id="industry">
+<option disabled="" selected="" value="">Select Industry</option>
+<option value="fin">Financial Services</option>
+<option value="hlth">Healthcare</option>
+<option value="tech">Technology</option>
+<option value="mfg">Manufacturing</option>
+<option value="rtl">Retail</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-text-secondary">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Data Region -->
+<div>
+<label class="form-label" for="region">Primary Data Region</label>
+<div class="relative">
+<select class="form-input appearance-none pr-10" id="region">
+<option disabled="" selected="" value="">Select Region</option>
+<option value="us-east">US East (N. Virginia)</option>
+<option value="us-west">US West (Oregon)</option>
+<option value="eu-central">EU Central (Frankfurt)</option>
+<option value="ap-south">AP South (Mumbai)</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-text-secondary">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="pt-8 mt-8 border-t border-outline-variant flex justify-end gap-4">
+<button class="h-10 px-6 rounded bg-surface border border-outline-variant text-on-surface font-body text-body hover:bg-surface-container-high transition-colors" type="button">
+                            Cancel
+                        </button>
+<button class="h-10 px-8 rounded bg-primary-container text-on-primary-container font-body text-body hover:bg-primary transition-colors hover:text-white flex items-center gap-2" type="button">
+                            Next Step
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</main>
+</body></html>

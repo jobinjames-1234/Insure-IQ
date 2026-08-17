@@ -1,0 +1,400 @@
+<!DOCTYPE html><html class="h-full bg-background" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>InsureIQ | Super-Admin Platform Overview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "text-secondary": "#5B5B60",
+                        "border-strong": "#D4D4D8",
+                        "tertiary": "#972900",
+                        "bg-muted": "#F4F4F5",
+                        "on-secondary-fixed": "#1d0061",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "surface-container-low": "#f3f2ff",
+                        "inverse-primary": "#b8c4ff",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#0037b9",
+                        "on-primary-fixed": "#001453",
+                        "warning": "#B5750A",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e7e7f5",
+                        "on-background": "#191b25",
+                        "on-tertiary-fixed": "#3a0a00",
+                        "surface-dim": "#d9d9e6",
+                        "warning-bg": "#FDF3E0",
+                        "on-tertiary-container": "#ffe4dc",
+                        "secondary-container": "#9a83ff",
+                        "secondary": "#6249c2",
+                        "on-error-container": "#93000a",
+                        "success-bg": "#E7F6EF",
+                        "background": "#fbf8ff",
+                        "surface-container": "#ededfa",
+                        "primary": "#003fd1",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c3c5d9",
+                        "tertiary-fixed": "#ffdbd1",
+                        "danger": "#C4293A",
+                        "success": "#12805C",
+                        "tertiary-fixed-dim": "#ffb59f",
+                        "outline": "#747688",
+                        "on-surface-variant": "#434656",
+                        "surface-container-highest": "#e1e1ef",
+                        "on-surface": "#191b25",
+                        "inverse-on-surface": "#f0effd",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#cbbeff",
+                        "primary-container": "#1a56ff",
+                        "danger-bg": "#FBEAEC",
+                        "primary-fixed": "#dde1ff",
+                        "on-secondary-container": "#300491",
+                        "bg-subtle": "#FAFAFA",
+                        "surface-bright": "#fbf8ff",
+                        "error-container": "#ffdad6",
+                        "surface": "#fbf8ff",
+                        "secondary-fixed": "#e6deff",
+                        "tertiary-container": "#c13700",
+                        "surface-tint": "#004af0",
+                        "text-muted": "#8B8B90",
+                        "on-secondary-fixed-variant": "#4a2ea9",
+                        "on-tertiary-fixed-variant": "#862300",
+                        "on-primary-container": "#e6e8ff",
+                        "inverse-surface": "#2e303a",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e1e1ef"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "base": "4px",
+                        "margin": "32px",
+                        "max-width": "1200px"
+                    },
+                    "fontFamily": {
+                        "body": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "mono-data": ["JetBrains Mono"],
+                        "display": ["Inter"],
+                        "h2": ["Inter"],
+                        "h1": ["Inter"],
+                        "h3": ["Inter"],
+                        "overline": ["Inter"],
+                        "caption": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "mono-data": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "display": ["48px", {"lineHeight": "1.1", "fontWeight": "600"}],
+                        "h2": ["24px", {"lineHeight": "1.25", "fontWeight": "600"}],
+                        "h1": ["36px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "h3": ["18px", {"lineHeight": "1.35", "fontWeight": "600"}],
+                        "overline": ["11px", {"lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .technical-chrome {
+            background-color: #0d0e14;
+        }
+        .bento-card {
+            background: #ffffff;
+            border: 1px solid #E7E7E9;
+            transition: all 0.2s ease;
+        }
+        .bento-card:hover {
+            border-color: #003fd1;
+            box-shadow: 0 4px 12px rgba(0, 63, 209, 0.05);
+        }
+        .status-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    </style>
+</head>
+<body class="font-body text-body text-on-surface h-full flex overflow-hidden">
+<!-- SideNavBar Component -->
+<aside class="technical-chrome h-screen w-64 flex flex-col border-r border-outline-variant shrink-0 bg-surface-container-low">
+<div class="h-16 flex items-center px-6 border-b border-outline-variant mb-4">
+<h1 class="font-h3 text-h3 text-white tracking-tight flex items-center gap-2"><span class="material-symbols-outlined text-primary">verified_user</span><span class="font-h3 text-h3">InsureIQ</span></h1>
+
+</div>
+<nav class="flex-1 px-4 space-y-1"><a class="flex items-center gap-3 bg-primary text-white rounded-full px-4 py-2 transition-all active:scale-95" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span><span class="font-caption font-medium">Platform Overview</span></a><a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high px-4 py-2 rounded-full transition-all active:scale-95" href="#"><span class="material-symbols-outlined">corporate_fare</span><span class="font-caption">Tenants</span></a><a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high px-4 py-2 rounded-full transition-all active:scale-95" href="#"><span class="material-symbols-outlined">account_balance_wallet</span><span class="font-caption">Billing Oversight</span></a><a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high px-4 py-2 rounded-full transition-all active:scale-95" href="#"><span class="material-symbols-outlined">history_edu</span><span class="font-caption">Audit Log</span></a></nav>
+<div class="p-4 border-t border-white/10 space-y-4"><div class="flex items-center gap-3 px-2 mb-4"><div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-white font-bold text-[10px]">OP</div><div class="overflow-hidden"><p class="font-caption font-medium text-on-surface truncate">Operator_041</p><p class="text-[10px] text-text-muted uppercase tracking-wider">Root Access</p></div></div><a class="flex items-center gap-3 text-on-surface-variant hover:text-primary px-2 py-2 transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="text-caption">System Settings</span></a></div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto relative bg-surface-container-lowest bg-background">
+<!-- Header -->
+<header class="sticky top-0 z-10 backdrop-blur-md px-gutter py-6 flex justify-between items-center border-b border-outline-variant bg-surface">
+<div>
+<h2 class="font-h2 text-h2 text-on-background">Platform Overview</h2>
+<div class="flex items-center gap-2 mt-1">
+<span class="inline-block w-2 h-2 bg-success rounded-full status-pulse"></span>
+<span class="font-caption text-success">Global Systems Nominal</span>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="bg-surface-container-highest text-on-surface-variant font-medium px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-surface-dim transition-colors">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+                    Refresh Data
+                </button>
+<button class="bg-primary text-white font-medium px-4 py-2 rounded-lg shadow-sm hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+                    SysConsole
+                </button>
+</div>
+</header>
+<div class="max-w-max-width mx-auto p-gutter space-y-8">
+<!-- High Level Metrics (Bento Style) -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- Tenant Count -->
+<div class="bento-card p-6 rounded-xl col-span-1 md:col-span-2">
+<div class="flex justify-between items-start mb-6">
+<div>
+<p class="font-overline text-text-secondary uppercase">Active Tenants</p>
+<h3 class="font-h1 text-h1 mt-1">1,482</h3>
+</div>
+<div class="bg-primary-fixed p-3 rounded-lg text-primary">
+<span class="material-symbols-outlined">groups</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center text-caption">
+<span class="text-text-secondary">Enterprise Tier</span>
+<span class="font-mono-data text-on-surface">428</span>
+</div>
+<div class="w-full bg-bg-muted h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[28%]"></div>
+</div>
+<div class="flex justify-between items-center text-caption">
+<span class="text-text-secondary">Growth Tier</span>
+<span class="font-mono-data text-on-surface">1,054</span>
+</div>
+<div class="w-full bg-bg-muted h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[72%]"></div>
+</div>
+</div>
+</div>
+<!-- Platform Health -->
+<div class="bento-card p-6 rounded-xl flex flex-col justify-between">
+<div>
+<p class="font-overline text-text-secondary uppercase">Avg Uptime (30d)</p>
+<h3 class="font-h2 text-h2 mt-2 font-mono-data text-success">99.998%</h3>
+</div>
+<div class="mt-4 flex items-end gap-1 h-12">
+<!-- Tiny Sparkline mock -->
+<div class="flex-1 bg-success/20 h-[80%] rounded-sm"></div>
+<div class="flex-1 bg-success/20 h-[90%] rounded-sm"></div>
+<div class="flex-1 bg-success/20 h-[85%] rounded-sm"></div>
+<div class="flex-1 bg-success/20 h-[95%] rounded-sm"></div>
+<div class="flex-1 bg-success/20 h-[100%] rounded-sm"></div>
+<div class="flex-1 bg-success/20 h-[98%] rounded-sm"></div>
+<div class="flex-1 bg-success/20 h-[99%] rounded-sm"></div>
+</div>
+</div>
+<!-- Error Rate -->
+<div class="bento-card p-6 rounded-xl flex flex-col justify-between">
+<div>
+<p class="font-overline text-text-secondary uppercase">API Error Rate</p>
+<h3 class="font-h2 text-h2 mt-2 font-mono-data text-danger">0.04%</h3>
+</div>
+<p class="text-caption text-text-muted mt-2">
+<span class="text-danger font-bold">↑ 0.01%</span> from last hour
+                    </p>
+</div>
+</section>
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Alerts Panel -->
+<div class="lg:col-span-1 space-y-4">
+<div class="flex items-center justify-between">
+<h4 class="font-h3 text-h3 flex items-center gap-2">
+<span class="material-symbols-outlined text-danger">notification_important</span>
+                            System Alerts
+                        </h4>
+<span class="bg-danger-bg text-danger px-2 py-0.5 rounded text-overline">3 Critical</span>
+</div>
+<!-- Alert Item -->
+<div class="bg-danger-bg border-l-4 border-danger p-4 rounded-r-lg space-y-2">
+<div class="flex justify-between">
+<p class="font-body font-bold text-danger">Billing Webhook Failure</p>
+<span class="text-caption text-danger opacity-70">2m ago</span>
+</div>
+<p class="text-caption text-on-error-container">Tenant: <span class="font-mono-data">TEN-8842 (AstraCorp)</span>. Failed to process recurring subscription payment.</p>
+<button class="text-caption font-bold text-danger hover:underline">Investigate</button>
+</div>
+<div class="bg-warning-bg border-l-4 border-warning p-4 rounded-r-lg space-y-2">
+<div class="flex justify-between">
+<p class="font-body font-bold text-warning">Latent DB Queries</p>
+<span class="text-caption text-warning opacity-70">14m ago</span>
+</div>
+<p class="text-caption text-on-surface-variant">Cluster <span class="font-mono-data">US-EAST-1A</span> reporting &gt;500ms execution times for policy lookups.</p>
+</div>
+<div class="bg-danger-bg border-l-4 border-danger p-4 rounded-r-lg space-y-2">
+<div class="flex justify-between">
+<p class="font-body font-bold text-danger">SSO Certificate Expiring</p>
+<span class="text-caption text-danger opacity-70">1h ago</span>
+</div>
+<p class="text-caption text-on-error-container">Root IdP certificate for operator login expires in 48 hours.</p>
+<button class="text-caption font-bold text-danger hover:underline">Renew Now</button>
+</div>
+</div>
+<!-- Marketplace Lead Volume -->
+<div class="lg:col-span-2 bento-card rounded-xl overflow-hidden flex flex-col">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h4 class="font-h3 text-h3">Marketplace Lead Volume</h4>
+<select class="text-caption border-outline-variant rounded-lg bg-surface focus:ring-primary focus:border-primary">
+<option>Last 24 Hours</option>
+<option>Last 7 Days</option>
+</select>
+</div>
+<div class="flex-1 p-6 flex items-center justify-center min-h-[300px]">
+<div class="w-full h-full relative">
+<!-- Abstract Data Visualization Placeholder -->
+<div class="absolute inset-0 flex items-end justify-between gap-2 px-2">
+<div class="w-full bg-primary/10 rounded-t h-[40%] hover:bg-primary/30 transition-all cursor-pointer group relative">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">12.4k</span>
+</div>
+<div class="w-full bg-primary/10 rounded-t h-[55%] hover:bg-primary/30 transition-all cursor-pointer group relative">
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">14.2k</span>
+</div>
+<div class="w-full bg-primary/10 rounded-t h-[35%] hover:bg-primary/30 transition-all cursor-pointer group relative"></div>
+<div class="w-full bg-primary/10 rounded-t h-[65%] hover:bg-primary/30 transition-all cursor-pointer group relative"></div>
+<div class="w-full bg-primary/10 rounded-t h-[85%] hover:bg-primary/30 transition-all cursor-pointer group relative"></div>
+<div class="w-full bg-primary/10 rounded-t h-[75%] hover:bg-primary/30 transition-all cursor-pointer group relative"></div>
+<div class="w-full bg-primary/10 rounded-t h-[95%] hover:bg-primary/30 transition-all cursor-pointer group relative"></div>
+<div class="w-full bg-primary/20 rounded-t h-[100%] border-x-2 border-primary hover:bg-primary/30 transition-all cursor-pointer group relative">
+<span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded font-bold">CURRENT: 18.9k</span>
+</div>
+<div class="w-full bg-primary/10 rounded-t h-[90%] hover:bg-primary/30 transition-all cursor-pointer group relative"></div>
+<div class="w-full bg-primary/10 rounded-t h-[80%] hover:bg-primary/30 transition-all cursor-pointer group relative"></div>
+<div class="w-full bg-primary/10 rounded-t h-[60%] hover:bg-primary/30 transition-all cursor-pointer group relative"></div>
+<div class="w-full bg-primary/10 rounded-t h-[45%] hover:bg-primary/30 transition-all cursor-pointer group relative"></div>
+</div>
+<div class="absolute bottom-[-24px] w-full flex justify-between text-[10px] text-text-muted font-mono-data px-1">
+<span class="">00:00</span>
+<span class="">04:00</span>
+<span class="">08:00</span>
+<span class="">12:00</span>
+<span class="">16:00</span>
+<span class="">20:00</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Latest Audit Entries Table -->
+<section class="bento-card rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h4 class="font-h3 text-h3">Global Audit Feed</h4>
+<button class="text-primary font-medium text-caption hover:underline">View All Logs</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-bg-muted border-b border-outline-variant">
+<tr>
+<th class="px-6 py-3 font-overline text-text-secondary uppercase">Timestamp</th>
+<th class="px-6 py-3 font-overline text-text-secondary uppercase">Actor</th>
+<th class="px-6 py-3 font-overline text-text-secondary uppercase">Action</th>
+<th class="px-6 py-3 font-overline text-text-secondary uppercase">Target</th>
+<th class="px-6 py-3 font-overline text-text-secondary uppercase text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-bg-subtle transition-colors">
+<td class="px-6 py-4 font-mono-data text-caption whitespace-nowrap">2023-11-24 14:22:01</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[10px]">AD</div>
+<span class="text-caption font-medium">SysAdmin_Alpha</span>
+</div>
+</td>
+<td class="px-6 py-4 text-caption">Tier Upgrade</td>
+<td class="px-6 py-4 text-caption font-mono-data">TEN-4429 (NexusInsure)</td>
+<td class="px-6 py-4 text-right">
+<span class="bg-success-bg text-success px-2 py-1 rounded-full text-[10px] font-bold">SUCCESS</span>
+</td>
+</tr>
+<tr class="hover:bg-bg-subtle transition-colors">
+<td class="px-6 py-4 font-mono-data text-caption whitespace-nowrap">2023-11-24 14:15:44</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center text-[10px]">SM</div>
+<span class="text-caption font-medium">System_Automator</span>
+</div>
+</td>
+<td class="px-6 py-4 text-caption">Database Reindex</td>
+<td class="px-6 py-4 text-caption font-mono-data">CLUSTER-DB-02</td>
+<td class="px-6 py-4 text-right">
+<span class="bg-success-bg text-success px-2 py-1 rounded-full text-[10px] font-bold">SUCCESS</span>
+</td>
+</tr>
+<tr class="hover:bg-bg-subtle transition-colors">
+<td class="px-6 py-4 font-mono-data text-caption whitespace-nowrap">2023-11-24 14:02:12</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-danger text-white flex items-center justify-center text-[10px]">RT</div>
+<span class="text-caption font-medium">Root_Observer</span>
+</div>
+</td>
+<td class="px-6 py-4 text-caption">Access Denied</td>
+<td class="px-6 py-4 text-caption font-mono-data">BILLING_VAULT_S3</td>
+<td class="px-6 py-4 text-right">
+<span class="bg-danger-bg text-danger px-2 py-1 rounded-full text-[10px] font-bold">FORBIDDEN</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+<!-- Global System Status Overlay (Floating Action) -->
+<div class="fixed bottom-6 right-6">
+<button class="bg-inverse-surface text-white p-4 rounded-full shadow-lg hover:scale-105 transition-transform flex items-center gap-3 active:scale-95 group">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-success status-pulse">cloud_done</span>
+<span class="font-caption group-hover:block hidden">All Regions Online</span>
+</div>
+<div class="w-px h-4 bg-white/20 group-hover:block hidden"></div>
+<span class="material-symbols-outlined">analytics</span>
+</button>
+</div>
+<script>
+        // Simple Micro-interaction for UI feel
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Potential for lightweight JS effects
+            });
+        });
+
+        // Current time for the status bar (mock updating)
+        function updateTime() {
+            // Logic to update timestamps or status if needed
+        }
+        setInterval(updateTime, 60000);
+    </script>
+
+
+</body></html>

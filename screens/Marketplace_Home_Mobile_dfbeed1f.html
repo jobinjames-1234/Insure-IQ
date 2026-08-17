@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InsureIQ Marketplace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface": "#191b25",
+                      "on-tertiary-fixed": "#3a0a00",
+                      "surface-tint": "#004af0",
+                      "secondary-container": "#9a83ff",
+                      "on-secondary-container": "#300491",
+                      "tertiary-fixed-dim": "#ffb59f",
+                      "surface-variant": "#e1e1ef",
+                      "primary-fixed": "#dde1ff",
+                      "inverse-surface": "#2e303a",
+                      "bg-subtle": "#FAFAFA",
+                      "error": "#ba1a1a",
+                      "tertiary-container": "#c13700",
+                      "danger": "#C4293A",
+                      "surface-container": "#ededfa",
+                      "on-tertiary-fixed-variant": "#862300",
+                      "tertiary-fixed": "#ffdbd1",
+                      "surface": "#fbf8ff",
+                      "background": "#fbf8ff",
+                      "surface-dim": "#d9d9e6",
+                      "success-bg": "#E7F6EF",
+                      "border-strong": "#D4D4D8",
+                      "secondary-fixed": "#e6deff",
+                      "surface-container-highest": "#e1e1ef",
+                      "primary-fixed-dim": "#b8c4ff",
+                      "outline-variant": "#c3c5d9",
+                      "text-muted": "#8B8B90",
+                      "on-background": "#191b25",
+                      "on-secondary-fixed-variant": "#4a2ea9",
+                      "danger-bg": "#FBEAEC",
+                      "success": "#12805C",
+                      "on-tertiary-container": "#ffe4dc",
+                      "on-error": "#ffffff",
+                      "text-secondary": "#5B5B60",
+                      "on-primary": "#ffffff",
+                      "primary-container": "#1a56ff",
+                      "on-tertiary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-secondary": "#ffffff",
+                      "warning": "#B5750A",
+                      "secondary": "#6249c2",
+                      "on-primary-fixed-variant": "#0037b9",
+                      "warning-bg": "#FDF3E0",
+                      "on-primary-fixed": "#001453",
+                      "primary": "#003fd1",
+                      "surface-container-low": "#f3f2ff",
+                      "surface-bright": "#fbf8ff",
+                      "tertiary": "#972900",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface-variant": "#434656",
+                      "on-error-container": "#93000a",
+                      "inverse-on-surface": "#f0effd",
+                      "inverse-primary": "#b8c4ff",
+                      "surface-container-high": "#e7e7f5",
+                      "bg-muted": "#F4F4F5",
+                      "on-primary-container": "#e6e8ff",
+                      "on-secondary-fixed": "#1d0061",
+                      "outline": "#747688",
+                      "secondary-fixed-dim": "#cbbeff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "base": "4px",
+                      "max-width": "1200px",
+                      "margin": "32px"
+              },
+              "fontFamily": {
+                      "mono-data": ["JetBrains Mono"],
+                      "h1": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "h3": ["Inter"],
+                      "h2": ["Inter"],
+                      "body": ["Inter"],
+                      "display": ["Inter"],
+                      "overline": ["Inter"],
+                      "caption": ["Inter"]
+              },
+              "fontSize": {
+                      "mono-data": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "h1": ["36px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "h3": ["18px", {"lineHeight": "1.35", "fontWeight": "600"}],
+                      "h2": ["24px", {"lineHeight": "1.25", "fontWeight": "600"}],
+                      "body": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "display": ["48px", {"lineHeight": "1.1", "fontWeight": "600"}],
+                      "overline": ["11px", {"lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600"}],
+                      "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="w-full sticky top-0 z-50 bg-surface border-b border-surface-variant flex justify-between items-center h-16 px-gutter max-w-max-width mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary font-h3 font-bold">I</div>
+<h1 class="font-h2 text-h2 font-bold text-primary">InsureIQ</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors duration-200 ease-in-out text-primary">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<main class="w-full max-w-max-width mx-auto px-gutter md:px-margin mt-8 flex flex-col gap-12">
+<!-- Hero Search Section -->
+<section class="flex flex-col gap-6 text-center pt-8 pb-4">
+<h2 class="font-h1 text-h1 text-on-surface">What are you insuring today?</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Compare top-rated policies tailored to your exact needs.</p>
+<div class="relative w-full max-w-md mx-auto mt-4 group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full h-14 pl-12 pr-4 rounded-full border border-outline-variant bg-surface-container-lowest focus:border-primary focus:ring-4 focus:ring-primary-fixed-dim transition-all shadow-xs text-body-lg text-on-surface placeholder-text-muted outline-none" placeholder="Search coverage (e.g. 'SUV Insurance')" type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 bg-primary text-on-primary w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:bg-primary-container hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 600;">arrow_forward</span>
+</button>
+</div>
+<div class="flex flex-wrap justify-center gap-4 mt-6">
+<div class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full border border-surface-variant">
+<span class="material-symbols-outlined text-success">verified</span>
+<span class="font-caption text-caption text-on-surface">30+ Insurers Compared</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full border border-surface-variant">
+<span class="material-symbols-outlined text-warning" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-caption text-caption text-on-surface">4.8/5 Rating</span>
+</div>
+</div>
+</section>
+<!-- Category Grid -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<a class="group relative flex flex-col p-6 bg-surface-container-lowest rounded-xl border border-surface-variant shadow-xs hover:shadow-md hover:border-primary-fixed-dim transition-all overflow-hidden h-48 justify-end" href="#">
+<div class="absolute top-4 left-4 w-12 h-12 bg-primary-fixed rounded-full flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]">directions_car</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-1">Auto</h3>
+<p class="font-caption text-caption text-on-surface-variant">12 Providers</p>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low to-transparent opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity"></div>
+</a>
+<a class="group relative flex flex-col p-6 bg-surface-container-lowest rounded-xl border border-surface-variant shadow-xs hover:shadow-md hover:border-primary-fixed-dim transition-all overflow-hidden h-48 justify-end" href="#">
+<div class="absolute top-4 left-4 w-12 h-12 bg-success-bg rounded-full flex items-center justify-center text-success group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]">favorite</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-1">Health</h3>
+<p class="font-caption text-caption text-on-surface-variant">8 Providers</p>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low to-transparent opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity"></div>
+</a>
+<a class="group relative flex flex-col p-6 bg-surface-container-lowest rounded-xl border border-surface-variant shadow-xs hover:shadow-md hover:border-primary-fixed-dim transition-all overflow-hidden h-48 justify-end" href="#">
+<div class="absolute top-4 left-4 w-12 h-12 bg-secondary-fixed rounded-full flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]">volunteer_activism</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-1">Life</h3>
+<p class="font-caption text-caption text-on-surface-variant">15 Providers</p>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low to-transparent opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity"></div>
+</a>
+<a class="group relative flex flex-col p-6 bg-surface-container-lowest rounded-xl border border-surface-variant shadow-xs hover:shadow-md hover:border-primary-fixed-dim transition-all overflow-hidden h-48 justify-end" href="#">
+<div class="absolute top-4 left-4 w-12 h-12 bg-tertiary-fixed rounded-full flex items-center justify-center text-tertiary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]">home</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-1">Home</h3>
+<p class="font-caption text-caption text-on-surface-variant">9 Providers</p>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low to-transparent opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity"></div>
+</a>
+</section>
+<!-- Promotional Callout -->
+<section class="mt-4 mb-8 relative overflow-hidden rounded-xl bg-primary-container text-on-primary-container p-8 shadow-md">
+<div class="relative z-10 flex flex-col gap-4 max-w-sm">
+<h3 class="font-h2 text-h2 font-bold">Bundle &amp; Save</h3>
+<p class="font-body text-body opacity-90">Combine your Auto and Home insurance policies to save up to 20% annually.</p>
+<button class="mt-2 self-start bg-on-primary-container text-primary-container px-6 py-2 rounded-full font-h3 text-h3 hover:bg-white transition-colors">
+                    Calculate Savings
+                </button>
+</div>
+<span class="material-symbols-outlined absolute -right-8 -bottom-8 text-[200px] opacity-10 rotate-12 pointer-events-none">security</span>
+</section>
+</main>
+<!-- Bottom Nav Bar -->
+<nav class="bg-surface fixed bottom-0 w-full z-50 pb-safe border-t border-surface-variant flat no shadows flex justify-around items-center h-16 md:hidden">
+<!-- Active Tab: Home -->
+<button class="flex flex-col items-center justify-center text-primary font-semibold hover:bg-surface-container-low active:scale-95 transition-transform duration-150 w-full h-full">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-caption text-caption mt-1">Home</span>
+</button>
+<!-- Inactive Tab: Apply -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low active:scale-95 transition-transform duration-150 w-full h-full">
+<span class="material-symbols-outlined">description</span>
+<span class="font-caption text-caption mt-1">Apply</span>
+</button>
+<!-- Inactive Tab: Claims -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low active:scale-95 transition-transform duration-150 w-full h-full">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+<span class="font-caption text-caption mt-1">Claims</span>
+</button>
+<!-- Inactive Tab: Profile -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low active:scale-95 transition-transform duration-150 w-full h-full">
+<span class="material-symbols-outlined">person</span>
+<span class="font-caption text-caption mt-1">Profile</span>
+</button>
+</nav>
+</body></html>

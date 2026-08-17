@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Claims Adjuster Investigation View - InsureIQ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline": "#747688",
+                      "surface-tint": "#004af0",
+                      "on-secondary-fixed-variant": "#4a2ea9",
+                      "on-primary-fixed": "#001453",
+                      "background": "#fbf8ff",
+                      "tertiary-container": "#c13700",
+                      "border-strong": "#D4D4D8",
+                      "on-error": "#ffffff",
+                      "surface-dim": "#d9d9e6",
+                      "surface-container": "#ededfa",
+                      "surface-container-lowest": "#ffffff",
+                      "primary": "#003fd1",
+                      "on-background": "#191b25",
+                      "on-tertiary-fixed-variant": "#862300",
+                      "surface-container-low": "#f3f2ff",
+                      "inverse-primary": "#b8c4ff",
+                      "text-muted": "#8B8B90",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-fixed": "#1d0061",
+                      "surface-bright": "#fbf8ff",
+                      "on-tertiary-container": "#ffe4dc",
+                      "on-primary": "#ffffff",
+                      "danger-bg": "#FBEAEC",
+                      "warning": "#B5750A",
+                      "bg-muted": "#F4F4F5",
+                      "on-secondary-container": "#300491",
+                      "inverse-surface": "#2e303a",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed-dim": "#cbbeff",
+                      "surface-container-high": "#e7e7f5",
+                      "on-surface": "#191b25",
+                      "tertiary-fixed": "#ffdbd1",
+                      "on-error-container": "#93000a",
+                      "primary-container": "#1a56ff",
+                      "inverse-on-surface": "#f0effd",
+                      "danger": "#C4293A",
+                      "primary-fixed": "#dde1ff",
+                      "on-primary-container": "#e6e8ff",
+                      "secondary-fixed": "#e6deff",
+                      "surface-container-highest": "#e1e1ef",
+                      "warning-bg": "#FDF3E0",
+                      "error": "#ba1a1a",
+                      "surface-variant": "#e1e1ef",
+                      "success-bg": "#E7F6EF",
+                      "primary-fixed-dim": "#b8c4ff",
+                      "text-secondary": "#5B5B60",
+                      "on-primary-fixed-variant": "#0037b9",
+                      "secondary": "#6249c2",
+                      "on-tertiary-fixed": "#3a0a00",
+                      "bg-subtle": "#FAFAFA",
+                      "success": "#12805C",
+                      "on-secondary": "#ffffff",
+                      "outline-variant": "#c3c5d9",
+                      "tertiary-fixed-dim": "#ffb59f",
+                      "surface": "#fbf8ff",
+                      "on-surface-variant": "#434656",
+                      "tertiary": "#972900",
+                      "secondary-container": "#9a83ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "max-width": "1200px",
+                      "gutter": "24px",
+                      "margin": "32px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "h1": [
+                              "Inter"
+                      ],
+                      "mono-data": [
+                              "JetBrains Mono"
+                      ],
+                      "overline": [
+                              "Inter"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "h2": [
+                              "Inter"
+                      ],
+                      "h3": [
+                              "Inter"
+                      ],
+                      "display": [
+                              "Inter"
+                      ],
+                      "body": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h1": [
+                              "36px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "mono-data": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "overline": [
+                              "11px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "letterSpacing": "0.04em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "h2": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.25",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "h3": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.35",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body text-body flex h-screen overflow-hidden">
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden md:flex flex-col h-screen left-0 w-64 border-r border-outline-variant bg-surface-container-low dark:bg-surface-container-low p-4 space-y-2 z-10">
+<div class="mb-8">
+<h1 class="font-h3 text-h3 text-on-surface dark:text-on-surface font-extrabold tracking-tight">InsureIQ</h1>
+<p class="font-caption text-caption text-on-surface-variant">Agent Portal</p>
+</div>
+<ul class="flex flex-col space-y-2 flex-grow">
+<li>
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface-variant px-4 py-2 hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-all font-caption text-caption" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface-variant px-4 py-2 hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-all font-caption text-caption" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+                    Policies
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container rounded-lg px-4 py-2 hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-all font-caption text-caption Active: scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_late" style="font-variation-settings: 'FILL' 1;">assignment_late</span>
+                    Claims
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface-variant px-4 py-2 hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-all font-caption text-caption" href="#">
+<span class="material-symbols-outlined" data-icon="rule">rule</span>
+                    Underwriting
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface-variant px-4 py-2 hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-all font-caption text-caption" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+<div class="mt-auto flex items-center gap-3 px-4 py-2 border-t border-outline-variant pt-4">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center overflow-hidden border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">person</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Agent Profile</span>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-grow flex flex-col h-full bg-background overflow-hidden relative">
+<!-- Top Action Bar -->
+<header class="flex items-center justify-between px-gutter h-16 border-b border-outline-variant bg-surface flex-shrink-0 z-10 shadow-xs">
+<div class="flex items-center gap-4">
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors rounded-full hover:bg-surface-container">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div>
+<h2 class="font-h2 text-h2 text-on-surface flex items-center gap-2">
+                        Claim #CL-2023-8942
+                        <span class="inline-flex items-center justify-center px-2 py-0.5 bg-danger-bg text-danger font-overline text-overline rounded-full ml-2">HIGH RISK</span>
+</h2>
+<p class="font-caption text-caption text-text-secondary">Filed: Oct 24, 2023 | Insured: Jane Doe</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="h-10 px-6 font-caption text-caption font-medium rounded-DEFAULT bg-surface text-danger border border-outline-variant hover:bg-danger-bg transition-colors">
+                    Reject Claim
+                </button>
+<button class="h-10 px-6 font-caption text-caption font-medium rounded-DEFAULT bg-surface text-warning border border-outline-variant hover:bg-warning-bg transition-colors">
+                    Escalate to SIU
+                </button>
+<button class="h-10 px-6 font-caption text-caption font-medium rounded-DEFAULT bg-primary-container text-on-primary-container hover:opacity-90 transition-opacity">
+                    Approve
+                </button>
+</div>
+</header>
+<!-- Two Pane Layout -->
+<div class="flex flex-grow overflow-hidden">
+<!-- Left Pane: Document/Photo Viewer -->
+<section class="w-3/5 border-r border-outline-variant flex flex-col bg-surface-container-lowest overflow-hidden relative z-0">
+<div class="flex-grow p-gutter flex items-center justify-center relative overflow-hidden bg-surface-dim">
+<div class="absolute inset-4 rounded-lg overflow-hidden border border-outline-variant shadow-sm bg-black group cursor-crosshair">
+<!-- Simulated zoomed image view -->
+<img class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500 ease-out origin-center" data-alt="A highly detailed close-up photograph of severe front-end damage to a modern silver sedan. The hood is crumpled, the bumper is hanging off, and the headlight assembly is shattered, exposing internal wiring. The lighting is harsh, clinical daylight, creating sharp contrast and deep shadows on the metallic surfaces. The aesthetic is documentary and forensic, emphasizing raw data and physical evidence. High resolution, stark realism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCWp3Qe5P2LpvZ0B5LWplRIEG9dHvCv2CtsA0JK1CdDusA56zfVANUsekU9j220fXW8wVquR0CSbz7rbxCWQ02PvcFvmSI2sqGQmgTlTsafAk_XVCmerdBJFX6lHnWgTKSGBH7mHFVAYoEqM168gSxm31gdBeBd93ZOm_PSQddoj32Q0UDJB88Auawbfc8gNC28ncleZX7oykdEz2mQ-xyMdjN-sYmqjx4cl2r0vXyIA3DdxrU2s50vg"/>
+<!-- Simulated UI overlays on image -->
+<div class="absolute top-4 left-4 bg-surface/90 backdrop-blur-sm px-3 py-1.5 rounded-DEFAULT border border-outline-variant font-mono-data text-mono-data text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">image</span> IMG_4921.JPG
+                         </div>
+<div class="absolute bottom-4 right-4 bg-surface/90 backdrop-blur-sm px-3 py-1.5 rounded-DEFAULT border border-outline-variant font-mono-data text-mono-data text-on-surface flex items-center gap-4">
+<button class="hover:text-primary"><span class="material-symbols-outlined text-sm">zoom_out</span></button>
+<span>150%</span>
+<button class="hover:text-primary"><span class="material-symbols-outlined text-sm">zoom_in</span></button>
+</div>
+<!-- Bounding box overlay for AI detection -->
+<div class="absolute top-[30%] left-[20%] w-[40%] h-[35%] border-2 border-warning border-dashed bg-warning/10 pointer-events-none rounded-sm">
+<div class="absolute -top-6 left-0 bg-warning text-surface-container-lowest font-overline text-overline px-2 py-0.5 rounded-t-sm whitespace-nowrap">AI DETECTED: INCONSISTENT DAMAGE PATTERN</div>
+</div>
+</div>
+</div>
+<!-- Thumbnail Strip -->
+<div class="h-32 border-t border-outline-variant bg-surface flex items-center gap-4 px-gutter py-4 overflow-x-auto">
+<div class="w-24 h-20 rounded-DEFAULT border-2 border-primary overflow-hidden flex-shrink-0 cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="Thumbnail showing front-end damage of a silver sedan. High contrast, sharp focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXeiM_uoYXZ8QjGeKfmaP6iDe4_N6StzBm9kSEsjCkMhEoWI14MTVctEtzGchn_enDhmG_ixEecoM_e0fY92imWevbwlBPF6RIsV1_LmUnLCUakcTkNVD5s3RVUv1MLZuhri1PoN9fY7yraB9RcaBEQ9qab1STXvoWWm5SqCDUGuMi_rMFonqaGMlu26ywkHl4U0XYVc3mAq3kXenVF-eZuGqnzCR2MsFxuuIRXYBSpgicDuOsCcBtFA"/>
+</div>
+<div class="w-24 h-20 rounded-DEFAULT border border-outline-variant overflow-hidden flex-shrink-0 cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="Thumbnail showing the rear license plate of a silver sedan. High contrast, sharp focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCga8Vnkw6YNJy5FDhCSkmM6e4MRhOWqb7MjzuIBlkkBT_Qcfcn5WPe2fXmZlxbLiCNhGKq_Q1oYRCdhuEY3CL20zZi8Etou2LotEZ4R4IkorafIMuWO328-WV5unF-nUvWy5F2BWNGZSM6zDyl9FBx_9cxQIUwOlk-hcV1Jqp-7obUcBML7_2lY19MR3zvYgs8oGJgcgzlV7idXf8X1ek6L2UMRCHVEgQhPm3uVuzL7G5eu3maaWf0ag"/>
+</div>
+<div class="w-24 h-20 rounded-DEFAULT border border-outline-variant overflow-hidden flex-shrink-0 cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover grayscale" data-alt="Thumbnail showing a scanned police report document. Text is illegible but structure is visible." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ5bGar-EpeXelT3V60ROTEOjXq6uN8XOKz3vY6ZkQtpbi7zcimBmglpTj7EvD-AF8Qa_ABK6tSbT2hLc46pLbq9b1TvJpo6edaeddb5JKCrtuqBIfsBOLc05IyQtMEkxilJ-w5LyM4EPzq_9ukGS621H7P1dR9rbZ5yDt0WFk95TFZz2Kitp42lEKm-EdsBgA699QI9lt98WV4ugF512euoEB4sFXOXkhYEkb1RDAsef9uHSxDMeNyA"/>
+</div>
+<div class="w-24 h-20 rounded-DEFAULT border border-outline-variant overflow-hidden flex-shrink-0 flex items-center justify-center bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-on-surface-variant">add</span>
+</div>
+</div>
+</section>
+<!-- Right Pane: Context & Intelligence -->
+<section class="w-2/5 flex flex-col bg-surface overflow-y-auto">
+<div class="p-gutter space-y-6">
+<!-- Fraud Intelligence Panel -->
+<div class="bg-surface-container-lowest rounded-lg border border-danger p-5 shadow-xs relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-danger"></div>
+<div class="flex items-start justify-between mb-4">
+<h3 class="font-h3 text-h3 text-danger flex items-center gap-2">
+<span class="material-symbols-outlined text-danger">warning</span>
+                                Fraud Intelligence
+                            </h3>
+<span class="bg-danger-bg text-danger font-overline text-overline px-2 py-1 rounded-DEFAULT border border-danger/20">CONFIDENCE: 92%</span>
+</div>
+<p class="font-body text-body text-on-surface mb-4">Multiple anomalous signals detected regarding policy inception timeline and claimed incident parameters.</p>
+<div class="space-y-3">
+<div class="flex items-start gap-3">
+<div class="w-6 h-6 rounded-full bg-danger-bg flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-danger text-[14px]">schedule</span>
+</div>
+<div>
+<h4 class="font-caption text-caption font-semibold text-on-surface">Proximity to Policy Start</h4>
+<p class="font-caption text-caption text-text-secondary">Claim filed exactly 3 days after policy inception.</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-6 h-6 rounded-full bg-warning-bg flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-warning text-[14px]">location_on</span>
+</div>
+<div>
+<h4 class="font-caption text-caption font-semibold text-on-surface">Location Mismatch</h4>
+<p class="font-caption text-caption text-text-secondary">Incident location is 450 miles from insured's primary garaging address.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Related Signals (Blinded) -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-5 shadow-xs">
+<h3 class="font-h3 text-h3 text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">hub</span>
+                            Related Signals
+                        </h3>
+<div class="space-y-2">
+<div class="flex justify-between items-center py-2 border-b border-outline-variant border-dashed last:border-0">
+<span class="font-mono-data text-mono-data text-text-secondary">IP ADDR MATCH</span>
+<span class="font-caption text-caption font-medium text-on-surface">3 previous denied claims</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant border-dashed last:border-0">
+<span class="font-mono-data text-mono-data text-text-secondary">BODY SHOP NETWORK</span>
+<span class="font-caption text-caption font-medium text-warning">Flagged Entity: 'Xyz Auto'</span>
+</div>
+</div>
+</div>
+<!-- Adjuster Notes Thread -->
+<div class="flex-grow flex flex-col">
+<h3 class="font-h3 text-h3 text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">forum</span>
+                            Investigation Thread
+                        </h3>
+<div class="space-y-4 mb-6 flex-grow">
+<!-- Note Item -->
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center flex-shrink-0 border border-outline-variant">
+<span class="font-caption text-caption text-on-surface-variant font-bold">AJ</span>
+</div>
+<div class="bg-surface-container-low rounded-lg p-3 border border-outline-variant relative">
+<div class="absolute -left-2 top-3 w-0 h-0 border-y-8 border-y-transparent border-r-8 border-r-outline-variant"></div>
+<div class="absolute -left-[7px] top-[13px] w-0 h-0 border-y-[6px] border-y-transparent border-r-[6px] border-r-surface-container-low"></div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-caption text-caption font-semibold text-on-surface">Alice Johnson</span>
+<span class="font-caption text-caption text-text-secondary">Oct 25, 09:14 AM</span>
+</div>
+<p class="font-body text-body text-on-surface">Called insured. Sounded evasive regarding the exact sequence of events leading to the collision. Requested recorded statement.</p>
+</div>
+</div>
+<!-- Note Item -->
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0 border border-outline-variant">
+<span class="font-caption text-caption text-on-secondary-container font-bold">SIU</span>
+</div>
+<div class="bg-surface-container-low rounded-lg p-3 border border-outline-variant w-full">
+<div class="flex justify-between items-center mb-1">
+<span class="font-caption text-caption font-semibold text-on-surface">System (SIU Rules Engine)</span>
+<span class="font-caption text-caption text-text-secondary">Oct 25, 09:15 AM</span>
+</div>
+<p class="font-body text-body text-on-surface">Automated trigger: Flagged for mandatory review based on Adjuster input 'evasive' + High Risk score.</p>
+</div>
+</div>
+</div>
+<!-- Add Note Input -->
+<div class="mt-auto">
+<label class="sr-only" for="note-input">Add internal note</label>
+<textarea class="w-full bg-surface border border-outline-variant rounded-DEFAULT p-3 font-body text-body text-on-surface focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none resize-none" id="note-input" placeholder="Add internal note or SIU referral justification..." rows="3"></textarea>
+<div class="flex justify-end mt-2">
+<button class="px-4 py-2 font-caption text-caption font-medium rounded-DEFAULT bg-surface text-on-surface border border-outline-variant hover:bg-surface-container transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">send</span>
+                                    Post Note
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InsureIQ - Billing &amp; Invoices</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#ffffff",
+                      "on-tertiary-fixed-variant": "#862300",
+                      "surface-container-high": "#e7e7f5",
+                      "secondary-fixed-dim": "#cbbeff",
+                      "primary-container": "#1a56ff",
+                      "text-muted": "#8B8B90",
+                      "on-surface": "#191b25",
+                      "success-bg": "#E7F6EF",
+                      "on-secondary-fixed-variant": "#4a2ea9",
+                      "tertiary-fixed-dim": "#ffb59f",
+                      "warning-bg": "#FDF3E0",
+                      "tertiary": "#972900",
+                      "on-primary-fixed": "#001453",
+                      "bg-muted": "#F4F4F5",
+                      "warning": "#B5750A",
+                      "surface-tint": "#004af0",
+                      "primary-fixed": "#dde1ff",
+                      "primary-fixed-dim": "#b8c4ff",
+                      "inverse-primary": "#b8c4ff",
+                      "on-secondary": "#ffffff",
+                      "success": "#12805C",
+                      "on-tertiary-fixed": "#3a0a00",
+                      "danger-bg": "#FBEAEC",
+                      "secondary": "#6249c2",
+                      "surface-dim": "#d9d9e6",
+                      "text-secondary": "#5B5B60",
+                      "tertiary-container": "#c13700",
+                      "outline": "#747688",
+                      "on-primary-container": "#e6e8ff",
+                      "on-tertiary": "#ffffff",
+                      "on-background": "#191b25",
+                      "tertiary-fixed": "#ffdbd1",
+                      "on-surface-variant": "#434656",
+                      "inverse-surface": "#2e303a",
+                      "on-tertiary-container": "#ffe4dc",
+                      "error-container": "#ffdad6",
+                      "border-strong": "#D4D4D8",
+                      "surface-bright": "#fbf8ff",
+                      "on-secondary-fixed": "#1d0061",
+                      "on-error-container": "#93000a",
+                      "on-secondary-container": "#300491",
+                      "primary": "#003fd1",
+                      "danger": "#C4293A",
+                      "background": "#fbf8ff",
+                      "on-primary": "#ffffff",
+                      "surface-variant": "#e1e1ef",
+                      "bg-subtle": "#FAFAFA",
+                      "surface": "#fbf8ff",
+                      "surface-container-low": "#f3f2ff",
+                      "error": "#ba1a1a",
+                      "outline-variant": "#c3c5d9",
+                      "on-primary-fixed-variant": "#0037b9",
+                      "surface-container-highest": "#e1e1ef",
+                      "inverse-on-surface": "#f0effd",
+                      "secondary-fixed": "#e6deff",
+                      "secondary-container": "#9a83ff",
+                      "surface-container": "#ededfa",
+                      "surface-container-lowest": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "margin": "32px",
+                      "max-width": "1200px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "h2": [
+                              "Inter"
+                      ],
+                      "display": [
+                              "Inter"
+                      ],
+                      "h1": [
+                              "Inter"
+                      ],
+                      "overline": [
+                              "Inter"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "h3": [
+                              "Inter"
+                      ],
+                      "mono-data": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h2": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.25",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "h1": [
+                              "36px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "overline": [
+                              "11px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "letterSpacing": "0.04em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h3": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.35",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "mono-data": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body font-body antialiased flex h-screen overflow-hidden">
+<!-- SideNavBar (Shared Component Blueprint applied) -->
+<aside class="flex flex-col h-full p-4 space-y-2 docked h-screen left-0 w-64 border-r border-outline-variant bg-surface-container-low hidden md:flex shrink-0">
+<div class="mb-8 mt-2 px-4 flex items-center gap-3">
+<!-- Brand Header -->
+<div class="h-8 w-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined font-h3" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div>
+<h1 class="font-h3 text-h3 text-on-surface leading-tight">InsureIQ</h1>
+<p class="font-caption text-caption text-text-secondary leading-tight">Agent Portal</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Inactive -->
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg font-caption text-caption" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<!-- Inactive -->
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg font-caption text-caption" href="#">
+<span class="material-symbols-outlined">description</span>
+                Policies
+            </a>
+<!-- Inactive -->
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg font-caption text-caption" href="#">
+<span class="material-symbols-outlined">assignment_late</span>
+                Claims
+            </a>
+<!-- Inactive -->
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg font-caption text-caption" href="#">
+<span class="material-symbols-outlined">rule</span>
+                Underwriting
+            </a>
+<!-- Active (Settings logic for Billing) -->
+<a class="flex items-center gap-3 bg-secondary-container text-on-secondary-container rounded-lg px-4 py-2 font-caption text-caption opacity-100 hover:scale-95 duration-150 shadow-xs" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+                Settings
+            </a>
+</nav>
+<!-- Bottom User Area -->
+<div class="pt-4 border-t border-outline-variant mt-auto">
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-lg font-caption text-caption" href="#">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-dim">
+<img alt="Agent Profile" class="w-full h-full object-cover" data-alt="A professional headshot of an insurance agent in a modern, well-lit corporate office. Neutral background, soft lighting, sharp focus, conveying trust and reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAG7JGgZFlQrUKmwC6aSgxN-QLtcuevrpzB3wRX-r5rtGXSWaYb957ek57Dm09bzI3QDMF2HVDCbprEGb7fApeAv1D9WDOMU5k5jZBcKw9Zh0g0Snjm8DgWDm2oOFY9VMzGbpdNcOqs6cpDkRSQBHyIvzir7u1fwvy2BXNOuJoulokPape8xv7zc7yfcckJ6JnRAkqG4s4PPKNTbjK6Ru844ORL_jRFcn72UuIxG9qakskD-k1RBHEsPw"/>
+</div>
+<span>Agent Profile</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto w-full">
+<!-- Mobile Top Nav (visible only on mobile) -->
+<header class="md:hidden flex justify-between items-center px-4 h-14 bg-surface border-b border-outline-variant w-full">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 bg-primary rounded-md flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-caption" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<h1 class="font-h3 text-h3 text-primary leading-tight">InsureIQ</h1>
+</div>
+<button class="text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<div class="max-w-max-width mx-auto p-4 md:p-gutter pb-24">
+<!-- Page Header -->
+<div class="mb-margin">
+<h2 class="font-h1 text-h1 text-on-surface mb-2">Billing &amp; Invoices</h2>
+<p class="font-body-lg text-body-lg text-text-secondary">Manage your subscription and view usage-based billing history.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-margin">
+<!-- Current Plan Card (Bento Large) -->
+<div class="lg:col-span-8 bg-surface rounded-xl border border-outline-variant shadow-xs p-gutter">
+<div class="flex justify-between items-start mb-6 border-b border-outline-variant pb-4">
+<div>
+<span class="inline-block px-3 py-1 rounded-full bg-primary-container text-on-primary-container font-overline text-overline mb-2 tracking-wider">CURRENT PLAN</span>
+<h3 class="font-h2 text-h2 text-on-surface">Enterprise AI</h3>
+<p class="font-body text-body text-text-secondary mt-1">Usage-based billing cycle resets on Nov 1, 2023</p>
+</div>
+<div class="text-right">
+<p class="font-caption text-caption text-text-secondary">Est. Next Bill</p>
+<p class="font-h2 text-h2 text-on-surface font-mono-data">$4,250.00</p>
+</div>
+</div>
+<!-- Usage Meters -->
+<div class="space-y-6">
+<!-- Policies Issued -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<div>
+<h4 class="font-h3 text-h3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-text-muted text-[20px]">description</span>
+                                        Policies Issued
+                                    </h4>
+</div>
+<div class="text-right">
+<span class="font-mono-data text-mono-data text-on-surface">8,420</span>
+<span class="font-caption text-caption text-text-secondary">/ 10,000 limit</span>
+</div>
+</div>
+<div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: 84%;"></div>
+</div>
+<p class="font-caption text-caption text-text-secondary mt-1 text-right">84% utilized</p>
+</div>
+<!-- Claims Processed -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<div>
+<h4 class="font-h3 text-h3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-text-muted text-[20px]">assignment_turned_in</span>
+                                        Claims Processed
+                                    </h4>
+</div>
+<div class="text-right">
+<span class="font-mono-data text-mono-data text-on-surface">1,205</span>
+<span class="font-caption text-caption text-text-secondary">/ 5,000 limit</span>
+</div>
+</div>
+<div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: 24%;"></div>
+</div>
+<p class="font-caption text-caption text-text-secondary mt-1 text-right">24% utilized</p>
+</div>
+</div>
+</div>
+<!-- Quick Actions / Status Card (Bento Small) -->
+<div class="lg:col-span-4 bg-surface rounded-xl border border-outline-variant shadow-xs p-gutter flex flex-col">
+<h3 class="font-h3 text-h3 text-on-surface mb-4">Payment Method</h3>
+<div class="bg-bg-muted rounded-lg p-4 mb-auto border border-outline-variant">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-on-surface-variant">credit_card</span>
+<span class="font-body-lg text-body-lg font-medium text-on-surface">•••• 4242</span>
+</div>
+<p class="font-caption text-caption text-text-secondary">Expires 12/25</p>
+</div>
+<div class="mt-6 space-y-3">
+<button class="w-full h-[40px] bg-white text-on-surface border border-outline-variant rounded-DEFAULT font-body text-body font-medium hover:bg-bg-muted transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+                            Update Payment
+                        </button>
+<button class="w-full h-[40px] bg-white text-on-surface border border-outline-variant rounded-DEFAULT font-body text-body font-medium hover:bg-bg-muted transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">upgrade</span>
+                            Change Plan
+                        </button>
+</div>
+</div>
+</div>
+<!-- Invoice History Table -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-xs overflow-hidden">
+<div class="p-6 border-b border-outline-variant">
+<h3 class="font-h2 text-h2 text-on-surface">Invoice History</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-bg-muted">
+<th class="py-3 px-6 font-overline text-overline text-text-secondary uppercase">Invoice ID</th>
+<th class="py-3 px-6 font-overline text-overline text-text-secondary uppercase">Date</th>
+<th class="py-3 px-6 font-overline text-overline text-text-secondary uppercase">Status</th>
+<th class="py-3 px-6 font-overline text-overline text-text-secondary uppercase text-right">Amount</th>
+<th class="py-3 px-6 font-overline text-overline text-text-secondary uppercase text-right">Action</th>
+</tr>
+</thead>
+<tbody class="font-body text-body">
+<!-- Row 1 -->
+<tr class="border-b border-outline-variant hover:bg-bg-subtle transition-colors">
+<td class="py-4 px-6 font-mono-data text-mono-data text-on-surface">INV-2023-10</td>
+<td class="py-4 px-6 text-on-surface">Oct 1, 2023</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-success-bg text-success font-caption text-caption font-medium border border-success/20">
+<span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+                                        Paid
+                                    </span>
+</td>
+<td class="py-4 px-6 font-mono-data text-mono-data text-on-surface text-right">$3,850.00</td>
+<td class="py-4 px-6 text-right">
+<button class="text-primary hover:text-primary-container transition-colors inline-flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                                        PDF
+                                    </button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-outline-variant hover:bg-bg-subtle transition-colors">
+<td class="py-4 px-6 font-mono-data text-mono-data text-on-surface">INV-2023-09</td>
+<td class="py-4 px-6 text-on-surface">Sep 1, 2023</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-success-bg text-success font-caption text-caption font-medium border border-success/20">
+<span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+                                        Paid
+                                    </span>
+</td>
+<td class="py-4 px-6 font-mono-data text-mono-data text-on-surface text-right">$4,100.50</td>
+<td class="py-4 px-6 text-right">
+<button class="text-primary hover:text-primary-container transition-colors inline-flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                                        PDF
+                                    </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-bg-subtle transition-colors">
+<td class="py-4 px-6 font-mono-data text-mono-data text-on-surface">INV-2023-08</td>
+<td class="py-4 px-6 text-on-surface">Aug 1, 2023</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-success-bg text-success font-caption text-caption font-medium border border-success/20">
+<span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+                                        Paid
+                                    </span>
+</td>
+<td class="py-4 px-6 font-mono-data text-mono-data text-on-surface text-right">$3,920.25</td>
+<td class="py-4 px-6 text-right">
+<button class="text-primary hover:text-primary-container transition-colors inline-flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                                        PDF
+                                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</body></html>

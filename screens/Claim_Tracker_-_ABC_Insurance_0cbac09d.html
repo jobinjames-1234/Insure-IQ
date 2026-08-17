@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Claim Tracker | InsureIQ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "text-secondary": "#5B5B60",
+                      "border-strong": "#D4D4D8",
+                      "tertiary": "#972900",
+                      "bg-muted": "#F4F4F5",
+                      "on-secondary-fixed": "#1d0061",
+                      "primary-fixed-dim": "#b8c4ff",
+                      "surface-container-low": "#f3f2ff",
+                      "inverse-primary": "#b8c4ff",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed-variant": "#0037b9",
+                      "on-primary-fixed": "#001453",
+                      "warning": "#B5750A",
+                      "on-primary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "surface-container-high": "#e7e7f5",
+                      "on-background": "#191b25",
+                      "on-tertiary-fixed": "#3a0a00",
+                      "surface-dim": "#d9d9e6",
+                      "warning-bg": "#FDF3E0",
+                      "on-tertiary-container": "#ffe4dc",
+                      "secondary-container": "#9a83ff",
+                      "secondary": "#6249c2",
+                      "on-error-container": "#93000a",
+                      "success-bg": "#E7F6EF",
+                      "background": "#fbf8ff",
+                      "surface-container": "#ededfa",
+                      "primary": "#003fd1",
+                      "on-secondary": "#ffffff",
+                      "outline-variant": "#c3c5d9",
+                      "tertiary-fixed": "#ffdbd1",
+                      "danger": "#C4293A",
+                      "success": "#12805C",
+                      "tertiary-fixed-dim": "#ffb59f",
+                      "outline": "#747688",
+                      "on-surface-variant": "#434656",
+                      "surface-container-highest": "#e1e1ef",
+                      "on-surface": "#191b25",
+                      "inverse-on-surface": "#f0effd",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed-dim": "#cbbeff",
+                      "primary-container": "#1a56ff",
+                      "danger-bg": "#FBEAEC",
+                      "primary-fixed": "#dde1ff",
+                      "on-secondary-container": "#300491",
+                      "bg-subtle": "#FAFAFA",
+                      "surface-bright": "#fbf8ff",
+                      "error-container": "#ffdad6",
+                      "surface": "#fbf8ff",
+                      "secondary-fixed": "#e6deff",
+                      "tertiary-container": "#c13700",
+                      "surface-tint": "#004af0",
+                      "text-muted": "#8B8B90",
+                      "on-secondary-fixed-variant": "#4a2ea9",
+                      "on-tertiary-fixed-variant": "#862300",
+                      "on-primary-container": "#e6e8ff",
+                      "inverse-surface": "#2e303a",
+                      "on-tertiary": "#ffffff",
+                      "surface-variant": "#e1e1ef"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "base": "4px",
+                      "margin": "32px",
+                      "max-width": "1200px"
+              },
+              "fontFamily": {
+                      "body": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "mono-data": ["JetBrains Mono"],
+                      "display": ["Inter"],
+                      "h2": ["Inter"],
+                      "h1": ["Inter"],
+                      "h3": ["Inter"],
+                      "overline": ["Inter"],
+                      "caption": ["Inter"]
+              },
+              "fontSize": {
+                      "body": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "mono-data": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "display": ["48px", {"lineHeight": "1.1", "fontWeight": "600"}],
+                      "h2": ["24px", {"lineHeight": "1.25", "fontWeight": "600"}],
+                      "h1": ["36px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "h3": ["18px", {"lineHeight": "1.35", "fontWeight": "600"}],
+                      "overline": ["11px", {"lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600"}],
+                      "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fbf8ff;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .step-line {
+            width: 2px;
+            background-color: #c3c5d9;
+            position: absolute;
+            top: 2rem;
+            bottom: 0;
+            left: 0.95rem;
+        }
+        .step-line-active {
+            background-color: #12805C;
+        }
+        .step-dot-shadow {
+            box-shadow: 0 0 0 4px rgba(18, 128, 92, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- TopNavBar -->
+<nav class="bg-surface border-b border-outline-variant docked full-width top-0 z-50 sticky">
+<div class="flex justify-between items-center px-gutter w-full h-16 max-w-max-width mx-auto">
+<div class="flex items-center gap-8">
+<span class="font-h2 text-h2 text-primary">InsureIQ</span>
+<div class="hidden md:flex items-center gap-6">
+<a class="font-body text-body text-on-surface-variant hover:text-primary transition-colors" href="#">Home</a>
+<a class="font-body text-body text-on-surface-variant hover:text-primary transition-colors" href="#">Apply</a>
+<a class="font-body text-body text-primary border-b-2 border-primary pb-1" href="#">Claims</a>
+<a class="font-body text-body text-on-surface-variant hover:text-primary transition-colors" href="#">Profile</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a friendly female insurance customer with a soft neutral background, lit by natural morning light, maintaining a corporate yet approachable aesthetic with cool blue and white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuB63yIcJBMPen-ybn0ab7yee4qpQZFBy6fdOtLc84mluWGRiU2TT1ZICzpWFszNoB1wcq3v02qeXXyuXxLPiEAMvIn5VKAGbSmlBb72ysIDoH1FVWwSodTQwYR12778_uIoUeUvTI4qggsLMgLLAcxgkBYE46IZaC-o68hAILIClWeK9Ubh1Gc6IBz9ejPsno5kmkkwT86hBT-QM0DZJtct_o5nbMb60JUnLWnnTJqG8LtZeEeYV7xA"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-max-width mx-auto px-gutter py-12">
+<!-- Header Section -->
+<header class="mb-10">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<nav class="flex items-center gap-2 mb-2 text-text-muted">
+<span class="font-caption text-caption">Claims</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="font-caption text-caption text-on-surface">#CL-9921</span>
+</nav>
+<h1 class="font-h1 text-h1 text-on-surface">Track your claim</h1>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2 border border-outline text-on-surface rounded-lg font-body text-body hover:bg-surface-container transition-all">
+                        Download Report
+                    </button>
+<button class="px-6 py-2 bg-primary text-on-primary rounded-lg font-body text-body hover:opacity-90 transition-all shadow-sm">
+                        Contact Support
+                    </button>
+</div>
+</div>
+</header>
+<!-- Main Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left: Tracker (Stepper) Column -->
+<div class="lg:col-span-4 bg-surface-container-lowest p-8 rounded-xl border border-outline-variant shadow-xs">
+<h3 class="font-h3 text-h3 mb-8">Claim Status</h3>
+<div class="relative space-y-12">
+<!-- Step 1: Submitted -->
+<div class="relative flex items-start gap-4">
+<div class="step-line step-line-active"></div>
+<div class="z-10 w-8 h-8 rounded-full bg-success text-on-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'wght' 600;">check</span>
+</div>
+<div>
+<p class="font-body text-body font-semibold text-on-surface">Submitted</p>
+<p class="font-caption text-caption text-text-secondary">12 Sep 2024</p>
+</div>
+</div>
+<!-- Step 2: Under Review -->
+<div class="relative flex items-start gap-4">
+<div class="step-line step-line-active"></div>
+<div class="z-10 w-8 h-8 rounded-full bg-success text-on-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'wght' 600;">check</span>
+</div>
+<div>
+<p class="font-body text-body font-semibold text-on-surface">Under Review</p>
+<p class="font-caption text-caption text-text-secondary">13 Sep 2024</p>
+</div>
+</div>
+<!-- Step 3: Fraud Check Complete (Current) -->
+<div class="relative flex items-start gap-4">
+<div class="step-line"></div>
+<div class="z-10 w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 step-dot-shadow">
+<span class="material-symbols-outlined text-[20px] animate-pulse">radar</span>
+</div>
+<div>
+<p class="font-body text-body font-semibold text-primary">Fraud Check Complete</p>
+<p class="font-caption text-caption text-text-muted">In Progress</p>
+</div>
+</div>
+<!-- Step 4: Approved -->
+<div class="relative flex items-start gap-4">
+<div class="step-line"></div>
+<div class="z-10 w-8 h-8 rounded-full bg-surface-container-high border-2 border-outline-variant flex items-center justify-center shrink-0">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+</div>
+<div>
+<p class="font-body text-body font-semibold text-text-muted">Approved</p>
+<p class="font-caption text-caption text-text-muted">Pending</p>
+</div>
+</div>
+<!-- Step 5: Payment Sent -->
+<div class="relative flex items-start gap-4">
+<div class="z-10 w-8 h-8 rounded-full bg-surface-container-high border-2 border-outline-variant flex items-center justify-center shrink-0">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+</div>
+<div>
+<p class="font-body text-body font-semibold text-text-muted">Payment Sent</p>
+<p class="font-caption text-caption text-text-muted">Pending</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Details Panels -->
+<div class="lg:col-span-8 space-y-8">
+<!-- Incident Details Panel -->
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant shadow-xs">
+<div class="flex justify-between items-start mb-6">
+<h3 class="font-h3 text-h3">Incident Details</h3>
+<span class="px-3 py-1 bg-success-bg text-success font-caption text-caption rounded-full">Automobile</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-4">
+<div>
+<label class="font-caption text-caption text-text-muted block mb-1">Incident Type</label>
+<p class="font-body text-body-lg text-on-surface">Minor collision at Oak St</p>
+</div>
+<div>
+<label class="font-caption text-caption text-text-muted block mb-1">Date of Incident</label>
+<p class="font-body text-body-lg text-on-surface">11 Sep 2024</p>
+</div>
+</div>
+<div class="relative h-32 rounded-lg overflow-hidden border border-outline-variant">
+<div class="absolute inset-0 bg-surface-dim">
+<img class="w-full h-full object-cover grayscale" data-alt="A clean, minimalist satellite map view of an urban intersection on Oak Street. The aesthetic is monochromatic and professional with subtle blue accents, highlighting clear street lines and geometric building shapes under soft, even daylight." data-location="Oak St, City" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArPtQ8OCl4O8jkLc6rUuwkVfinRSYGzPgawtE_-vq2Bwu7I6CIzzG13HFNpo-g2Asd1Em4EXZ1V2cF9nkRatjZFxWbM-y12hnXFxvlycB9-VbzuSpI7eKnk0Wa2dkXzgHL-KibiCliXWu69fFumExuzI0nRBmxfVIZ-J_4YES7TTOnyeAJGccswyl433txEYpF0NZ7QU4kSKAZgDHzv5oM04KAtSIL37OPmm9zNEbdJKR5utsUog9XUg"/>
+</div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="bg-primary text-on-primary p-2 rounded-full shadow-lg">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Adjuster Note & Actions -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Note Panel -->
+<div class="bg-warning-bg p-8 rounded-xl border border-warning/20 shadow-xs relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-[64px]">sticky_note_2</span>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-warning">info</span>
+<h4 class="font-body text-body font-bold text-warning">Adjuster Note</h4>
+</div>
+<p class="font-body text-body text-on-surface leading-relaxed">
+                            "Damage assessment in progress. Expected resolution in 24 hours."
+                        </p>
+<div class="mt-6 pt-6 border-t border-warning/10 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center border border-warning/20">
+<span class="material-symbols-outlined text-warning">person</span>
+</div>
+<div>
+<p class="font-caption text-caption font-bold text-on-surface">Marcus Sterling</p>
+<p class="font-caption text-caption text-text-secondary">Senior Claims Adjuster</p>
+</div>
+</div>
+</div>
+<!-- Summary / Next Steps Panel -->
+<div class="bg-surface-container-highest p-8 rounded-xl border border-outline-variant shadow-xs">
+<h4 class="font-body text-body font-bold mb-4">Immediate Actions</h4>
+<ul class="space-y-4">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-success">check_circle</span>
+<span class="font-body text-body text-on-surface">Photos uploaded</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">pending_actions</span>
+<span class="font-body text-body text-on-surface">Signature required for release</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-text-muted">schedule</span>
+<span class="font-body text-body text-on-surface">Assessment review</span>
+</li>
+</ul>
+<button class="w-full mt-6 py-2 bg-on-surface text-surface rounded-lg font-body text-body hover:opacity-90 transition-all">
+                            Complete Signature
+                        </button>
+</div>
+</div>
+<!-- Documentation Carousel (Visual placeholder) -->
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<h3 class="font-h3 text-h3">Attached Documentation</h3>
+<a class="text-primary font-caption text-caption hover:underline" href="#">View All</a>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="aspect-square rounded-lg border border-outline-variant bg-surface overflow-hidden group cursor-pointer">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-105" data-alt="A clean, close-up photograph of minor vehicle damage on a silver car door. The lighting is soft and neutral, highlighting surface scratches without dramatic shadows. The style is pragmatic, honest, and high-fidelity, set against a blurred urban background in light-mode tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7Whu0huENCEcxJ2MEvlIyHap3wRu6i06z3F2uKOnaTcd6M-x3su1wwIm0ciTTvUpLNos3c6p_Ec6279rbjw7tzYoNUemvoBUnFbBQH44zp7no08nkJjwaROcltu11GVJ2btniJ9nqdG_R1D_DZYAlNGxwcDVLeu0ulQUGTX0_S8arNCITxYqDp1xxT6f6HaM-J-oXnaGylBi8LNWdqmAndhJQvlkktPtHxLnINDQdPXmSvurRBvtAuQ"/>
+</div>
+<div class="aspect-square rounded-lg border border-outline-variant bg-surface overflow-hidden group cursor-pointer">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-105" data-alt="A clear, professional photo of a driver's license lying on a white textured surface. The image is brightly lit with a clean, clinical aesthetic, using soft blues and grays to maintain a corporate identity. The background is minimalist and out of focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPz5AFm1CB6h0eaW7h34pjamguYPJ_aBrjJ1r2DXqUqGwZ856k6soGLFiIfAJ8zEeRxag_a95Yj2PtOcg9XJ1hWPvqNoIZdHfaLT9-B_E5wSRw6zHoUYkjg0PBqTbWwayRXUDfAzWxi2PHxCx2EUyRIaJSrkp4q_zOKzvSC9FRltq3vlxtal0tpMPT4tAzEpU8fL5kT0-aEao5yqmzOOzmYNJUkBqK8cff2SB_wCSK0mHLmjjoGFol3Q"/>
+</div>
+<div class="aspect-square rounded-lg border border-outline-variant bg-surface overflow-hidden group cursor-pointer">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-105" data-alt="A macro shot of a hand-written insurance claim form with a blue ink pen resting on the side. The paper is crisp white, and the lighting is bright and professional. The overall mood is serious, administrative, and orderly, following the brand's blue and white color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLDejvikPyIJxU_Ne5Yft6kllMaT2azcVeeZNiXGbnvZa-RlW3qR0_S0AymilX6Y44THyrq2dzhtY0Dm2fX9YWnlfrNKZJDWXodTuZOZuGSqcn2GNiDpEDFyWbyZSJBjLDtlUgk6A88Jhi67pHjqqsnGMNgYi44GoFTcu8AqkIDFNuwbWOex4xBd3eT3leP-Gz6CNDGhKelUZwEQNf-6o4DpA0MOwgFFtOhPbmnurylOpRJP8KOSv9Iw"/>
+</div>
+<div class="aspect-square rounded-lg border border-outline-variant bg-surface-container-high flex flex-col items-center justify-center gap-2 hover:bg-surface-container-highest transition-all cursor-pointer">
+<span class="material-symbols-outlined text-outline">add_a_photo</span>
+<span class="font-caption text-caption text-text-muted">Add Photo</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="mt-20 border-t border-outline-variant py-12">
+<div class="max-w-max-width mx-auto px-gutter flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-col gap-1">
+<span class="font-h3 text-h3 text-primary">InsureIQ</span>
+<span class="font-caption text-caption text-text-muted">© 2024 InsureIQ. Trusted coverage for every journey.</span>
+</div>
+<div class="flex gap-8">
+<a class="font-caption text-caption text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-caption text-caption text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-caption text-caption text-on-surface-variant hover:text-primary transition-colors" href="#">Help Center</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple micro-interaction for the FAB-like signature button
+        const signatureBtn = document.querySelector('button:contains("Complete Signature")');
+        if (signatureBtn) {
+            signatureBtn.addEventListener('mousedown', () => {
+                signatureBtn.style.transform = 'scale(0.98)';
+            });
+            signatureBtn.addEventListener('mouseup', () => {
+                signatureBtn.style.transform = 'scale(1)';
+            });
+        }
+    </script>
+</body></html>

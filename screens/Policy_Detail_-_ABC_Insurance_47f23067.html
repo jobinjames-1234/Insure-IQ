@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Policy Detail - InsureIQ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#e7e7f5",
+                        "on-primary-fixed-variant": "#0037b9",
+                        "on-surface": "#191b25",
+                        "on-error": "#ffffff",
+                        "on-background": "#191b25",
+                        "tertiary-fixed": "#ffdbd1",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#001453",
+                        "danger": "#C4293A",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "danger-bg": "#FBEAEC",
+                        "inverse-on-surface": "#f0effd",
+                        "on-primary-container": "#e6e8ff",
+                        "on-secondary-fixed-variant": "#4a2ea9",
+                        "on-tertiary-container": "#ffe4dc",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb59f",
+                        "on-tertiary-fixed-variant": "#862300",
+                        "error": "#ba1a1a",
+                        "outline": "#747688",
+                        "on-secondary": "#ffffff",
+                        "surface": "#fbf8ff",
+                        "on-secondary-fixed": "#1d0061",
+                        "surface-container-highest": "#e1e1ef",
+                        "primary": "#003fd1",
+                        "surface-tint": "#004af0",
+                        "secondary": "#6249c2",
+                        "text-secondary": "#5B5B60",
+                        "surface-bright": "#fbf8ff",
+                        "primary-container": "#1a56ff",
+                        "text-muted": "#8B8B90",
+                        "warning": "#B5750A",
+                        "tertiary": "#972900",
+                        "on-tertiary-fixed": "#3a0a00",
+                        "tertiary-container": "#c13700",
+                        "on-secondary-container": "#300491",
+                        "inverse-primary": "#b8c4ff",
+                        "primary-fixed": "#dde1ff",
+                        "on-surface-variant": "#434656",
+                        "outline-variant": "#c3c5d9",
+                        "surface-container": "#ededfa",
+                        "bg-muted": "#F4F4F5",
+                        "inverse-surface": "#2e303a",
+                        "surface-dim": "#d9d9e6",
+                        "secondary-container": "#9a83ff",
+                        "background": "#fbf8ff",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "success": "#12805C",
+                        "bg-subtle": "#FAFAFA",
+                        "surface-variant": "#e1e1ef",
+                        "on-error-container": "#93000a",
+                        "border-strong": "#D4D4D8",
+                        "secondary-fixed": "#e6deff",
+                        "success-bg": "#E7F6EF",
+                        "secondary-fixed-dim": "#cbbeff",
+                        "surface-container-low": "#f3f2ff",
+                        "warning-bg": "#FDF3E0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "base": "4px",
+                        "margin": "32px",
+                        "max-width": "1200px"
+                    },
+                    "fontFamily": {
+                        "display": ["Inter"],
+                        "mono-data": ["JetBrains Mono"],
+                        "h1": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body": ["Inter"],
+                        "h3": ["Inter"],
+                        "overline": ["Inter"],
+                        "caption": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "mono-data": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h3": ["18px", { "lineHeight": "1.35", "fontWeight": "600" }],
+                        "overline": ["11px", { "lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "h2": ["24px", { "lineHeight": "1.25", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Hide scrollbar for clean horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body font-sans antialiased min-h-screen flex flex-col">
+<!-- Header / TopNav (Suppressed for this deep-dive as requested, relying on Back action) -->
+<header class="bg-surface border-b border-outline-variant sticky top-0 z-50">
+<div class="max-w-max-width mx-auto px-gutter h-16 flex items-center justify-between">
+<button class="flex items-center text-text-secondary hover:text-primary transition-colors group">
+<span class="material-symbols-outlined mr-2 group-hover:-translate-x-1 transition-transform">arrow_back</span>
+<span class="font-body-lg font-medium">Back to Policies</span>
+</button>
+<div class="flex items-center gap-4">
+<button class="p-2 text-text-secondary hover:text-primary transition-colors rounded-full hover:bg-surface-container">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold">JD</div>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-max-width mx-auto w-full px-gutter py-8 md:py-margin space-y-8">
+<!-- Policy Header -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-outline-variant pb-8">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-success-bg text-success px-3 py-1 rounded-full text-caption font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined filled text-[14px]">check_circle</span> Active
+                    </span>
+<span class="text-text-muted text-body flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">shield</span> Auto Insurance
+                    </span>
+</div>
+<h1 class="text-h1 font-bold text-on-surface mb-2">Comprehensive Auto</h1>
+<p class="text-mono-data text-text-secondary">Policy #AU-993-2023-A4</p>
+</div>
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+<div class="bg-surface-container rounded-lg p-4 flex flex-col justify-center border border-outline-variant">
+<span class="text-overline text-text-secondary uppercase mb-1">Next Payment</span>
+<span class="text-h3 font-bold font-mono-data">$124.50</span>
+<span class="text-caption text-text-muted mt-1">Due Oct 15, 2023</span>
+</div>
+<button class="h-10 px-6 bg-primary text-on-primary rounded-DEFAULT font-medium hover:bg-primary-container transition-colors shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">payments</span>
+                    Pay Now
+                </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Left Column: Coverage Terms (8 cols on desktop) -->
+<div class="md:col-span-8 space-y-6">
+<!-- Vehicle Info Card (Glassmorphism inspired, minimal) -->
+<div class="bg-surface border border-outline-variant rounded-xl p-6 shadow-xs relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-surface-container-low to-transparent opacity-50 z-0 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+<div class="w-full sm:w-1/3 aspect-video sm:aspect-square bg-surface-container rounded-lg flex items-center justify-center overflow-hidden border border-outline-variant shrink-0">
+<img class="object-cover w-full h-full opacity-90 mix-blend-multiply" data-alt="A highly detailed, professional automotive photograph of a dark metallic blue 2021 Toyota Camry parked on a sleek, minimalist concrete surface. The lighting is studio-quality, creating smooth reflections on the car's bodywork. The background is a stark, bright white, maintaining a clean, modern, light-mode aesthetic suitable for a high-trust financial application. The mood is pristine and reliable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZmZx5CEibWggfUiGNgqStVWi72muR-FvzUS0XNFeIDPZ9sewdu0QnkALnwqz9S56NVOiWTlhq6zoLs3gTcgx4HnX10ZhmmZK3J_4Q0lYrO5_n0KTJBso3TxY1USXjvjSqIqfNcgl0uOJz6mCTY-Or8hxRBRvNs1w3nkqyY6INozOOWY3Ys-ICSSIGU7X99selcuoCHd0FpdtgJZA7ZT-gZmSZITvsjTkGTIdFyxto-Hq_L17MRoC80w"/>
+</div>
+<div class="flex-1 space-y-4">
+<div>
+<h3 class="text-h3 font-semibold mb-1">2021 Toyota Camry LE</h3>
+<p class="text-body text-text-secondary font-mono-data">VIN: 4T1B11HK5MU09XXXX</p>
+</div>
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant">
+<div>
+<span class="block text-caption text-text-muted mb-1">Primary Driver</span>
+<span class="text-body font-medium">John Doe</span>
+</div>
+<div>
+<span class="block text-caption text-text-muted mb-1">Annual Mileage</span>
+<span class="text-body font-medium font-mono-data">12,000</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Coverage Breakdown -->
+<div class="bg-surface border border-outline-variant rounded-xl shadow-xs overflow-hidden">
+<div class="p-6 border-b border-outline-variant bg-bg-subtle flex justify-between items-center">
+<h3 class="text-h3 font-semibold">Coverage Details</h3>
+<button class="text-primary hover:text-primary-container text-body font-medium flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span> Modify
+                        </button>
+</div>
+<div class="divide-y divide-outline-variant">
+<!-- Coverage Item 1 -->
+<div class="p-6 flex flex-col sm:flex-row justify-between gap-4 hover:bg-bg-subtle transition-colors">
+<div class="flex-1">
+<h4 class="text-body-lg font-semibold mb-1">Bodily Injury Liability</h4>
+<p class="text-body text-text-secondary mb-2 max-w-prose">Covers medical expenses and lost wages for others if you're at fault in an accident.</p>
+</div>
+<div class="text-left sm:text-right min-w-[120px]">
+<span class="block text-h3 font-bold font-mono-data">$100k / $300k</span>
+<span class="text-caption text-text-muted">Per Person / Per Accident</span>
+</div>
+</div>
+<!-- Coverage Item 2 -->
+<div class="p-6 flex flex-col sm:flex-row justify-between gap-4 hover:bg-bg-subtle transition-colors">
+<div class="flex-1">
+<h4 class="text-body-lg font-semibold mb-1">Property Damage Liability</h4>
+<p class="text-body text-text-secondary mb-2 max-w-prose">Covers damage you cause to someone else's property or vehicle.</p>
+</div>
+<div class="text-left sm:text-right min-w-[120px]">
+<span class="block text-h3 font-bold font-mono-data">$100k</span>
+<span class="text-caption text-text-muted">Per Accident</span>
+</div>
+</div>
+<!-- Coverage Item 3 -->
+<div class="p-6 flex flex-col sm:flex-row justify-between gap-4 hover:bg-bg-subtle transition-colors">
+<div class="flex-1">
+<h4 class="text-body-lg font-semibold mb-1 flex items-center gap-2">
+                                    Comprehensive
+                                    <span class="bg-surface-container-high text-text-secondary px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">Deductible</span>
+</h4>
+<p class="text-body text-text-secondary mb-2 max-w-prose">Covers damage from events outside your control (theft, weather, vandalism).</p>
+</div>
+<div class="text-left sm:text-right min-w-[120px]">
+<span class="block text-h3 font-bold font-mono-data">$500</span>
+<span class="text-caption text-text-muted">Deductible</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Documents, Premium History, Renewal (4 cols on desktop) -->
+<div class="md:col-span-4 space-y-6">
+<!-- Renewal Action Card (Highlight) -->
+<div class="bg-surface border-2 border-primary rounded-xl p-6 shadow-md relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary-fixed rounded-bl-full -z-10 opacity-50"></div>
+<div class="flex items-start justify-between mb-4">
+<h3 class="text-h3 font-semibold text-primary">Renewal Available</h3>
+<span class="material-symbols-outlined text-primary">update</span>
+</div>
+<p class="text-body text-on-surface-variant mb-6">Your current policy expires on Nov 1, 2023. Review and renew now to avoid gaps in coverage.</p>
+<button class="w-full h-10 bg-primary text-on-primary rounded-DEFAULT font-medium hover:bg-primary-container transition-colors shadow-sm flex items-center justify-center gap-2">
+                        Renew Policy
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+<!-- Documents -->
+<div class="bg-surface border border-outline-variant rounded-xl shadow-xs p-6">
+<h3 class="text-h3 font-semibold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary">folder_open</span> Documents
+                    </h3>
+<div class="space-y-3">
+<a class="flex items-center p-3 rounded-lg border border-outline-variant hover:border-primary hover:bg-surface-container-low transition-all group" href="#">
+<span class="material-symbols-outlined text-danger mr-3">picture_as_pdf</span>
+<div class="flex-1 min-w-0">
+<p class="text-body font-medium truncate group-hover:text-primary transition-colors">Declaration Page</p>
+<p class="text-caption text-text-muted font-mono-data">PDF • 1.2 MB • Sep 1, 2023</p>
+</div>
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary">download</span>
+</a>
+<a class="flex items-center p-3 rounded-lg border border-outline-variant hover:border-primary hover:bg-surface-container-low transition-all group" href="#">
+<span class="material-symbols-outlined text-danger mr-3">picture_as_pdf</span>
+<div class="flex-1 min-w-0">
+<p class="text-body font-medium truncate group-hover:text-primary transition-colors">Full Policy Wording</p>
+<p class="text-caption text-text-muted font-mono-data">PDF • 4.5 MB • Sep 1, 2023</p>
+</div>
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary">download</span>
+</a>
+<a class="flex items-center p-3 rounded-lg border border-outline-variant hover:border-primary hover:bg-surface-container-low transition-all group" href="#">
+<span class="material-symbols-outlined text-primary mr-3">wallet</span>
+<div class="flex-1 min-w-0">
+<p class="text-body font-medium truncate group-hover:text-primary transition-colors">Digital ID Card</p>
+<p class="text-caption text-text-muted font-mono-data">Apple Wallet / GPay</p>
+</div>
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary">add_circle</span>
+</a>
+</div>
+</div>
+<!-- Premium History (Simplified Bar Chart Representation) -->
+<div class="bg-surface border border-outline-variant rounded-xl shadow-xs p-6">
+<h3 class="text-h3 font-semibold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary">bar_chart</span> Premium History
+                    </h3>
+<div class="space-y-4">
+<div class="flex items-end h-32 gap-2 border-b border-outline-variant pb-2 relative">
+<!-- Y-axis indicators -->
+<div class="absolute left-0 top-0 h-full flex flex-col justify-between text-caption text-text-muted font-mono-data w-8">
+<span>$150</span>
+<span>$100</span>
+<span>$50</span>
+</div>
+<!-- Bars (starting after y-axis space) -->
+<div class="flex-1 flex items-end justify-between ml-10 h-full">
+<div class="w-1/5 flex flex-col items-center group relative">
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[60%] group-hover:bg-primary-fixed transition-colors"></div>
+<div class="absolute -top-8 bg-inverse-surface text-inverse-on-surface text-caption px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-mono-data pointer-events-none">$95.00</div>
+</div>
+<div class="w-1/5 flex flex-col items-center group relative">
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[65%] group-hover:bg-primary-fixed transition-colors"></div>
+<div class="absolute -top-8 bg-inverse-surface text-inverse-on-surface text-caption px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-mono-data pointer-events-none">$105.00</div>
+</div>
+<div class="w-1/5 flex flex-col items-center group relative">
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[70%] group-hover:bg-primary-fixed transition-colors"></div>
+<div class="absolute -top-8 bg-inverse-surface text-inverse-on-surface text-caption px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-mono-data pointer-events-none">$110.50</div>
+</div>
+<div class="w-1/5 flex flex-col items-center group relative">
+<div class="w-full bg-primary rounded-t-sm h-[80%]"></div>
+<div class="absolute -top-8 bg-primary text-on-primary text-caption px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-mono-data pointer-events-none">$124.50</div>
+</div>
+</div>
+</div>
+<!-- X-axis labels -->
+<div class="flex justify-between ml-10 text-caption text-text-muted">
+<span class="w-1/5 text-center">2020</span>
+<span class="w-1/5 text-center">2021</span>
+<span class="w-1/5 text-center">2022</span>
+<span class="w-1/5 text-center font-semibold text-on-surface">2023</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

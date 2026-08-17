@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ABC Insurance - Mobile Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#191b25",
+                        "on-tertiary-fixed": "#3a0a00",
+                        "surface-tint": "#004af0",
+                        "secondary-container": "#9a83ff",
+                        "on-secondary-container": "#300491",
+                        "tertiary-fixed-dim": "#ffb59f",
+                        "surface-variant": "#e1e1ef",
+                        "primary-fixed": "#dde1ff",
+                        "inverse-surface": "#2e303a",
+                        "bg-subtle": "#FAFAFA",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#c13700",
+                        "danger": "#C4293A",
+                        "surface-container": "#ededfa",
+                        "on-tertiary-fixed-variant": "#862300",
+                        "tertiary-fixed": "#ffdbd1",
+                        "surface": "#fbf8ff",
+                        "background": "#fbf8ff",
+                        "surface-dim": "#d9d9e6",
+                        "success-bg": "#E7F6EF",
+                        "border-strong": "#D4D4D8",
+                        "secondary-fixed": "#e6deff",
+                        "surface-container-highest": "#e1e1ef",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "outline-variant": "#c3c5d9",
+                        "text-muted": "#8B8B90",
+                        "on-background": "#191b25",
+                        "on-secondary-fixed-variant": "#4a2ea9",
+                        "danger-bg": "#FBEAEC",
+                        "success": "#12805C",
+                        "on-tertiary-container": "#ffe4dc",
+                        "on-error": "#ffffff",
+                        "text-secondary": "#5B5B60",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#1a56ff",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "warning": "#B5750A",
+                        "secondary": "#6249c2",
+                        "on-primary-fixed-variant": "#0037b9",
+                        "warning-bg": "#FDF3E0",
+                        "on-primary-fixed": "#001453",
+                        "primary": "#003fd1",
+                        "surface-container-low": "#f3f2ff",
+                        "surface-bright": "#fbf8ff",
+                        "tertiary": "#972900",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#434656",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#f0effd",
+                        "inverse-primary": "#b8c4ff",
+                        "surface-container-high": "#e7e7f5",
+                        "bg-muted": "#F4F4F5",
+                        "on-primary-container": "#e6e8ff",
+                        "on-secondary-fixed": "#1d0061",
+                        "outline": "#747688",
+                        "secondary-fixed-dim": "#cbbeff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "base": "4px",
+                        "max-width": "1200px",
+                        "margin": "32px"
+                    },
+                    "fontFamily": {
+                        "mono-data": ["JetBrains Mono"],
+                        "h1": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Inter"],
+                        "h2": ["Inter"],
+                        "body": ["Inter"],
+                        "display": ["Inter"],
+                        "overline": ["Inter"],
+                        "caption": ["Inter"]
+                    },
+                    "fontSize": {
+                        "mono-data": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h3": ["18px", { "lineHeight": "1.35", "fontWeight": "600" }],
+                        "h2": ["24px", { "lineHeight": "1.25", "fontWeight": "600" }],
+                        "body": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "overline": ["11px", { "lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #fbf8ff; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased flex flex-col min-h-screen relative max-w-[480px] mx-auto md:hidden">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 bg-surface border-b border-surface-variant flex justify-between items-center h-16 px-gutter max-w-max-width mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm">
+                AB
+            </div>
+<span class="font-h2 text-h2 font-bold text-primary">InsureIQ</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface hover:bg-surface-container-low rounded-full transition-colors duration-200 ease-in-out">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-4 py-6 overflow-y-auto pb-[90px]">
+<!-- Greeting -->
+<section class="mb-6">
+<h1 class="font-h1 text-h1 text-on-surface">Hello, Sarah</h1>
+<p class="font-body-lg text-body-lg text-text-secondary mt-1">Here is a quick overview of your policies.</p>
+</section>
+<!-- Urgency Banner -->
+<section class="mb-8">
+<div class="bg-warning-bg border border-warning rounded-lg p-4 flex gap-4 items-start shadow-xs">
+<span class="material-symbols-outlined text-warning mt-0.5" style="font-variation-settings: 'FILL' 1;">error</span>
+<div class="flex-1">
+<h3 class="font-h3 text-h3 text-on-surface">Renewal Due in 12 Days</h3>
+<p class="font-body text-body text-text-secondary mt-1">Your Auto policy is expiring soon. Review your details to maintain continuous coverage.</p>
+</div>
+<button class="material-symbols-outlined text-text-muted hover:text-on-surface transition-colors">close</button>
+</div>
+</section>
+<!-- Policy Cards Stack -->
+<section class="mb-8 space-y-4">
+<div class="flex justify-between items-end mb-4">
+<h2 class="font-h2 text-h2 text-on-surface">Your Policies</h2>
+</div>
+<!-- Auto Policy Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-xs border border-surface-variant relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined">directions_car</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">Daily Commuter</h3>
+<p class="font-caption text-caption text-text-secondary">Auto Policy • 2021 Honda Civic</p>
+</div>
+</div>
+<span class="bg-warning-bg text-warning font-caption text-caption px-2 py-1 rounded-full whitespace-nowrap">Expiring Soon</span>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-6">
+<div>
+<p class="font-overline text-overline text-text-muted uppercase tracking-wider">Premium</p>
+<p class="font-mono-data text-mono-data text-on-surface mt-1">$142.50<span class="text-text-secondary font-body text-body">/mo</span></p>
+</div>
+<div>
+<p class="font-overline text-overline text-text-muted uppercase tracking-wider">Next Payment</p>
+<p class="font-mono-data text-mono-data text-on-surface mt-1">Oct 15, 2023</p>
+</div>
+</div>
+<button class="w-full mt-6 bg-surface-container-high text-on-surface font-body text-body py-2 rounded-lg hover:bg-surface-variant transition-colors border border-surface-variant">View Details</button>
+</div>
+<!-- Home Policy Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-xs border border-surface-variant relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-success"></div>
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-success-bg text-success flex items-center justify-center">
+<span class="material-symbols-outlined">house</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">Primary Residence</h3>
+<p class="font-caption text-caption text-text-secondary">Home Policy • 123 Maple St</p>
+</div>
+</div>
+<span class="bg-success-bg text-success font-caption text-caption px-2 py-1 rounded-full whitespace-nowrap">Active</span>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-6">
+<div>
+<p class="font-overline text-overline text-text-muted uppercase tracking-wider">Premium</p>
+<p class="font-mono-data text-mono-data text-on-surface mt-1">$89.00<span class="text-text-secondary font-body text-body">/mo</span></p>
+</div>
+<div>
+<p class="font-overline text-overline text-text-muted uppercase tracking-wider">Next Payment</p>
+<p class="font-mono-data text-mono-data text-on-surface mt-1">Oct 28, 2023</p>
+</div>
+</div>
+<button class="w-full mt-6 bg-surface-container-high text-on-surface font-body text-body py-2 rounded-lg hover:bg-surface-variant transition-colors border border-surface-variant">View Details</button>
+</div>
+</section>
+<!-- Call to Action -->
+<section class="mt-8 mb-6">
+<button class="w-full h-10 bg-primary-container text-on-primary font-body text-body rounded-lg hover:bg-primary transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+                Get a New Quote
+            </button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface border-t border-surface-variant flex justify-around items-center h-16 max-w-[480px] mx-auto left-0 right-0">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center text-primary font-semibold hover:bg-surface-container-low transition-transform duration-150 active:scale-95 flex-1 h-full" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-caption text-caption mt-1">Home</span>
+</a>
+<!-- Apply -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-transform duration-150 active:scale-95 flex-1 h-full" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-caption text-caption mt-1">Apply</span>
+</a>
+<!-- Claims -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-transform duration-150 active:scale-95 flex-1 h-full" href="#">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+<span class="font-caption text-caption mt-1">Claims</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-transform duration-150 active:scale-95 flex-1 h-full" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-caption text-caption mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

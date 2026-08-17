@@ -1,0 +1,520 @@
+Module 1 — Tenant Management (Multi-Tenant Core)
+
+Estimated tables: 27
+
+#	Table Name	Purpose
+1	tenants	Master tenant (insurance company)
+2	tenant_profiles	Company information
+3	tenant_addresses	Company addresses
+4	tenant_contacts	Official contacts
+5	tenant_domains	Custom domains & subdomains
+6	tenant_branding	Logos, themes, colors
+7	tenant_settings	General tenant configuration
+8	tenant_locales	Timezone, language, currency
+9	tenant_features	Enabled feature flags
+10	tenant_feature_overrides	Per-feature customization
+11	tenant_modules	Enabled application modules
+12	tenant_subscription_plans	Assigned SaaS plan
+13	tenant_usage_limits	Usage quotas
+14	tenant_usage_counters	Current usage statistics
+15	tenant_status_history	Activation/Suspension history
+16	tenant_lifecycle_events	Provisioning lifecycle
+17	tenant_api_credentials	Tenant API credentials
+18	tenant_oauth_clients	OAuth clients
+19	tenant_security_settings	Password, MFA, security policies
+20	tenant_data_regions	Data residency region
+21	tenant_backup_policies	Backup configuration
+22	tenant_integrations	Third-party integrations
+23	tenant_webhooks	Outgoing webhook endpoints
+24	tenant_email_settings	SMTP configuration
+25	tenant_sms_settings	SMS provider configuration
+26	tenant_storage_settings	File/object storage configuration
+27	tenant_provisioning_logs	Tenant creation and provisioning audit
+
+Relationships
+Tenant
+├── Profile
+├── Addresses
+├── Contacts
+├── Branding
+├── Domains
+├── Settings
+├── Modules
+├── Features
+├── Subscription
+├── Usage
+├── API Credentials
+├── Security Settings
+├── Integrations
+├── Webhooks
+└── Provisioning Logs
+
+Module 2 — Identity, Authentication & User Management
+
+Estimated tables: 39
+
+This module manages every human user in the platform—from InsureIQ Super Admins to tenant Administrators, Underwriters, Agents, Claims Adjusters, Customer Support, Auditors, and eventually B2C marketplace users. It supports role-based access control (RBAC), secure authentication, MFA, session management, password policies, and account lifecycle. The requirements specify multiple user roles within each tenant and tenant-level administration.
+
+Core Identity
+#	Table Name	Purpose
+1	users	Master user account
+2	user_profiles	Personal profile
+3	user_addresses	User addresses
+4	user_contacts	Contact information
+5	user_preferences	UI preferences
+6	user_settings	Account settings
+7	user_status_history	Status changes
+8	user_login_history	Login audit
+9	user_devices	Registered devices
+10	user_sessions	Active sessions
+Authentication
+#	Table Name	Purpose
+11	passwords	Password metadata
+12	password_history	Previous passwords
+13	password_reset_tokens	Password reset
+14	email_verification_tokens	Email verification
+15	phone_verification_tokens	OTP verification
+16	refresh_tokens	JWT refresh tokens
+17	api_tokens	Personal API tokens
+18	mfa_methods	MFA methods
+19	mfa_backup_codes	Recovery codes
+20	login_attempts	Failed logins
+21	account_lockouts	Temporary lockouts
+Authorization (RBAC)
+#	Table Name	Purpose
+22	roles	System roles
+23	permissions	Individual permissions
+24	role_permissions	Role-permission mapping
+25	user_roles	User-role mapping
+26	permission_groups	Permission categories
+27	custom_roles	Tenant-defined roles
+28	custom_role_permissions	Custom role permissions
+Organization Membership
+#	Table Name	Purpose
+29	tenant_users	User belongs to tenant
+30	departments	Departments
+31	user_departments	Department membership
+32	teams	Teams
+33	team_members	Team membership
+34	reporting_hierarchy	Manager-subordinate relationships
+Security & Compliance
+#	Table Name	Purpose
+35	user_consents	Privacy/GDPR consent
+36	security_questions	Recovery questions
+37	security_answers	Encrypted answers
+38	trusted_devices	Trusted devices
+39	user_access_logs	Security audit log
+Relationship Overview
+Tenant
+│
+├── Users
+│      │
+│      ├── Profile
+│      ├── Contacts
+│      ├── Addresses
+│      ├── Preferences
+│      ├── Settings
+│      ├── Devices
+│      ├── Sessions
+│      ├── Login History
+│      ├── Passwords
+│      ├── MFA
+│      ├── API Tokens
+│      ├── Consents
+│      └── Access Logs
+│
+├── Roles
+│      ├── Permissions
+│      └── Role Permissions
+│
+├── Departments
+├── Teams
+└── Reporting Hierarchy
+Major Relationships
+Tenant → Users (1:N)
+User → User Profile (1:1)
+User → Sessions (1:N)
+User → Devices (1:N)
+User → Roles (M:N)
+Role → Permissions (M:N)
+Department → Users (M:N)
+Team → Users (M:N)
+Manager → Employee (1:N via reporting_hierarchy)
+User → Login History (1:N)
+User → MFA Methods (1:N)
+User → Access Logs (1:N)
+
+Module 3 — Organization Structure & Employee Management
+
+Estimated tables: 34
+
+This module models the internal organizational hierarchy of each insurance company (tenant). It defines branches, regions, departments, job positions, reporting structures, employee assignments, and workforce management. This supports the tenant roles described in the requirements (Agents, Underwriters, Claims Adjusters, Administrators, etc.) while allowing every insurer to have its own organizational structure.
+
+Organization
+#	Table Name	Purpose
+1	organizations	Legal business entity
+2	organization_types	Company classifications
+3	organization_hierarchy	Parent-child organization structure
+4	organization_settings	Organization-level settings
+Regional Structure
+#	Table Name	Purpose
+5	regions	Sales/operational regions
+6	zones	Zone hierarchy
+7	territories	Territory definitions
+8	branches	Insurance branch offices
+9	branch_addresses	Branch addresses
+10	branch_contacts	Branch contact details
+11	branch_operating_hours	Working hours
+12	branch_service_areas	Coverage/service regions
+Departments
+#	Table Name	Purpose
+13	departments	Departments
+14	department_types	Department categories
+15	department_hierarchy	Parent-child departments
+16	department_cost_centers	Financial cost centers
+Employee Structure
+#	Table Name	Purpose
+17	employees	Employee master
+18	employee_positions	Employee designation
+19	job_titles	Standard job titles
+20	employment_types	Full-time, contract, etc.
+21	employee_branch_assignments	Branch assignment
+22	employee_department_assignments	Department assignment
+23	employee_region_assignments	Regional assignment
+24	employee_reporting_lines	Reporting manager
+25	employee_work_locations	Physical/remote work location
+Workforce Assignment
+#	Table Name	Purpose
+26	employee_workloads	Current workload
+27	employee_specializations	Insurance specialization
+28	employee_certifications	Professional certifications
+29	employee_license_records	Regulatory licenses
+30	employee_skill_matrix	Skills inventory
+31	employee_availability	Availability status
+32	employee_leave_balances	Leave balances
+33	employee_shift_assignments	Shift schedules
+34	employee_assignment_history	Historical assignments
+Relationship Overview
+Organization
+│
+├── Regions
+│      ├── Zones
+│      │      ├── Territories
+│      │      │      └── Branches
+│
+├── Departments
+│      └── Sub Departments
+│
+└── Employees
+       ├── Position
+       ├── Department
+       ├── Branch
+       ├── Region
+       ├── Manager
+       ├── Certifications
+       ├── Licenses
+       ├── Skills
+       ├── Workload
+       ├── Availability
+       └── Assignment History
+Major Relationships
+Tenant → Organization (1:1)
+Organization → Regions (1:N)
+Region → Zones (1:N)
+Zone → Territories (1:N)
+Territory → Branches (1:N)
+Organization → Departments (1:N)
+Department → Employees (1:N)
+Employee → Branch (N:1)
+Employee → Region (N:1)
+Employee → Manager (Self-referencing hierarchy)
+Employee → Certifications (1:N)
+Employee → Licenses (1:N)
+Employee → Skills (1:N)
+Employees supported
+
+This module accommodates all operational staff within a tenant, including:
+
+Administrator
+Branch Manager
+Regional Manager
+Insurance Agent
+Underwriter
+Senior Underwriter
+Claims Adjuster
+Claims Manager
+Customer Support Executive
+Sales Executive
+Finance Officer
+Compliance Officer
+Internal Auditor
+Data Analyst
+AI/ML Administrator
+IT Support Engineer
+
+This module establishes the organizational hierarchy used throughout the platform. Later modules such as Policy Management, Claims, Workflow, Task Assignment, Commissions, Approvals, and Analytics will reference these organizational entities for routing, ownership, permissions, and reporting.
+
+Module 4 — Customer & Party Management
+
+Estimated tables: 52
+
+This is one of the largest modules in the entire platform. It manages every person and organization that interacts with InsureIQ. The project distinguishes between tenant customers (insurance companies) and end customers (policyholders), while also supporting brokers, nominees, employers, hospitals, repair garages, surveyors, reinsurers, and other parties. This module forms the foundation for Policies, Claims, Billing, AI, CRM, and Marketplace functionality.
+
+A. Party Master (Universal Party Model)
+
+Instead of separate "Customer", "Company", "Hospital", etc., every entity begins as a Party.
+
+#	Table Name	Purpose
+1	parties	Universal party master
+2	party_types	Person, Organization, Hospital, Broker...
+3	party_statuses	Active, Suspended, Blacklisted
+4	party_identifiers	External IDs
+5	party_relationships	Party-to-party relationships
+6	party_tags	Classification tags
+7	party_notes	Internal notes
+8	party_attachments	Party documents
+B. Individual Persons
+#	Table Name	Purpose
+9	persons	Individual details
+10	person_names	Name history
+11	person_demographics	Gender, DOB, nationality
+12	person_marital_status	Marital information
+13	person_employment	Employment details
+14	person_income_profiles	Income information
+15	person_family_members	Family members
+16	person_emergency_contacts	Emergency contacts
+C. Organizations
+#	Table Name	Purpose
+17	organizations_master	Organization details
+18	organization_contacts	Contacts
+19	organization_industries	Industry classification
+20	organization_sizes	Company size
+21	organization_financial_profiles	Financial profile
+D. Customer Management
+#	Table Name	Purpose
+22	customers	Customer master
+23	customer_profiles	Extended profile
+24	customer_segments	Customer segmentation
+25	customer_categories	Retail, Corporate, VIP
+26	customer_status_history	Lifecycle history
+27	customer_preferences	Communication preferences
+28	customer_lifecycle	Lifecycle stage
+29	customer_risk_profiles	Current risk profile
+E. Identity & Verification
+#	Table Name	Purpose
+30	identity_documents	Aadhaar, Passport, etc.
+31	identity_verifications	Verification results
+32	kyc_applications	KYC requests
+33	kyc_verification_results	KYC outcome
+34	sanctions_screenings	AML/Sanctions
+35	pep_screenings	Politically exposed persons
+36	customer_consents	Privacy consent
+F. Addresses
+#	Table Name	Purpose
+37	addresses	Master addresses
+38	address_types	Home, Office
+39	party_addresses	Party-address mapping
+G. Contact Information
+#	Table Name	Purpose
+40	contact_methods	Phone, Email
+41	phone_numbers	Phone numbers
+42	email_addresses	Email addresses
+43	social_profiles	Social media
+44	preferred_contact_methods	Preferred communication
+H. Nominees & Beneficiaries
+#	Table Name	Purpose
+45	nominees	Insurance nominees
+46	beneficiary_allocations	Allocation percentages
+47	legal_guardians	Guardian information
+I. Marketplace Customer
+#	Table Name	Purpose
+48	marketplace_accounts	Global marketplace account
+49	marketplace_preferences	Marketplace settings
+50	marketplace_saved_quotes	Saved quote comparisons
+J. Customer History
+#	Table Name	Purpose
+51	customer_activity_history	Activity timeline
+52	customer_merge_history	Duplicate merge history
+Relationship Overview
+Party
+│
+├── Person
+│      ├── Employment
+│      ├── Income
+│      ├── Family
+│      ├── Emergency Contacts
+│      └── Identity Documents
+│
+├── Organization
+│
+├── Customer
+│      ├── Profile
+│      ├── Risk Profile
+│      ├── Preferences
+│      ├── Lifecycle
+│      ├── KYC
+│      ├── Consents
+│      ├── Nominees
+│      └── Marketplace Account
+│
+├── Addresses
+├── Phones
+├── Emails
+├── Notes
+└── Attachments
+Major Relationships
+Party → Customer (1:1 or 1:N depending on business rules)
+Party → Addresses (M:N)
+Party → Contact Methods (1:N)
+Customer → Identity Documents (1:N)
+Customer → KYC Applications (1:N)
+Customer → Risk Profiles (1:N over time)
+Customer → Nominees (1:N)
+Customer → Marketplace Account (1:1)
+Customer → Activity History (1:N)
+Customer → Policies (1:N, introduced in the Policy module)
+Why use a Universal Party Model?
+
+This is a common enterprise pattern used in large insurance and financial systems because many entities share the same core attributes (name, address, contacts, documents, relationships). Rather than duplicating those fields across separate tables for customers, hospitals, brokers, repair shops, reinsurers, and employers, they all derive from a single parties entity with specialized extensions. It reduces redundancy, simplifies integrations, and supports future expansion.
+
+This module underpins nearly every other domain in InsureIQ: Policies, Claims, Underwriting, Billing, CRM, Marketplace, AI Risk Scoring, Fraud Detection, and Analytics all reference these customer and party records.
+
+Module 5 — Insurance Product & Policy Catalog
+
+Estimated tables: 47
+
+This module defines what an insurance company sells, not what customers purchase. Every tenant (insurer) can configure its own insurance products, policy types, coverages, riders, premium bands, exclusions, underwriting rules, eligibility criteria, deductibles, waiting periods, and benefits without affecting other tenants. This aligns with the requirement that policy types, coverage rules, premium bands, and approval thresholds be configurable per tenant.
+
+A. Product Catalog
+#	Table Name	Purpose
+1	insurance_products	Product master
+2	product_categories	Motor, Health, Life, Travel
+3	product_subcategories	Hatchback, SUV, Family Health
+4	product_versions	Version history
+5	product_statuses	Draft, Published, Archived
+6	product_localizations	Multi-language product content
+B. Policy Types
+#	Table Name	Purpose
+7	policy_types	Policy master
+8	policy_type_versions	Version history
+9	policy_classes	Personal, Commercial
+10	policy_terms	Annual, Monthly
+11	policy_duration_options	Allowed durations
+C. Coverage
+#	Table Name	Purpose
+12	coverages	Coverage master
+13	coverage_categories	Liability, Medical, Theft
+14	coverage_limits	Coverage limits
+15	coverage_conditions	Conditions
+16	coverage_rules	Coverage business rules
+17	product_coverages	Product-coverage mapping
+D. Riders / Add-ons
+#	Table Name	Purpose
+18	riders	Rider master
+19	rider_categories	Rider grouping
+20	rider_rules	Rider eligibility
+21	product_riders	Product-rider mapping
+E. Benefits
+#	Table Name	Purpose
+22	benefits	Benefit catalog
+23	benefit_limits	Benefit limits
+24	product_benefits	Product-benefit mapping
+F. Exclusions
+#	Table Name	Purpose
+25	exclusions	Exclusion master
+26	exclusion_categories	Exclusion types
+27	product_exclusions	Product exclusions
+G. Premium Configuration
+#	Table Name	Purpose
+28	premium_tables	Premium master
+29	premium_bands	Premium bands
+30	premium_factors	Pricing factors
+31	premium_adjustments	Loading & discounts
+32	premium_rate_versions	Version history
+33	premium_rounding_rules	Rounding rules
+H. Eligibility Rules
+#	Table Name	Purpose
+34	eligibility_rules	Eligibility master
+35	eligibility_conditions	Rule conditions
+36	eligibility_exceptions	Rule exceptions
+I. Underwriting Configuration
+#	Table Name	Purpose
+37	underwriting_rule_sets	Rule sets
+38	underwriting_rules	Individual rules
+39	underwriting_thresholds	Auto approval thresholds
+J. Waiting Periods & Deductibles
+#	Table Name	Purpose
+40	waiting_periods	Waiting periods
+41	deductibles	Deductible master
+42	deductible_options	Deductible choices
+K. Documents
+#	Table Name	Purpose
+43	required_documents	Required documents
+44	product_document_requirements	Product-document mapping
+L. Compliance
+#	Table Name	Purpose
+45	regulatory_requirements	Regulatory compliance
+46	product_disclosures	Customer disclosures
+47	product_change_history	Product audit history
+Relationship Overview
+Insurance Product
+│
+├── Product Version
+├── Policy Type
+├── Coverages
+│      ├── Limits
+│      ├── Rules
+│      └── Conditions
+│
+├── Riders
+├── Benefits
+├── Exclusions
+├── Premium Tables
+│      ├── Premium Bands
+│      ├── Pricing Factors
+│      └── Adjustments
+│
+├── Eligibility Rules
+├── Underwriting Rules
+├── Waiting Periods
+├── Deductibles
+├── Required Documents
+└── Regulatory Requirements
+Major Relationships
+Tenant → Insurance Products (1:N)
+Product → Policy Types (1:N)
+Product → Coverages (M:N)
+Product → Riders (M:N)
+Product → Benefits (M:N)
+Product → Exclusions (M:N)
+Product → Premium Tables (1:N)
+Product → Eligibility Rules (1:N)
+Product → Underwriting Rules (1:N)
+Product → Required Documents (M:N)
+Product → Regulatory Requirements (1:N)
+Product types this module can support
+Motor Insurance
+Health Insurance
+Life Insurance
+Travel Insurance
+Home Insurance
+Property Insurance
+Marine Insurance
+Cargo Insurance
+Fire Insurance
+Cyber Insurance
+Liability Insurance
+Commercial Insurance
+Agriculture Insurance
+Pet Insurance
+Gadget Insurance
+Education Insurance
+Business Interruption Insurance
+Professional Indemnity Insurance
+Why separate the Product Catalog from Policies?
+
+In enterprise insurance platforms (such as Guidewire, Duck Creek, and Sapiens), products are templates, while policies are customer-specific contracts. A single product (e.g., Comprehensive Motor Gold Plan 2026) can be used to issue thousands of individual policies. Separating these concerns enables insurers to version products, adjust pricing and rules for future sales, and maintain historical policies without retroactively changing the contracts already issued.
+
+This module becomes the configuration backbone for Quote Generation, Underwriting, Policy Issuance, Renewals, Marketplace Comparison, Premium Calculation, and AI Risk Assessment.
+
+

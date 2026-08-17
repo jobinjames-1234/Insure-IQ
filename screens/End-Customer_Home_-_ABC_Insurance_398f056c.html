@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InsureIQ | Home Dashboard</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "text-secondary": "#5B5B60",
+                    "border-strong": "#D4D4D8",
+                    "tertiary": "#972900",
+                    "bg-muted": "#F4F4F5",
+                    "on-secondary-fixed": "#1d0061",
+                    "primary-fixed-dim": "#b8c4ff",
+                    "surface-container-low": "#f3f2ff",
+                    "inverse-primary": "#b8c4ff",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#0037b9",
+                    "on-primary-fixed": "#001453",
+                    "warning": "#B5750A",
+                    "on-primary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-container-high": "#e7e7f5",
+                    "on-background": "#191b25",
+                    "on-tertiary-fixed": "#3a0a00",
+                    "surface-dim": "#d9d9e6",
+                    "warning-bg": "#FDF3E0",
+                    "on-tertiary-container": "#ffe4dc",
+                    "secondary-container": "#9a83ff",
+                    "secondary": "#6249c2",
+                    "on-error-container": "#93000a",
+                    "success-bg": "#E7F6EF",
+                    "background": "#fbf8ff",
+                    "surface-container": "#ededfa",
+                    "primary": "#003fd1",
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#c3c5d9",
+                    "tertiary-fixed": "#ffdbd1",
+                    "danger": "#C4293A",
+                    "success": "#12805C",
+                    "tertiary-fixed-dim": "#ffb59f",
+                    "outline": "#747688",
+                    "on-surface-variant": "#434656",
+                    "surface-container-highest": "#e1e1ef",
+                    "on-surface": "#191b25",
+                    "inverse-on-surface": "#f0effd",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#cbbeff",
+                    "primary-container": "#1a56ff",
+                    "danger-bg": "#FBEAEC",
+                    "primary-fixed": "#dde1ff",
+                    "on-secondary-container": "#300491",
+                    "bg-subtle": "#FAFAFA",
+                    "surface-bright": "#fbf8ff",
+                    "error-container": "#ffdad6",
+                    "surface": "#fbf8ff",
+                    "secondary-fixed": "#e6deff",
+                    "tertiary-container": "#c13700",
+                    "surface-tint": "#004af0",
+                    "text-muted": "#8B8B90",
+                    "on-secondary-fixed-variant": "#4a2ea9",
+                    "on-tertiary-fixed-variant": "#862300",
+                    "on-primary-container": "#e6e8ff",
+                    "inverse-surface": "#2e303a",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#e1e1ef"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "base": "4px",
+                    "margin": "32px",
+                    "max-width": "1200px"
+            },
+            "fontFamily": {
+                    "body": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "mono-data": ["JetBrains Mono"],
+                    "display": ["Inter"],
+                    "h2": ["Inter"],
+                    "h1": ["Inter"],
+                    "h3": ["Inter"],
+                    "overline": ["Inter"],
+                    "caption": ["Inter"]
+            },
+            "fontSize": {
+                    "body": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "mono-data": ["14px", {"lineHeight": "1.5", "fontWeight": "500"}],
+                    "display": ["48px", {"lineHeight": "1.1", "fontWeight": "600"}],
+                    "h2": ["24px", {"lineHeight": "1.25", "fontWeight": "600"}],
+                    "h1": ["36px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "h3": ["18px", {"lineHeight": "1.35", "fontWeight": "600"}],
+                    "overline": ["11px", {"lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600"}],
+                    "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .hairline-border { border: 1px solid #E7E7E9; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(231, 231, 233, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface antialiased min-h-screen">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 bg-surface dark:bg-surface border-b border-outline-variant">
+<div class="flex justify-between items-center px-gutter w-full h-16 max-w-max-width mx-auto">
+<div class="flex items-center gap-8">
+<span class="font-h2 text-h2 text-primary dark:text-primary-fixed-dim">InsureIQ</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary pb-1 font-body text-body" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors font-body text-body" href="#">Apply</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors font-body text-body" href="#">Claims</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors font-body text-body" href="#">Profile</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-bold text-caption">
+                    JD
+                </div>
+</div>
+</div>
+</header>
+<main class="max-w-max-width mx-auto px-gutter py-8 space-y-8">
+<!-- Welcome Section -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<span class="font-overline text-overline text-primary uppercase tracking-wider">Dashboard</span>
+<h1 class="font-h1 text-h1 text-on-surface mt-1">Hello, Jane Doe</h1>
+<p class="text-text-secondary font-body mt-2">Manage your policies and explore new coverage options.</p>
+</div>
+<div class="text-right hidden md:block">
+<p class="text-caption text-text-muted">Last login: Today, 10:42 AM</p>
+</div>
+</section>
+<!-- Urgent Banner -->
+<div class="relative overflow-hidden rounded-lg bg-surface-container-highest hairline-border p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-warning-bg flex items-center justify-center text-warning shrink-0">
+<span class="material-symbols-outlined text-[28px]" data-icon="priority_high">priority_high</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">Renewal required</h3>
+<p class="text-body text-on-surface-variant mt-1">Your Motor policy for <strong class="text-on-surface">'Honda City'</strong> expires in 12 days.</p>
+</div>
+</div>
+<button class="w-full md:w-auto px-6 h-10 bg-primary-container text-on-primary font-body font-semibold rounded-lg hover:shadow-md active:scale-95 transition-all">
+                Renew Now
+            </button>
+<!-- Decorative Subtle Background Element -->
+<div class="absolute -right-4 -bottom-4 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-[120px]" data-icon="timer">timer</span>
+</div>
+</div>
+<!-- Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Active Policies (Main Content) -->
+<div class="lg:col-span-8 space-y-6">
+<div class="flex items-center justify-between">
+<h2 class="font-h2 text-h2 text-on-surface">Active Policies</h2>
+<button class="text-primary font-body text-body font-semibold hover:underline">View All</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Policy Card 1 -->
+<div class="group bg-surface-container-lowest rounded-xl hairline-border p-6 shadow-xs hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="directions_car">directions_car</span>
+</div>
+<span class="px-3 py-1 rounded-full bg-warning-bg text-warning font-caption text-caption">Renewal Pending</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface">Honda City</h3>
+<p class="text-caption text-text-muted uppercase tracking-tight">Motor Insurance</p>
+<div class="mt-8 space-y-3">
+<div class="flex justify-between py-2 border-b border-outline-variant">
+<span class="text-body text-text-secondary">Premium</span>
+<span class="font-mono-data text-mono-data text-on-surface">$1,200.00 / yr</span>
+</div>
+<div class="flex justify-between py-2">
+<span class="text-body text-text-secondary">Renewal</span>
+<span class="font-mono-data text-mono-data text-on-surface">12 Oct 2024</span>
+</div>
+</div>
+<button class="w-full mt-6 py-2 rounded-lg border border-primary text-primary font-body font-semibold hover:bg-surface-container-low transition-colors">
+                            Manage Policy
+                        </button>
+</div>
+<!-- Policy Card 2 -->
+<div class="group bg-surface-container-lowest rounded-xl hairline-border p-6 shadow-xs hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</div>
+<span class="px-3 py-1 rounded-full bg-success-bg text-success font-caption text-caption">Active</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface">Home Security</h3>
+<p class="text-caption text-text-muted uppercase tracking-tight">Property Insurance</p>
+<div class="mt-8 space-y-3">
+<div class="flex justify-between py-2 border-b border-outline-variant">
+<span class="text-body text-text-secondary">Premium</span>
+<span class="font-mono-data text-mono-data text-on-surface">$450.00 / yr</span>
+</div>
+<div class="flex justify-between py-2">
+<span class="text-body text-text-secondary">Renewal</span>
+<span class="font-mono-data text-mono-data text-on-surface">15 Jan 2025</span>
+</div>
+</div>
+<button class="w-full mt-6 py-2 rounded-lg border border-outline-variant text-on-surface-variant font-body font-semibold hover:bg-surface-container-high transition-colors">
+                            Manage Policy
+                        </button>
+</div>
+</div>
+</div>
+<!-- Get a Quote (Sidebar/CTA) -->
+<div class="lg:col-span-4">
+<div class="bg-primary p-8 rounded-xl text-on-primary h-full flex flex-col justify-between relative overflow-hidden group shadow-lg">
+<div class="relative z-10">
+<h2 class="font-h2 text-h2 mb-4">Get a Quote</h2>
+<p class="text-body opacity-90 mb-8">Ready to expand your protection? Get a personalized quote in minutes.</p>
+<div class="space-y-4">
+<button class="w-full flex items-center justify-between p-4 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="car_repair">car_repair</span>
+<span class="font-body-lg text-body-lg">Auto Insurance</span>
+</div>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+<span class="font-body-lg text-body-lg">Health Insurance</span>
+</div>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-body-lg text-body-lg">Life Insurance</span>
+</div>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Decorative Graphic -->
+<div class="absolute -bottom-10 -right-10 opacity-10 group-hover:scale-110 transition-transform duration-700">
+<span class="material-symbols-outlined text-[200px]" data-icon="verified_user">verified_user</span>
+</div>
+<p class="relative z-10 mt-12 text-caption opacity-70">
+                        Trusted by 2M+ customers worldwide.
+                    </p>
+</div>
+</div>
+</div>
+<!-- Recent Activity Bento -->
+<section class="space-y-6">
+<h2 class="font-h2 text-h2 text-on-surface">Recent Activity</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Activity Item 1 -->
+<div class="p-6 rounded-xl hairline-border bg-surface-container-lowest flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-success-bg text-success flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="check_circle">check_circle</span>
+</div>
+<div>
+<p class="font-body font-semibold">Payment Received</p>
+<p class="text-caption text-text-muted">Home Insurance — Oct 01</p>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="p-6 rounded-xl hairline-border bg-surface-container-lowest flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
+</div>
+<div>
+<p class="font-body font-semibold">Policy Updated</p>
+<p class="text-caption text-text-muted">Auto Insurance — Sep 28</p>
+</div>
+</div>
+<!-- Activity Item 3 -->
+<div class="p-6 rounded-xl hairline-border bg-surface-container-lowest flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-error-container text-error flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="error">error</span>
+</div>
+<div>
+<p class="font-body font-semibold">Claim Update Required</p>
+<p class="text-caption text-text-muted">Case #88219 — Sep 25</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="mt-auto border-t border-outline-variant bg-surface py-12">
+<div class="max-w-max-width mx-auto px-gutter grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="space-y-4">
+<span class="font-h2 text-h2 text-primary">InsureIQ</span>
+<p class="text-body text-text-secondary">Simplifying insurance for a smarter future.</p>
+</div>
+<div class="space-y-4">
+<h4 class="font-h3 text-h3">Support</h4>
+<nav class="flex flex-col gap-2">
+<a class="text-body text-text-secondary hover:text-primary" href="#">Help Center</a>
+<a class="text-body text-text-secondary hover:text-primary" href="#">Contact Us</a>
+<a class="text-body text-text-secondary hover:text-primary" href="#">Claims FAQ</a>
+</nav>
+</div>
+<div class="space-y-4">
+<h4 class="font-h3 text-h3">Company</h4>
+<nav class="flex flex-col gap-2">
+<a class="text-body text-text-secondary hover:text-primary" href="#">About ABC Insurance</a>
+<a class="text-body text-text-secondary hover:text-primary" href="#">Privacy Policy</a>
+<a class="text-body text-text-secondary hover:text-primary" href="#">Terms of Service</a>
+</nav>
+</div>
+<div class="space-y-4">
+<h4 class="font-h3 text-h3">Stay Protected</h4>
+<p class="text-caption text-text-muted mb-4">Subscribe to our newsletter for tips and updates.</p>
+<div class="flex gap-2">
+<input class="flex-1 rounded-lg border-outline-variant focus:ring-primary focus:border-primary px-4 py-2 text-body" placeholder="Email" type="email"/>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-body font-semibold">Join</button>
+</div>
+</div>
+</div>
+<div class="max-w-max-width mx-auto px-gutter mt-12 pt-8 border-t border-outline-variant flex justify-between items-center text-caption text-text-muted">
+<p>© 2024 InsureIQ - Powered by ABC Insurance. All rights reserved.</p>
+<div class="flex gap-4">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+<span>English (US)</span>
+</div>
+</div>
+</footer>
+<!-- Micro-interaction Script -->
+<script>
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+            button.addEventListener('mouseleave', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+    </script>
+</body></html>

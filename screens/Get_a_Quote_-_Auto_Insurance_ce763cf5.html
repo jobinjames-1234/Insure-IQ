@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Auto Insurance Quote - InsureMarket</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface": "#191b25",
+                      "surface-container": "#ededfa",
+                      "secondary-container": "#9a83ff",
+                      "on-secondary-fixed": "#1d0061",
+                      "surface-container-highest": "#e1e1ef",
+                      "surface-variant": "#e1e1ef",
+                      "on-secondary-fixed-variant": "#4a2ea9",
+                      "on-primary-fixed-variant": "#0037b9",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed-dim": "#ffb59f",
+                      "error-container": "#ffdad6",
+                      "tertiary": "#972900",
+                      "on-error": "#ffffff",
+                      "text-secondary": "#5B5B60",
+                      "bg-subtle": "#FAFAFA",
+                      "on-error-container": "#93000a",
+                      "on-secondary": "#ffffff",
+                      "danger": "#C4293A",
+                      "text-muted": "#8B8B90",
+                      "primary-fixed-dim": "#b8c4ff",
+                      "inverse-primary": "#b8c4ff",
+                      "secondary": "#6249c2",
+                      "warning-bg": "#FDF3E0",
+                      "on-tertiary": "#ffffff",
+                      "on-background": "#191b25",
+                      "on-tertiary-fixed-variant": "#862300",
+                      "danger-bg": "#FBEAEC",
+                      "bg-muted": "#F4F4F5",
+                      "surface-dim": "#d9d9e6",
+                      "on-secondary-container": "#300491",
+                      "on-primary-container": "#e6e8ff",
+                      "success": "#12805C",
+                      "surface-container-high": "#e7e7f5",
+                      "tertiary-container": "#c13700",
+                      "primary": "#003fd1",
+                      "surface": "#fbf8ff",
+                      "inverse-on-surface": "#f0effd",
+                      "success-bg": "#E7F6EF",
+                      "outline-variant": "#c3c5d9",
+                      "on-tertiary-fixed": "#3a0a00",
+                      "surface-tint": "#004af0",
+                      "primary-fixed": "#dde1ff",
+                      "secondary-fixed-dim": "#cbbeff",
+                      "on-primary-fixed": "#001453",
+                      "primary-container": "#1a56ff",
+                      "background": "#fbf8ff",
+                      "on-surface-variant": "#434656",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-bright": "#fbf8ff",
+                      "surface-container-low": "#f3f2ff",
+                      "border-strong": "#D4D4D8",
+                      "inverse-surface": "#2e303a",
+                      "tertiary-fixed": "#ffdbd1",
+                      "warning": "#B5750A",
+                      "on-tertiary-container": "#ffe4dc",
+                      "error": "#ba1a1a",
+                      "outline": "#747688",
+                      "secondary-fixed": "#e6deff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "base": "4px",
+                      "max-width": "1200px",
+                      "margin": "32px"
+              },
+              "fontFamily": {
+                      "caption": ["Inter"],
+                      "h3": ["Inter"],
+                      "mono-data": ["JetBrains Mono"],
+                      "overline": ["Inter"],
+                      "display": ["Inter"],
+                      "h2": ["Inter"],
+                      "h1": ["Inter"],
+                      "body": ["Inter"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                      "h3": ["18px", {"lineHeight": "1.35", "fontWeight": "600"}],
+                      "mono-data": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "overline": ["11px", {"lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "600"}],
+                      "display": ["48px", {"lineHeight": "1.1", "fontWeight": "600"}],
+                      "h2": ["24px", {"lineHeight": "1.25", "fontWeight": "600"}],
+                      "h1": ["36px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "body": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .input-focus-ring:focus {
+            outline: none;
+            border-color: #003fd1;
+            box-shadow: 0 0 0 4px rgba(0, 63, 209, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body font-body text-body min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="docked full-width top-0 border-b border-outline-variant bg-surface dark:bg-on-surface shadow-none z-50">
+<div class="flex justify-between items-center w-full px-base max-w-max-width mx-auto h-16">
+<div class="flex items-center gap-gutter">
+<a class="font-display text-h2 font-black text-primary" href="#">InsureMarket</a>
+<div class="hidden md:flex gap-6 h-full items-center">
+<a class="font-body text-body text-text-secondary pb-1 hover:text-primary transition-colors" href="#">Browse</a>
+<a class="font-body text-body text-text-secondary pb-1 hover:text-primary transition-colors" href="#">My Policies</a>
+<a class="font-body text-body text-text-secondary pb-1 hover:text-primary transition-colors" href="#">Claims</a>
+<a class="font-body text-body text-text-secondary pb-1 hover:text-primary transition-colors" href="#">Support</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg text-body font-body text-on-surface focus:outline-none input-focus-ring h-10" placeholder="Search..." type="text"/>
+</div>
+<button class="bg-primary-container text-on-primary font-body text-body font-semibold px-4 py-2 rounded h-10 hover:opacity-90 transition-opacity scale-95 active:opacity-80">
+                    Get Quote
+                </button>
+<img alt="Customer Avatar" class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="A small, circular avatar portrait of a customer smiling softly, well-lit in a modern office environment, with a neutral gray background. The image is crisp, professional, and fits seamlessly into a clean corporate UI design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcYf3ZSejpXb22S962Lwbt5nBO4NK1CD9mBDJXaz15Lk-Igj_fbRRshUaoQnbja70rNSUU1viFwG7HymkCJibJqzNmaSRVOaJYfYLgBW7UKNFQxFHihp_86v-cKtICdA--TYXc4NyDJivFp11lHuUKUM_nE3tAZNOI8nilXYE6PBAEGRouANWe0L8LlT0E3tsJQlcVliSmziw_ocK7LNGuLc7klN2J3yywLK7Qdx8ooCTk-5Osv7UajQ"/>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-grow w-full max-w-max-width mx-auto px-base py-margin grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Form Area (Left) -->
+<div class="lg:col-span-8 space-y-8">
+<div>
+<h1 class="font-h1 text-h1 text-on-surface mb-2">Let's build your auto quote</h1>
+<p class="font-body-lg text-body-lg text-text-secondary">We'll need a few details to get you the most accurate prices.</p>
+</div>
+<form class="space-y-8 bg-surface-container-lowest p-gutter rounded-lg shadow-xs border border-outline-variant">
+<!-- Vehicle Details -->
+<section class="space-y-6">
+<h2 class="font-h2 text-h2 text-on-surface border-b border-outline-variant pb-2">Vehicle Details</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="font-caption text-caption text-text-secondary" for="year">Year</label>
+<input class="border border-outline-variant rounded p-2 font-body text-body text-on-surface bg-surface h-[40px] input-focus-ring" id="year" placeholder="e.g. 2020" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-caption text-caption text-text-secondary" for="make">Make</label>
+<input class="border border-outline-variant rounded p-2 font-body text-body text-on-surface bg-surface h-[40px] input-focus-ring" id="make" placeholder="e.g. Toyota" type="text"/>
+</div>
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="font-caption text-caption text-text-secondary" for="model">Model</label>
+<input class="border border-outline-variant rounded p-2 font-body text-body text-on-surface bg-surface h-[40px] input-focus-ring" id="model" placeholder="e.g. Camry" type="text"/>
+</div>
+<div class="md:col-span-2">
+<p class="font-caption text-caption text-text-muted flex items-center gap-1 mt-2">
+<span class="material-symbols-outlined text-[16px]">info</span>
+                                Or enter your VIN for a faster, more accurate quote.
+                            </p>
+<div class="flex flex-col gap-2 mt-2">
+<label class="font-caption text-caption text-text-secondary" for="vin">VIN (Optional)</label>
+<input class="border border-outline-variant rounded p-2 font-mono-data text-mono-data text-on-surface bg-surface h-[40px] input-focus-ring uppercase" id="vin" placeholder="17-character VIN" type="text"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Usage -->
+<section class="space-y-6">
+<h2 class="font-h2 text-h2 text-on-surface border-b border-outline-variant pb-2">Usage</h2>
+<div class="grid grid-cols-1 gap-6">
+<div class="flex flex-col gap-2">
+<label class="font-caption text-caption text-text-secondary">Primary Use</label>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded cursor-pointer hover:bg-surface-container-low transition-colors">
+<input checked="" class="text-primary focus:ring-primary h-4 w-4" name="usage" type="radio" value="commute"/>
+<span class="font-body text-body text-on-surface">Commuting</span>
+</label>
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded cursor-pointer hover:bg-surface-container-low transition-colors">
+<input class="text-primary focus:ring-primary h-4 w-4" name="usage" type="radio" value="pleasure"/>
+<span class="font-body text-body text-on-surface">Pleasure</span>
+</label>
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded cursor-pointer hover:bg-surface-container-low transition-colors">
+<input class="text-primary focus:ring-primary h-4 w-4" name="usage" type="radio" value="business"/>
+<span class="font-body text-body text-on-surface">Business</span>
+</label>
+</div>
+</div>
+<div class="flex flex-col gap-2 md:w-1/2">
+<label class="font-caption text-caption text-text-secondary" for="mileage">Estimated Annual Mileage</label>
+<div class="relative">
+<input class="border border-outline-variant rounded p-2 font-mono-data text-mono-data text-on-surface bg-surface h-[40px] input-focus-ring w-full text-right pr-12" id="mileage" placeholder="12000" type="number"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 font-caption text-caption text-text-muted">mi</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Driver Info -->
+<section class="space-y-6">
+<h2 class="font-h2 text-h2 text-on-surface border-b border-outline-variant pb-2">Driver Info</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="font-caption text-caption text-text-secondary" for="dob">Date of Birth</label>
+<input class="border border-outline-variant rounded p-2 font-body text-body text-on-surface bg-surface h-[40px] input-focus-ring" id="dob" type="date"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-caption text-caption text-text-secondary" for="zip">Zip Code (Garaging Location)</label>
+<input class="border border-outline-variant rounded p-2 font-mono-data text-mono-data text-on-surface bg-surface h-[40px] input-focus-ring" id="zip" placeholder="e.g. 90210" type="text"/>
+</div>
+<div class="md:col-span-2 flex flex-col gap-2">
+<label class="font-caption text-caption text-text-secondary">Any accidents or tickets in the last 3 years?</label>
+<div class="flex gap-4">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="text-primary focus:ring-primary h-4 w-4" name="incidents" type="radio" value="yes"/>
+<span class="font-body text-body text-on-surface">Yes</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="text-primary focus:ring-primary h-4 w-4" name="incidents" type="radio" value="no"/>
+<span class="font-body text-body text-on-surface">No</span>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Submit Area -->
+<div class="pt-6 border-t border-outline-variant flex flex-col items-center gap-4">
+<button class="w-full md:w-auto bg-primary-container text-on-primary font-h3 text-h3 font-semibold px-8 py-3 rounded-lg h-auto min-h-[48px] hover:opacity-90 transition-opacity flex items-center justify-center gap-2" type="submit">
+                        View Quotes
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<div class="flex items-center justify-center gap-2 text-success">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+<p class="font-caption text-caption">Your data is encrypted and only shared with insurers you choose.</p>
+</div>
+</div>
+</form>
+</div>
+<!-- Sidebar / Helper Context (Right) -->
+<aside class="lg:col-span-4 sticky top-[88px] space-y-6 hidden lg:block">
+<div class="bg-surface-container-low rounded-lg p-6 border border-outline-variant">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-secondary">help</span>
+<h3 class="font-h3 text-h3 text-on-surface">Why we ask this</h3>
+</div>
+<div class="space-y-4">
+<div class="pb-4 border-b border-outline-variant last:border-0 last:pb-0">
+<h4 class="font-caption text-caption font-semibold text-on-surface mb-1">Vehicle Details</h4>
+<p class="font-body text-body text-text-secondary">The age, make, and model of your car directly affect repair costs and theft rates, which insurers use to calculate your premium.</p>
+</div>
+<div class="pb-4 border-b border-outline-variant last:border-0 last:pb-0">
+<h4 class="font-caption text-caption font-semibold text-on-surface mb-1">Annual Mileage</h4>
+<p class="font-body text-body text-text-secondary">Driving less means fewer chances of an accident. Accurate mileage estimates can often lead to discounts.</p>
+</div>
+<div class="pb-4 border-b border-outline-variant last:border-0 last:pb-0">
+<h4 class="font-caption text-caption font-semibold text-on-surface mb-1">Garaging Zip Code</h4>
+<p class="font-body text-body text-text-secondary">Rates vary by location due to differences in weather patterns, local accident statistics, and vehicle crime rates.</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-lg p-6 border border-outline-variant flex items-start gap-4">
+<span class="material-symbols-outlined text-primary-container text-4xl">shield_person</span>
+<div>
+<h3 class="font-h3 text-h3 text-on-surface mb-1">Trust &amp; Privacy</h3>
+<p class="font-body text-body text-text-secondary">We never sell your data to third parties. Information is used strictly to provide you with accurate marketplace quotes.</p>
+</div>
+</div>
+</aside>
+</main>
+</body></html>
