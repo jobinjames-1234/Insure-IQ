@@ -1,3 +1,4 @@
+import contextlib
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
@@ -12,11 +13,19 @@ from app.api.exceptions import (
 )
 from app.api.middleware import TenantMiddleware
 from app.schemas.response import StandardResponse
+from app.core.redis import init_redis, close_redis
 
 # Initialize logging
 setup_logging(settings.ENVIRONMENT)
 
-app = FastAPI(title="InsureIQ API", version="1.0.0")
+@contextlib.asynccontextmanager
+async def lifespan(app: FastAPI):
+    await init_redis()
+    yield
+    await close_redis()
+
+app = FastAPI(title="InsureIQ API", version="1.0.0", lifespan=lifespan)
+
 
 # --- Middlewares ---
 app.add_middleware(

@@ -30,6 +30,7 @@ async def file_claim(
     claim = Claim(
         policy_id=policy_id,
         customer_id=customer.id,
+        tenant_id=current_user.tenant_id,
         claim_number=f"CLM-{str(policy_id)[:6].upper()}",
         status="submitted",
         incident_date=payload.get("incident_date"),
@@ -60,8 +61,8 @@ async def get_claims_queue(
     current_user: User = Depends(require_role(["adjuster", "admin"])),
     db: AsyncSession = Depends(get_db)
 ):
-    # Adjusters see submitted and under_review claims
-    res = await db.execute(select(Claim).where(Claim.status.in_(["submitted", "under_review"])))
+    # Adjusters see submitted and under_review claims in their tenant
+    res = await db.execute(select(Claim).where(Claim.status.in_(["submitted", "under_review"]), Claim.tenant_id == current_user.tenant_id))
     return res.scalars().all()
 
 @router.get("/{id}")
@@ -141,3 +142,33 @@ async def add_claim_note(
     db.add(note)
     await db.commit()
     return note
+
+@router.post("/{id}/documents")
+async def add_claim_document(
+    id: UUID,
+    payload: dict,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+):
+    res = await db.execute(select(Claim).where(Claim.id == id))
+    claim = res.scalars().first()
+    if not claim:
+        raise HTTPException(status_code=404, detail="Claim not found")
+
+    if current_user.role == "customer":
+        cust_res = await db.execute(select(Customer).where(Customer.user_id == current_user.id))
+        customer = cust_res.scalars().first()
+        if not customer or claim.customer_id != customer.id:
+            raise HTTPException(status_code=403, detail="Forbidden")
+
+    doc = ClaimDocument(
+        claim_id=claim.id,
+        document_type=payload.get("document_type", "other"),
+        file_url=payload.get("file_url", ""),
+        file_name=payload.get("file_name", "document.pdf")
+    )
+    db.add(doc)
+    await db.commit()
+    await db.refresh(doc)
+    return doc
+

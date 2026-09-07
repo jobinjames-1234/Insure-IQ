@@ -12,6 +12,8 @@ class InsuranceProduct(Base, TimestampMixin, TenantMixin):
     description = Column(String, nullable=True)
     status = Column(String, default="draft")
     category = Column(String, nullable=False) # e.g., Auto, Health
+    
+    policy_types = relationship("PolicyType", back_populates="product")
 
 class PolicyType(Base, TimestampMixin, TenantMixin):
     __tablename__ = "policy_types"
@@ -19,6 +21,8 @@ class PolicyType(Base, TimestampMixin, TenantMixin):
     product_id = Column(UUID(as_uuid=True), ForeignKey("insurance_products.id"), nullable=False)
     name = Column(String, nullable=False)
     term_months = Column(Float, nullable=False)
+    
+    product = relationship("InsuranceProduct", back_populates="policy_types")
 
 class Coverage(Base, TimestampMixin, TenantMixin):
     __tablename__ = "coverages"
@@ -35,11 +39,22 @@ class PremiumBand(Base, TimestampMixin, TenantMixin):
     base_premium = Column(Float, nullable=False)
     risk_factor_multiplier = Column(Float, default=1.0)
 
+class Quote(Base, TimestampMixin, TenantMixin):
+    __tablename__ = "quotes"
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    customer_id = Column(UUID(as_uuid=True), ForeignKey("customers.id"), nullable=True)
+    policy_type_id = Column(UUID(as_uuid=True), ForeignKey("policy_types.id"), nullable=False)
+    status = Column(String, default="active") # active, converted, expired
+    quote_data = Column(JSON, default=dict)
+    quoted_premium = Column(Float, nullable=False)
+    valid_until = Column(Date, nullable=False)
+
 class Application(Base, TimestampMixin, TenantMixin):
     __tablename__ = "applications"
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     customer_id = Column(UUID(as_uuid=True), ForeignKey("customers.id"), nullable=False)
     policy_type_id = Column(UUID(as_uuid=True), ForeignKey("policy_types.id"), nullable=False)
+    quote_id = Column(UUID(as_uuid=True), ForeignKey("quotes.id"), nullable=True)
     status = Column(String, default="draft") # draft, submitted, under_review, approved, rejected
     application_data = Column(JSON, default=dict)
     quoted_premium = Column(Float, nullable=True)

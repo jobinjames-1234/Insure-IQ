@@ -125,6 +125,22 @@ async def register(req: UserCreate, db: AsyncSession = Depends(get_db)):
     if customer_role:
         db.add(UserRole(user_id=new_user.id, role_id=customer_role.id))
         
+        from app.models.customer import Customer, CustomerProfile
+        new_customer = Customer(
+            user_id=new_user.id,
+            tenant_id=req.tenant_id
+        )
+        db.add(new_customer)
+        await db.flush()
+        
+        new_customer_profile = CustomerProfile(
+            customer_id=new_customer.id,
+            first_name=req.first_name,
+            last_name=req.last_name,
+            tenant_id=req.tenant_id
+        )
+        db.add(new_customer_profile)
+        
     await db.commit()
     await db.refresh(new_user)
     
@@ -170,6 +186,66 @@ async def get_kyc_status(
     # Mocking status for frontend flow. 
     # Valid statuses: "pending", "verified", "rejected", "unsubmitted"
     return {"status": "verified", "message": "Your identity has been verified."}
+
+@router.post("/refresh", response_model=TokenResponse)
+async def refresh_token(
+    req: RefreshTokenRequest,
+    db: AsyncSession = Depends(get_db)
+):
+    result = await db.execute(
+        select(RefreshToken).where(RefreshToken.token == req.refresh_token)
+    )
+    db_token = result.scalars().first()
+    
+    if not db_token or db_token.expires_at < datetime.utcnow():
+        raise HTTPException(status_code=401, detail="Invalid or expired refresh token")
+        
+    user_result = await db.execute(select(User).where(User.id == db_token.user_id))
+    user = user_result.scalars().first()
+    
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found")
+        
+    role_result = await db.execute(
+        select(Role.name)
+        .join(UserRole, UserRole.role_id == Role.id)
+        .where(UserRole.user_id == user.id)
+    )
+    role = role_result.scalars().first() or "customer"
+    
+    access_token = create_access_token(
+        subject=str(user.id),
+        tenant_id=str(user.tenant_id) if user.tenant_id else None,
+        role=role
+    )
+    
+    new_refresh = secrets.token_urlsafe(32)
+    db_token.token = new_refresh
+    db_token.expires_at = datetime.utcnow() + timedelta(days=7)
+    
+    await db.commit()
+    
+    return {
+        "access_token": access_token,
+        "refresh_token": new_refresh,
+        "token_type": "bearer"
+    }
+
+@router.post("/logout")
+async def logout(
+    req: RefreshTokenRequest,
+    db: AsyncSession = Depends(get_db)
+):
+    if req.refresh_token:
+        result = await db.execute(
+            select(RefreshToken).where(RefreshToken.token == req.refresh_token)
+        )
+        db_token = result.scalars().first()
+        if db_token:
+            await db.delete(db_token)
+            await db.commit()
+            
+    return {"message": "Successfully logged out"}
 
 async def log_attempt(db: AsyncSession, email: str, success: bool):
     attempt = LoginAttempt(email=email, success=success)

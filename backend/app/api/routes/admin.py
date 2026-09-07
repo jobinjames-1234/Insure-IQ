@@ -36,14 +36,60 @@ async def invite_team_member(
     current_user: User = Depends(require_role(["admin"])),
     db: AsyncSession = Depends(get_db)
 ):
-    # Mocking an invite system
     email = payload.get("email")
-    role = payload.get("role")
+    role_name = payload.get("role")
+    password = payload.get("password", "TempPass123!")
     
-    if not email or not role:
+    if not email or not role_name:
         raise HTTPException(status_code=400, detail="Missing email or role")
         
-    return {"message": "Invite sent", "email": email, "role": role}
+    from app.models.user import User, Password, UserRole, UserProfile
+    from app.models.core import Role
+    from app.core.security import get_password_hash
+    
+    # Check if email exists
+    existing = await db.execute(select(User).where(User.email == email))
+    if existing.scalars().first():
+        raise HTTPException(status_code=400, detail="Email already exists")
+        
+    # Find role
+    role_result = await db.execute(select(Role).where(Role.name == role_name))
+    role_obj = role_result.scalars().first()
+    if not role_obj:
+        raise HTTPException(status_code=400, detail="Invalid role")
+        
+    # Create user
+    new_user = User(
+        email=email,
+        is_active=True,
+        is_verified=True,
+        tenant_id=current_user.tenant_id
+    )
+    db.add(new_user)
+    await db.flush()
+    
+    # Create Profile
+    new_profile = UserProfile(
+        user_id=new_user.id,
+        first_name=payload.get("first_name", ""),
+        last_name=payload.get("last_name", ""),
+        tenant_id=current_user.tenant_id
+    )
+    db.add(new_profile)
+    
+    # Create Password
+    new_password = Password(
+        user_id=new_user.id,
+        hashed_password=get_password_hash(password)
+    )
+    db.add(new_password)
+    
+    # Assign Role
+    db.add(UserRole(user_id=new_user.id, role_id=role_obj.id))
+    
+    await db.commit()
+    
+    return {"message": "User created", "email": email, "role": role_name}
 
 @router.get("/stats")
 async def get_admin_stats(
@@ -65,6 +111,10 @@ async def get_admin_stats(
         "monthly_premium": 284000.00 # Placeholder for aggregated premium
     }
 
+mock_billing = {
+    "plan": "Enterprise AI"
+}
+
 @router.get("/billing")
 async def get_billing(
     current_user: User = Depends(require_role(["admin"]))
@@ -75,8 +125,18 @@ async def get_billing(
             {"id": "inv-002", "date": "2026-07-01", "amount": 1500.00, "status": "Paid"}
         ],
         "next_billing_date": "2026-09-01",
-        "plan": "Enterprise"
+        "plan": mock_billing["plan"]
     }
+
+@router.post("/billing/plan")
+async def update_billing_plan(
+    payload: dict,
+    current_user: User = Depends(require_role(["admin"]))
+):
+    new_plan = payload.get("plan")
+    if new_plan:
+        mock_billing["plan"] = new_plan
+    return {"message": "Plan updated successfully", "plan": mock_billing["plan"]}
 
 @router.get("/policy-config")
 async def get_policy_config(

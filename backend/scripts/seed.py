@@ -49,6 +49,24 @@ async def seed_platform_data(session: AsyncSession):
     
     return {"plan_pro": plan_pro, "roles": {r.name: r for r in roles}}
 
+async def create_user(session: AsyncSession, role_id: str, email: str, first: str, last: str, tenant_id: str = None):
+    user = User(tenant_id=tenant_id, email=email, is_verified=True)
+    session.add(user)
+    await session.flush()
+    
+    profile = UserProfile(tenant_id=tenant_id, user_id=user.id, first_name=first, last_name=last)
+    
+    # Only add tenant_user if tenant_id is not None
+    if tenant_id:
+        tenant_user = TenantUser(tenant_id=tenant_id, user_id=user.id)
+        session.add(tenant_user)
+        
+    user_role = UserRole(user_id=user.id, role_id=role_id)
+    password = Password(user_id=user.id, hashed_password=MOCK_HASH)
+    
+    session.add_all([profile, user_role, password])
+    return user
+
 async def seed_tenant(session: AsyncSession, name: str, slug: str, color: str, platform_data: dict):
     # Tenant
     tenant = Tenant(name=name, slug=slug, domain=f"{slug}.insureiq.app")
@@ -61,24 +79,10 @@ async def seed_tenant(session: AsyncSession, name: str, slug: str, color: str, p
     session.add_all([branding, settings])
     
     # Users
-    async def create_user(role_name: str, email_prefix: str, first: str, last: str):
-        user = User(tenant_id=tenant.id, email=f"{email_prefix}@{slug}.com", is_verified=True)
-        session.add(user)
-        await session.flush()
-        
-        profile = UserProfile(tenant_id=tenant.id, user_id=user.id, first_name=first, last_name=last)
-        tenant_user = TenantUser(tenant_id=tenant.id, user_id=user.id)
-        user_role = UserRole(user_id=user.id, role_id=platform_data["roles"][role_name].id)
-        password = Password(user_id=user.id, hashed_password=MOCK_HASH)
-        
-        session.add_all([profile, tenant_user, user_role, password])
-        return user
-        
-    admin = await create_user("admin", "admin", "Admin", "User")
-    uw1 = await create_user("underwriter", "uw1", "Alice", "Underwriter")
-    agent1 = await create_user("agent", "agent1", "Bob", "Agent")
-    adj1 = await create_user("adjuster", "adj1", "Charlie", "Adjuster")
-    superadmin = await create_user("superadmin", "super", "Super", "Admin")
+    admin = await create_user(session, platform_data["roles"]["admin"].id, f"admin@{slug}.com", "Admin", "User", tenant.id)
+    uw1 = await create_user(session, platform_data["roles"]["underwriter"].id, f"uw1@{slug}.com", "Alice", "Underwriter", tenant.id)
+    agent1 = await create_user(session, platform_data["roles"]["agent"].id, f"agent1@{slug}.com", "Bob", "Agent", tenant.id)
+    adj1 = await create_user(session, platform_data["roles"]["adjuster"].id, f"adj1@{slug}.com", "Charlie", "Adjuster", tenant.id)
     
     # Products
     product_auto = InsuranceProduct(tenant_id=tenant.id, name="Auto Insurance", category="Auto", status="active")
@@ -97,7 +101,7 @@ async def seed_tenant(session: AsyncSession, name: str, slug: str, color: str, p
     
     # Customers
     for i in range(1, 6):
-        cust_user = await create_user("customer", f"customer{i}", f"Cust{i}", "User")
+        cust_user = await create_user(session, platform_data["roles"]["customer"].id, f"customer{i}@{slug}.com", f"Cust{i}", "User", tenant.id)
         customer = Customer(tenant_id=tenant.id, user_id=cust_user.id)
         session.add(customer)
         await session.flush()
@@ -121,6 +125,9 @@ async def seed():
             platform_data = await seed_platform_data(session)
             if not platform_data:
                 return
+            
+            print("Creating global superadmin...")
+            await create_user(session, platform_data["roles"]["superadmin"].id, "super@platform.com", "Super", "Admin", None)
             
             print("Seeding Tenant 1 (ABC Insurance)...")
             await seed_tenant(session, "ABC Insurance", "abc", "#1A56FF", platform_data)

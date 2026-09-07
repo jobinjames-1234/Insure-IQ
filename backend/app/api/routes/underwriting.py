@@ -17,8 +17,17 @@ async def get_queue(
     current_user: User = Depends(require_role(["underwriter", "admin"])),
     db: AsyncSession = Depends(get_db)
 ):
-    # Fetch pending applications
-    res = await db.execute(select(Application).where(Application.status.in_(["submitted", "under_review"])))
+    # Fetch pending applications for the tenant
+    res = await db.execute(select(Application).where(Application.status.in_(["submitted", "under_review"]), Application.tenant_id == current_user.tenant_id))
+    return res.scalars().all()
+
+@router.get("/history")
+async def get_history(
+    current_user: User = Depends(require_role(["underwriter", "admin"])),
+    db: AsyncSession = Depends(get_db)
+):
+    # Fetch processed applications for the tenant
+    res = await db.execute(select(Application).where(Application.status.in_(["approved", "rejected", "referred"]), Application.tenant_id == current_user.tenant_id).order_by(Application.updated_at.desc()))
     return res.scalars().all()
 
 @router.put("/applications/{id}/decide")
@@ -46,7 +55,8 @@ async def decide_application(
         old_status=app.status,
         new_status=new_status,
         changed_by=current_user.id,
-        comments=payload.get("comments", "")
+        comments=payload.get("comments", ""),
+        tenant_id=current_user.tenant_id
     )
     db.add(history)
     
@@ -65,7 +75,8 @@ async def decide_application(
             policy_number=policy_num,
             start_date=start,
             end_date=end,
-            total_premium=app.quoted_premium or 1200.0
+            total_premium=app.quoted_premium or 1200.0,
+            tenant_id=current_user.tenant_id
         )
         db.add(policy)
 

@@ -10,10 +10,13 @@ class Claim(Base, TimestampMixin, TenantMixin):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     policy_id = Column(UUID(as_uuid=True), ForeignKey("policies.id"), nullable=False)
     customer_id = Column(UUID(as_uuid=True), ForeignKey("customers.id"), nullable=False)
+    assigned_adjuster_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
     claim_number = Column(String, unique=True, nullable=False)
     status = Column(String, default="submitted") # submitted, investigating, approved, rejected, paid
+    priority = Column(String, default="Medium") # Low, Medium, High, Critical
     incident_date = Column(Date, nullable=False)
     reported_date = Column(Date, nullable=False)
+    sla_deadline = Column(Date, nullable=True)
     description = Column(String, nullable=False)
     claimed_amount = Column(Float, nullable=False)
     approved_amount = Column(Float, nullable=True)

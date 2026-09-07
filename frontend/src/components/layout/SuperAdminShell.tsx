@@ -1,5 +1,7 @@
-import React from "react"
+import React, { useState } from "react"
+import { Link, useLocation } from "react-router-dom"
 import { ShieldAlert, Database, Users, Activity, Settings, LogOut } from "lucide-react"
+import { useAuthStore } from "../../store/authStore"
 
 interface SuperAdminShellProps {
   children: React.ReactNode
@@ -7,76 +9,118 @@ interface SuperAdminShellProps {
 }
 
 export function SuperAdminShell({ children, userName }: SuperAdminShellProps) {
-  // SuperAdmin uses a distinct dark-mode sidebar to visually separate it from tenant B2B views
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
+  const logout = useAuthStore(state => state.logout)
+  const location = useLocation()
   
+  const getLinkClass = (path: string) => {
+    const isActive = location.pathname.startsWith(path)
+    return isActive
+      ? "flex items-center gap-3 px-4 py-2 rounded-full transition-all active:scale-95 bg-primary text-white"
+      : "flex items-center gap-3 px-4 py-2 rounded-full transition-all active:scale-95 text-white/70 hover:bg-white/10"
+  }
+
   return (
-    <div className="flex h-screen bg-slate-100 font-sans">
+    <div className="flex h-screen bg-background font-body text-body text-on-surface antialiased overflow-hidden">
       {/* Dark Sidebar for SuperAdmin */}
-      <aside className="w-64 flex-shrink-0 bg-slate-900 text-slate-300 flex flex-col">
-        <div className="h-16 flex items-center px-6 border-b border-slate-800">
+      <aside className="w-64 flex-shrink-0 flex flex-col border-r border-outline-variant bg-[#0d0e14] text-white">
+        <div className="h-16 flex items-center px-6 border-b border-white/10 mb-4">
           <div className="flex items-center gap-2 text-white">
-            <ShieldAlert className="h-5 w-5 text-red-500" />
-            <span className="font-bold tracking-tight">InsureIQ System</span>
+            <ShieldAlert className="h-5 w-5 text-primary" />
+            <span className="font-h3 text-h3 tracking-tight">InsureIQ</span>
           </div>
         </div>
-        
-        <div className="px-6 py-4">
-          <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">Super Admin</p>
-        </div>
 
-        <nav className="flex-1 px-3 space-y-1">
-          <a href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium bg-slate-800 text-white">
-            <Database className="h-4 w-4 text-slate-400" />
-            Tenants
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium hover:bg-slate-800 hover:text-white transition-colors">
-            <Users className="h-4 w-4 text-slate-400" />
-            Platform Users
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium hover:bg-slate-800 hover:text-white transition-colors">
-            <Activity className="h-4 w-4 text-slate-400" />
-            System Metrics
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium hover:bg-slate-800 hover:text-white transition-colors">
-            <Settings className="h-4 w-4 text-slate-400" />
-            Global Settings
-          </a>
+        <nav className="flex-1 px-4 space-y-1">
+          <Link to="/admin/tenants" className={getLinkClass('/admin/tenants')}>
+            <Database className="h-5 w-5" />
+            <span className="font-caption font-medium">Tenants</span>
+          </Link>
+          <Link to="/admin/users" className={getLinkClass('/admin/users')}>
+            <Users className="h-5 w-5" />
+            <span className="font-caption font-medium">Platform Users</span>
+          </Link>
+          <Link to="/admin/console" className={getLinkClass('/admin/console')}>
+            <Activity className="h-5 w-5" />
+            <span className="font-caption font-medium">Platform Overview</span>
+          </Link>
+          <Link to="/admin/settings" className={getLinkClass('/admin/settings')}>
+            <Settings className="h-5 w-5" />
+            <span className="font-caption font-medium">Global Settings</span>
+          </Link>
         </nav>
 
-        <div className="p-4 border-t border-slate-800">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center text-white text-sm font-medium">
-                {userName.charAt(0)}
-              </div>
-              <span className="text-sm font-medium text-white">{userName}</span>
+        <div className="p-4 border-t border-white/10 space-y-4">
+          <div className="flex items-center gap-3 px-2 mb-4">
+            <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-white font-bold text-[10px] uppercase">
+              {userName.substring(0, 2)}
             </div>
-            <button className="text-slate-500 hover:text-red-400 transition-colors">
-              <LogOut className="h-4 w-4" />
-            </button>
+            <div className="overflow-hidden">
+              <p className="font-caption font-medium text-white truncate">{userName}</p>
+              <p className="text-[10px] text-white/50 uppercase tracking-wider">Root Access</p>
+            </div>
           </div>
+          <button 
+            onClick={() => setShowLogoutConfirm(true)}
+            className="flex items-center gap-3 text-white/70 hover:text-danger px-2 py-2 transition-colors w-full"
+          >
+            <LogOut className="h-[20px] w-[20px]" />
+            <span className="text-caption font-medium">Logout</span>
+          </button>
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 flex flex-col overflow-y-auto relative bg-background">
         {/* Warning Banner */}
-        <div className="bg-red-50 border-b border-red-100 px-6 py-2">
-          <p className="text-xs font-medium text-red-600 flex items-center gap-2">
+        <div className="bg-danger-bg border-b border-danger/20 px-6 py-2 shrink-0">
+          <p className="text-caption font-medium text-danger flex items-center gap-2">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-danger opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-danger"></span>
             </span>
             You are operating in the Global SuperAdmin context. Actions here affect all tenants.
           </p>
         </div>
         
-        <div className="p-8">
-          <div className="max-w-5xl mx-auto">
-            {children}
-          </div>
+        <div className="flex-1 w-full">
+          {children}
         </div>
       </main>
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutConfirm && (
+        <div className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
+          <div className="bg-surface rounded-lg shadow-xl max-w-sm w-full border border-outline-variant overflow-hidden">
+            <div className="p-6 text-on-surface">
+              <div className="flex items-center gap-3 mb-4 text-danger">
+                <ShieldAlert className="w-6 h-6" />
+                <h3 className="font-h3 text-h3 text-on-surface">Confirm Logout</h3>
+              </div>
+              <p className="font-body text-body text-on-surface-variant mb-6">
+                Are you sure you want to log out of the Global SuperAdmin console?
+              </p>
+              <div className="flex justify-end gap-3">
+                <button 
+                  onClick={() => setShowLogoutConfirm(false)}
+                  className="px-4 py-2 rounded-md border border-outline-variant text-on-surface-variant hover:bg-surface-container font-medium transition-colors"
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={() => {
+                    setShowLogoutConfirm(false)
+                    logout()
+                  }}
+                  className="px-4 py-2 rounded-md bg-danger text-white hover:bg-danger/90 font-medium transition-colors"
+                >
+                  Log out
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

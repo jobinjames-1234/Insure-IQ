@@ -17,12 +17,6 @@ async def get_policy_types(
     db: AsyncSession = Depends(get_db)
     # Accessible publicly or authenticated, depending on use-case
 ):
-    result = await db.execute(
-        select(PolicyType).join(InsuranceProduct).options(selectinload(PolicyType.product))
-    )
-    # Note: We need a relationship 'product' on PolicyType, which might not be set.
-    # Let's do a simple join manually if relation isn't present
-    # Better yet, just return types
     result = await db.execute(select(PolicyType))
     types = result.scalars().all()
     return types
@@ -47,7 +41,8 @@ async def create_application(
         customer_id=customer.id,
         policy_type_id=policy_type_id,
         status="submitted",
-        application_data=payload.get("data", {})
+        application_data=payload.get("data", {}),
+        tenant_id=current_user.tenant_id
     )
     db.add(app)
     await db.commit()

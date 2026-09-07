@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { ShieldAlert } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { useAuthStore } from '../store/authStore'
+import { getRoleDashboardRoute } from '../utils/routing'
 
 export function UnauthorizedPage() {
   const navigate = useNavigate()
@@ -9,11 +10,8 @@ export function UnauthorizedPage() {
   const role = user?.role || 'customer'
 
   const handleGoBack = () => {
-    switch (role) {
-      case 'superadmin': navigate('/admin', { replace: true }); break;
-      case 'customer': navigate('/portal', { replace: true }); break;
-      default: navigate('/b2b', { replace: true }); break;
-    }
+    const dashboardRoute = getRoleDashboardRoute(role)
+    navigate(dashboardRoute, { replace: true })
   }
 
   return (

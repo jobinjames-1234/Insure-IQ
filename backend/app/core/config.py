@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     POSTGRES_DB: str = "insureiq"
     DATABASE_URL: str | None = None
     
+    # Redis
+    REDIS_URL: str = "redis://localhost:16379/0"
+    
     @property
     def async_database_uri(self) -> str:
         if self.DATABASE_URL:

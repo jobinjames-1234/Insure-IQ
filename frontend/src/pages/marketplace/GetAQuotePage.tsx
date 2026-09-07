@@ -41,14 +41,15 @@ export function GetAQuotePage() {
   }
 
   return (
-    <div className="p-8 max-w-2xl mx-auto space-y-8">
+    <div className="p-8 max-w-2xl mx-auto space-y-8 bg-background">
       <div className="text-center">
-        <div className="mx-auto w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mb-4">
+        <div className="mx-auto w-12 h-12 bg-secondary-container text-on-secondary-container rounded-full flex items-center justify-center mb-4">
           <Shield className="w-6 h-6" />
         </div>
         <PageHeader 
           title="Let's get you a quote" 
           description="We just need a few details to find the best rates for you across our network."
+          className="justify-center text-center"
         />
       </div>
 
@@ -73,26 +74,26 @@ export function GetAQuotePage() {
             />
             
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-slate-700">Coverage Level</label>
+              <label className="block font-caption text-caption text-on-surface font-medium">Coverage Level</label>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {['Basic', 'Standard', 'Premium'].map(level => (
                   <div 
                     key={level}
                     className={`border rounded-lg p-4 cursor-pointer text-center transition-all ${
                       formData.coverage_level === level 
-                        ? 'border-indigo-600 bg-indigo-50 ring-1 ring-indigo-600' 
-                        : 'border-slate-200 hover:border-indigo-300'
+                        ? 'border-primary bg-primary-fixed ring-1 ring-primary' 
+                        : 'border-outline-variant hover:border-primary'
                     }`}
                     onClick={() => setFormData({...formData, coverage_level: level})}
                   >
-                    <div className="font-semibold text-slate-900">{level}</div>
+                    <div className="font-semibold text-on-surface">{level}</div>
                   </div>
                 ))}
               </div>
             </div>
             
-            <div className="pt-4 border-t border-slate-100">
-              <Button type="submit" className="w-full h-12 text-lg" isLoading={loading}>
+            <div className="pt-4 border-t border-outline-variant">
+              <Button type="submit" className="w-full" size="lg" isLoading={loading}>
                 Find My Matches
               </Button>
             </div>

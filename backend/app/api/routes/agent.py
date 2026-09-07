@@ -17,9 +17,7 @@ async def get_customers(
     current_user: User = Depends(require_role(["agent", "admin"])),
     db: AsyncSession = Depends(get_db)
 ):
-    # In a real app, this would filter by the agent's assigned customers.
-    # For MVP, agents can see all customers in their tenant.
-    res = await db.execute(select(Customer))
+    res = await db.execute(select(Customer).where(Customer.tenant_id == current_user.tenant_id))
     return res.scalars().all()
 
 @router.get("/customers/{id}")
@@ -51,7 +49,13 @@ async def get_commission(
     return {
         "mtd_commission": 4500.00,
         "ytd_commission": 38200.00,
-        "active_policies": 142
+        "active_policies": 142,
+        "pending_commission": 3120.00,
+        "ledger": [
+            { "id": 1, "date": "2026-10-24", "policy_id": "POL-8492-AX", "customer": "Sarah Jenkins", "premium": 1200, "commission": 180, "status": "Paid" },
+            { "id": 2, "date": "2026-10-22", "policy_id": "POL-3310-BQ", "customer": "TechFlow Solutions", "premium": 4500, "commission": 675, "status": "Pending" },
+            { "id": 3, "date": "2026-10-18", "policy_id": "POL-9921-CX", "customer": "Marcus Thorne", "premium": 850, "commission": 127.5, "status": "Paid" }
+        ]
     }
 
 @router.get("/retention-alerts")

@@ -8,6 +8,7 @@ import { Button } from '../../components/ui/Button'
 import { Input } from '../../components/ui/Input'
 import { useAuthStore } from '../../store/authStore'
 import { api } from '../../lib/api'
+import { getRoleDashboardRoute } from '../../utils/routing'
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -54,11 +55,8 @@ export function LoginPage() {
       if (from) {
         navigate(from, { replace: true })
       } else {
-        switch (role) {
-          case 'superadmin': navigate('/admin', { replace: true }); break;
-          case 'customer': navigate('/portal', { replace: true }); break;
-          default: navigate('/b2b', { replace: true }); break;
-        }
+        const dashboardRoute = getRoleDashboardRoute(role)
+        navigate(dashboardRoute, { replace: true })
       }
     } catch (err: any) {
       if (err.response?.status === 401) {
@@ -72,18 +70,18 @@ export function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 font-sans">
-      <div className="max-w-md w-full space-y-8 bg-white p-6 sm:p-10 rounded-xl shadow-xl border border-slate-100">
+    <div className="min-h-screen flex items-center justify-center bg-surface-container-low py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-surface p-6 sm:p-10 rounded-xl shadow-xl border border-outline-variant">
         <div className="flex flex-col items-center justify-center">
-          <div className="h-12 w-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white mb-4">
+          <div className="h-12 w-12 bg-primary rounded-xl flex items-center justify-center text-white mb-4">
             <ShieldCheck className="h-7 w-7" />
           </div>
-          <h2 className="text-center text-2xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-center font-h2 text-h2 text-on-surface">
             Sign in to your account
           </h2>
-          <p className="mt-2 text-center text-sm text-slate-500">
+          <p className="mt-2 text-center font-body text-body text-text-secondary">
             Or{' '}
-            <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors">
+            <Link to="/register" className="font-medium text-primary hover:text-primary-hover transition-colors">
               start your customer journey
             </Link>
           </p>
@@ -110,8 +108,8 @@ export function LoginPage() {
           </div>
 
           {globalError && (
-            <div className="p-3 rounded-md bg-red-50 border border-red-200">
-              <p className="text-sm text-red-600 font-medium text-center">{globalError}</p>
+            <div className="p-3 rounded-md bg-error-container border border-error">
+              <p className="font-body text-body text-on-error-container font-medium text-center">{globalError}</p>
             </div>
           )}
 
@@ -121,15 +119,15 @@ export function LoginPage() {
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-slate-300 rounded"
+                className="h-4 w-4 text-primary focus:ring-primary border-outline rounded"
               />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-slate-900">
+              <label htmlFor="remember-me" className="ml-2 block font-body text-body text-on-surface">
                 Remember me
               </label>
             </div>
 
-            <div className="text-sm">
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+            <div className="font-body text-body">
+              <a href="#" className="font-medium text-primary hover:text-primary-hover">
                 Forgot your password?
               </a>
             </div>

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Float, ForeignKey, JSON
+from sqlalchemy import Column, String, Float, ForeignKey, JSON, Boolean
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 import uuid
@@ -39,3 +39,14 @@ class ChurnScore(Base, TimestampMixin, TenantMixin):
     risk_level = Column(String, nullable=False) # Low, Medium, High
     factors = Column(JSON, default=list) # SHAP factors
     model_version = Column(String, default="v1.0")
+
+class ModelPerformanceMetric(Base, TimestampMixin, TenantMixin):
+    __tablename__ = "model_performance_metrics"
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    model_name = Column(String, nullable=False) # e.g., 'risk_pricing_v1', 'fraud_detection_v2'
+    prediction_type = Column(String, nullable=False) # e.g., 'classification', 'regression'
+    target_id = Column(UUID(as_uuid=True), nullable=False) # ID of the entity predicted on (Application, Claim, etc.)
+    predicted_value = Column(String, nullable=False)
+    actual_value = Column(String, nullable=True) # Populated later when outcome is known
+    confidence_score = Column(Float, nullable=True)
+    is_accurate = Column(Boolean, nullable=True)

@@ -50,18 +50,18 @@ export function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 font-sans">
-      <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-xl border border-slate-100">
+    <div className="min-h-screen flex items-center justify-center bg-surface-container-low py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-surface p-10 rounded-xl shadow-xl border border-outline-variant">
         <div className="flex flex-col items-center justify-center">
-          <div className="h-12 w-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white mb-4">
+          <div className="h-12 w-12 bg-primary rounded-xl flex items-center justify-center text-white mb-4">
             <ShieldCheck className="h-7 w-7" />
           </div>
-          <h2 className="text-center text-2xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-center font-h2 text-h2 text-on-surface">
             Create your account
           </h2>
-          <p className="mt-2 text-center text-sm text-slate-500">
+          <p className="mt-2 text-center font-body text-body text-text-secondary">
             Already have an account?{' '}
-            <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors">
+            <Link to="/login" className="font-medium text-primary hover:text-primary-hover transition-colors">
               Sign in
             </Link>
           </p>
@@ -108,8 +108,8 @@ export function RegisterPage() {
           />
 
           {globalError && (
-            <div className="p-3 rounded-md bg-red-50 border border-red-200">
-              <p className="text-sm text-red-600 font-medium text-center">{globalError}</p>
+            <div className="p-3 rounded-md bg-error-container border border-error">
+              <p className="font-body text-body text-on-error-container font-medium text-center">{globalError}</p>
             </div>
           )}
 

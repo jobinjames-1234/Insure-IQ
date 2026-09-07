@@ -2,34 +2,38 @@ import React from "react"
 import { cn } from "../../lib/utils"
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "ghost" | "danger"
+  variant?: "primary" | "secondary" | "ghost" | "danger" | "outline"
   size?: "sm" | "md" | "lg" | "icon"
   isLoading?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", size = "md", isLoading, children, disabled, ...props }, ref) => {
-    const baseStyles = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 disabled:pointer-events-none disabled:opacity-50"
+    const baseStyles = "inline-flex items-center justify-center rounded-full font-medium transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50"
     
     const variants = {
-      primary: "bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm",
-      secondary: "bg-white text-slate-900 border border-slate-200 hover:bg-slate-50 shadow-sm",
-      ghost: "hover:bg-slate-100 text-slate-700",
-      danger: "bg-red-600 text-white hover:bg-red-700 shadow-sm"
+      primary: "bg-primary text-white hover:opacity-90 shadow-sm",
+      secondary: "bg-secondary-container text-on-secondary-container hover:bg-secondary hover:text-white shadow-sm",
+      outline: "bg-surface text-on-surface border border-outline-variant hover:bg-surface-container-high shadow-sm",
+      ghost: "hover:bg-surface-container-high text-on-surface-variant",
+      danger: "bg-danger text-white hover:opacity-90 shadow-sm"
     }
     
     const sizes = {
-      sm: "h-8 px-3 text-xs",
-      md: "h-10 px-4 py-2",
-      lg: "h-12 px-8 text-base",
+      sm: "h-8 px-3 font-caption text-caption",
+      md: "h-10 px-4 py-2 font-body text-body",
+      lg: "h-[44px] px-6 font-body text-body-lg",
       icon: "h-10 w-10"
     }
+
+    // Default to 'outline' instead of 'secondary' for backward compatibility if needed, but 'secondary' in design is purple.
+    const resolvedVariant = variant === "secondary" && !variants["secondary"] ? "outline" : variant;
 
     return (
       <button
         ref={ref}
         disabled={disabled || isLoading}
-        className={cn(baseStyles, variants[variant], sizes[size], className)}
+        className={cn(baseStyles, variants[resolvedVariant as keyof typeof variants] || variants.primary, sizes[size], className)}
         {...props}
       >
         {isLoading ? (
