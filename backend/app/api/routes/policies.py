@@ -24,6 +24,14 @@ async def get_my_policies(
     res = await db.execute(select(Policy).where(Policy.customer_id == customer.id))
     return res.scalars().all()
 
+@router.get("/all")
+async def get_all_policies(
+    current_user: User = Depends(require_role(["admin", "superadmin"])),
+    db: AsyncSession = Depends(get_db)
+):
+    res = await db.execute(select(Policy).where(Policy.tenant_id == current_user.tenant_id))
+    return res.scalars().all()
+
 @router.get("/{id}")
 async def get_policy(
     id: UUID,

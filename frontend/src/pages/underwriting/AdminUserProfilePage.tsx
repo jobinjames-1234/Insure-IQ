@@ -9,20 +9,31 @@ export function AdminUserProfilePage() {
   const [user, setUser] = useState<any>(null)
 
   useEffect(() => {
-    // In a real app, we'd fetch the user by ID: api.get(`/admin/users/${id}`)
-    // For now, we simulate a network request and return mock data based on ID
-    setTimeout(() => {
-      const mockUsers = [
-        { id: '1', name: 'Sarah Jenkins', email: 'sarah.j@insureiq.com', role: 'Administrator', status: 'Active', lastActive: '2 hours ago', department: 'Executive', phone: '+1 (555) 123-4567', location: 'New York, NY', joinDate: 'Jan 15, 2021' },
-        { id: '2', name: 'Michael Ross', email: 'm.ross@insureiq.com', role: 'Underwriter', status: 'Active', lastActive: 'Oct 12, 2023', department: 'Risk Management', phone: '+1 (555) 987-6543', location: 'Chicago, IL', joinDate: 'Mar 10, 2022' },
-        { id: '3', name: 'David Chen', email: 'd.chen@insureiq.com', role: 'Adjuster', status: 'Active', lastActive: 'Oct 10, 2023', department: 'Claims', phone: '+1 (555) 456-7890', location: 'San Francisco, CA', joinDate: 'Jun 22, 2023' },
-        { id: '4', name: 'Elena Lopez', email: 'elena.l@insureiq.com', role: 'Agent', status: 'Suspended', lastActive: 'Sep 28, 2023', department: 'Sales', phone: '+1 (555) 321-0987', location: 'Miami, FL', joinDate: 'Aug 05, 2023' },
-      ]
-      
-      const found = mockUsers.find(u => String(u.id) === String(id)) || mockUsers[0]
-      setUser(found)
-      setLoading(false)
-    }, 500)
+    const fetchUser = async () => {
+      try {
+        const { api } = await import('../../lib/api')
+        const users = await api.get('/admin/users')
+        const found = users.find((u: any) => String(u.id) === String(id))
+        
+        if (found) {
+          // Map backend fields to UI fields
+          setUser({
+            ...found,
+            name: found.email.split('@')[0],
+            department: 'Unknown',
+            phone: 'N/A',
+            location: 'Unknown',
+            joinDate: 'N/A',
+            lastActive: 'Unknown'
+          })
+        }
+      } catch (err) {
+        console.error('Failed to fetch user:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchUser()
   }, [id])
 
   if (loading) {

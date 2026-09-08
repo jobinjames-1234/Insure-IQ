@@ -15,13 +15,7 @@ export function CommissionTrackerPage() {
 
   if (loading) return <div className="p-8 text-center text-text-secondary animate-pulse font-body text-body">Loading commissions...</div>
 
-  // Mock ledger data to display since API might not have it yet
-  const ledger = data?.ledger || [
-    { id: 1, date: 'Oct 24, 2023', policy_id: 'POL-8492-AX', customer: 'Sarah Jenkins', premium: 1200, commission: 180, status: 'Paid' },
-    { id: 2, date: 'Oct 22, 2023', policy_id: 'POL-3310-BQ', customer: 'TechFlow Solutions', premium: 4500, commission: 675, status: 'Pending' },
-    { id: 3, date: 'Oct 18, 2023', policy_id: 'POL-9921-CX', customer: 'Marcus Thorne', premium: 850, commission: 127.5, status: 'Paid' },
-    { id: 4, date: 'Oct 15, 2023', policy_id: 'POL-1102-DZ', customer: 'Elena Rodriguez', premium: 2100, commission: 315, status: 'Paid' }
-  ]
+  const ledger = data?.ledger || []
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-background min-w-full">

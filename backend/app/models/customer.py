@@ -49,3 +49,12 @@ class KycVerificationResult(Base, TimestampMixin, TenantMixin):
     verified_by = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
     comments = Column(String, nullable=True)
     risk_rating = Column(String, nullable=True)
+
+class RetentionAlert(Base, TimestampMixin, TenantMixin):
+    __tablename__ = "retention_alerts"
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    customer_id = Column(UUID(as_uuid=True), ForeignKey("customers.id"), nullable=False)
+    severity = Column(String, nullable=False) # Urgent, High, Medium, Low
+    reason = Column(String, nullable=False)
+    action = Column(String, nullable=False)
+    status = Column(String, default="open") # open, resolved

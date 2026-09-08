@@ -17,15 +17,7 @@ export function UnderwriterDashboardPage() {
 
   if (loading) return <div className="p-8 text-center text-text-secondary animate-pulse">Loading queue...</div>
 
-  // Mock data for UI alignment if API is sparse
-  const displayQueue = queue.length > 0 ? queue : [
-    { id: '1', name: 'Alexander Sterling', policy: 'Commercial Liability', premium: '$12,450.00', riskScore: 32, riskLevel: 'low', status: 'In Review' },
-    { id: '2', name: 'Vanguard Logistics Ltd.', policy: 'Fleet & Cargo', premium: '$84,200.00', riskScore: 84, riskLevel: 'high', status: 'Critical' },
-    { id: '3', name: 'Dr. Helena Rossi', policy: 'Professional Indemnity', premium: '$3,120.00', riskScore: 61, riskLevel: 'medium', status: 'Queued' },
-    { id: '4', name: 'Marcus Chen', policy: 'Home Premium Plus', premium: '$940.00', riskScore: 12, riskLevel: 'low', status: 'Queued' },
-    { id: '5', name: 'Nexus Tech Solutions', policy: 'Cyber Security Bond', premium: '$15,700.00', riskScore: 45, riskLevel: 'medium', status: 'Queued' },
-    { id: '6', name: 'Oceania Shipping Group', policy: 'Marine Hull', premium: '$210,000.00', riskScore: 91, riskLevel: 'high', status: 'Flagged' },
-  ];
+  const displayQueue = queue;
 
   return (
     <div className="flex-1 flex flex-col h-screen overflow-hidden bg-background">

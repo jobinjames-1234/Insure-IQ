@@ -1,20 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ArrowBack, Search, FilterList, Download, AccountBalance } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
-
+import { api } from '../../lib/api'
 export function AdminRevenueView() {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
 
-  const mockStatements = [
-    { id: 'STMT-1044', date: 'Oct 31, 2023', description: 'Stripe Payout - Premium Collection', type: 'Credit', amount: '+$142,500.00', balance: '$1,245,000.00' },
-    { id: 'STMT-1043', date: 'Oct 28, 2023', description: 'Claim Payout - C-8829', type: 'Debit', amount: '-$45,000.00', balance: '$1,102,500.00' },
-    { id: 'STMT-1042', date: 'Oct 15, 2023', description: 'Stripe Payout - Premium Collection', type: 'Credit', amount: '+$85,200.00', balance: '$1,147,500.00' },
-    { id: 'STMT-1041', date: 'Oct 02, 2023', description: 'Platform Fee Deduction', type: 'Debit', amount: '-$4,200.00', balance: '$1,062,300.00' },
-    { id: 'STMT-1040', date: 'Sep 30, 2023', description: 'Stripe Payout - Premium Collection', type: 'Credit', amount: '+$112,000.00', balance: '$1,066,500.00' },
-  ]
+  const [statements, setStatements] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const displayStatements = mockStatements.filter(s => 
+  useEffect(() => {
+    const fetchLedger = async () => {
+      try {
+        const { data } = await api.get('/admin/ledger')
+        setStatements(data)
+      } catch (err) {
+        console.error("Failed to load financial ledger", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchLedger()
+  }, [])
+
+  const displayStatements = statements.filter(s => 
     s.description.toLowerCase().includes(searchQuery.toLowerCase()) || 
     s.id.toLowerCase().includes(searchQuery.toLowerCase())
   )
@@ -93,6 +102,9 @@ export function AdminRevenueView() {
           </div>
 
           <div className="overflow-x-auto">
+            {loading ? (
+              <div className="p-12 text-center">Loading...</div>
+            ) : (
             <table className="w-full text-left border-collapse">
               <thead className="bg-surface-container-lowest border-b border-outline-variant">
                 <tr>
@@ -107,20 +119,20 @@ export function AdminRevenueView() {
               <tbody className="divide-y divide-outline-variant bg-surface">
                 {displayStatements.map((stmt) => (
                   <tr key={stmt.id} className="hover:bg-surface-container-low transition-colors">
-                    <td className="px-6 py-4 font-mono-data text-body font-medium text-primary">{stmt.id}</td>
-                    <td className="px-6 py-4 font-body text-body text-text-secondary">{stmt.date}</td>
+                    <td className="px-6 py-4 font-mono-data text-body font-medium text-primary">{stmt.id.split('-')[0]}</td>
+                    <td className="px-6 py-4 font-body text-body text-text-secondary">{stmt.transaction_date}</td>
                     <td className="px-6 py-4 font-body text-body text-on-surface font-medium">{stmt.description}</td>
                     <td className="px-6 py-4">
                       <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[12px] font-bold tracking-wide uppercase ${
-                        stmt.type === 'Credit' ? 'bg-success-bg text-success' : 'bg-danger-bg text-danger'
+                        stmt.transaction_type === 'Credit' ? 'bg-success-bg text-success' : 'bg-danger-bg text-danger'
                       }`}>
-                        {stmt.type}
+                        {stmt.transaction_type}
                       </span>
                     </td>
-                    <td className={`px-6 py-4 font-mono-data text-body text-right ${stmt.type === 'Credit' ? 'text-success' : 'text-danger'}`}>
-                      {stmt.amount}
+                    <td className={`px-6 py-4 font-mono-data text-body text-right ${stmt.transaction_type === 'Credit' ? 'text-success' : 'text-danger'}`}>
+                      ${stmt.amount.toLocaleString(undefined, {minimumFractionDigits: 2})}
                     </td>
-                    <td className="px-6 py-4 font-mono-data text-body text-on-surface text-right font-medium">{stmt.balance}</td>
+                    <td className="px-6 py-4 font-mono-data text-body text-on-surface text-right font-medium">${stmt.running_balance.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
                   </tr>
                 ))}
                 {displayStatements.length === 0 && (
@@ -130,6 +142,7 @@ export function AdminRevenueView() {
                 )}
               </tbody>
             </table>
+            )}
           </div>
         </div>
       </div>

@@ -9,11 +9,17 @@ export function ClaimsWorkspacePage() {
   const [data, setData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [comments, setComments] = useState("")
+  const [approvedAmount, setApprovedAmount] = useState<string>("")
   const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
     api.get(`/claims/${id}`)
-      .then((res: any) => setData(res.data))
+      .then((res: any) => {
+        setData(res.data)
+        if (res.data?.claim) {
+          setApprovedAmount(res.data.claim.claimed_amount?.toString() || "")
+        }
+      })
       .catch((err: any) => console.error(err))
       .finally(() => setLoading(false))
   }, [id])
@@ -23,7 +29,8 @@ export function ClaimsWorkspacePage() {
     try {
       await api.put(`/claims/${id}/decide`, {
         status,
-        comments
+        comments,
+        approved_amount: parseFloat(approvedAmount) || undefined
       })
       navigate('/b2b/claims')
     } catch (err) {
@@ -35,20 +42,13 @@ export function ClaimsWorkspacePage() {
   }
 
   if (loading) return <div className="p-8 text-on-surface-variant animate-pulse font-body text-body">Loading claim...</div>
-  
-  // Use mock data if API fails or is empty for visual alignment
-  const claim = data?.claim || {
-    claim_number: 'CL-98234-AX',
-    status: 'Awaiting Review',
-    incident_date: '2024-05-14T00:00:00.000Z',
-    estimated_amount: '4,250.00',
+  if (!data || !data.claim) {
+    return <div className="p-8 text-on-surface-variant font-body text-body">Claim not found.</div>
   }
-  const customer = data?.customer || {
-    first_name: 'Robert J.',
-    last_name: 'McAllister',
-    id: 'POL-4412-9908'
-  }
-  const documentUrl = data?.documents?.[0]?.file_url || "https://lh3.googleusercontent.com/aida-public/AB6AXuAmVQewOfmj7-KJ2xxc6YEwiC8zwIgBsGgrzYIJQvAL66IDOB4KeSuDjshA-kB4i7uP8DIJVbTgB9TV4-JICc7GQrBF5J6k7gN8ZFww1zu9hL9MzHTUkaJGolqEwDgHPV8IsGwKgjxwVgjSdveTRdJv63wIQRKxf_GgfCCwIdyJH5ZsEjrOaqlMrKTi1LjfSBq8BKK8rJEkXCBR6gMIoBBWfZ62Ma-nMfj1MpqQ6qNWVMIRKwp3SgmfgA"
+
+  const claim = data.claim
+  const customer = data.customer || { first_name: 'Unknown', last_name: 'Customer' }
+  const documentUrl = data.documents?.[0]?.file_url || "https://lh3.googleusercontent.com/aida-public/AB6AXuAmVQewOfmj7-KJ2xxc6YEwiC8zwIgBsGgrzYIJQvAL66IDOB4KeSuDjshA-kB4i7uP8DIJVbTgB9TV4-JICc7GQrBF5J6k7gN8ZFww1zu9hL9MzHTUkaJGolqEwDgHPV8IsGwKgjxwVgjSdveTRdJv63wIQRKxf_GgfCCwIdyJH5ZsEjrOaqlMrKTi1LjfSBq8BKK8rJEkXCBR6gMIoBBWfZ62Ma-nMfj1MpqQ6qNWVMIRKwp3SgmfgA"
 
   return (
     <div className="flex-1 flex flex-col h-[calc(100vh-64px)] bg-surface-bright">
@@ -213,8 +213,9 @@ export function ClaimsWorkspacePage() {
                       <span className="absolute left-3 top-2.5 text-text-secondary text-sm">$</span>
                       <input 
                         className="w-full h-10 pl-7 pr-3 bg-surface-container rounded border border-outline focus:ring-2 focus:ring-primary focus:border-primary font-mono-data text-mono-data text-right text-on-surface" 
-                        type="text" 
-                        defaultValue={claim.estimated_amount}
+                        type="number" 
+                        value={approvedAmount}
+                        onChange={(e) => setApprovedAmount(e.target.value)}
                       />
                     </div>
                   </div>

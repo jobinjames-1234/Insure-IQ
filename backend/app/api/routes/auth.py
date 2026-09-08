@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from typing import Any
@@ -15,8 +15,7 @@ from app.api.deps import get_current_user
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-@router.post("/login", response_model=TokenResponse)
-async def login(req: LoginRequest, db: AsyncSession = Depends(get_db)):
+async def perform_login(req: LoginRequest, db: AsyncSession, expected_roles: list[str]) -> dict:
     # Check lockout
     recent_attempts_result = await db.execute(
         select(LoginAttempt)
@@ -45,8 +44,6 @@ async def login(req: LoginRequest, db: AsyncSession = Depends(get_db)):
         await log_attempt(db, req.email, False)
         raise HTTPException(status_code=401, detail="Invalid credentials")
         
-    await log_attempt(db, req.email, True)
-    
     # Get role
     role_result = await db.execute(
         select(Role.name)
@@ -54,6 +51,12 @@ async def login(req: LoginRequest, db: AsyncSession = Depends(get_db)):
         .where(UserRole.user_id == user.id)
     )
     role = role_result.scalars().first() or "customer"
+
+    if role not in expected_roles:
+        await log_attempt(db, req.email, False)
+        raise HTTPException(status_code=403, detail=f"Access denied: This login portal does not support the '{role}' role.")
+
+    await log_attempt(db, req.email, True)
     
     # Create tokens
     access_token = create_access_token(
@@ -76,6 +79,18 @@ async def login(req: LoginRequest, db: AsyncSession = Depends(get_db)):
         "refresh_token": refresh_token,
         "token_type": "bearer"
     }
+
+@router.post("/login/customer", response_model=TokenResponse)
+async def login_customer(req: LoginRequest, db: AsyncSession = Depends(get_db)):
+    return await perform_login(req, db, ["customer"])
+
+@router.post("/login/institution", response_model=TokenResponse)
+async def login_institution(req: LoginRequest, db: AsyncSession = Depends(get_db)):
+    return await perform_login(req, db, ["admin", "underwriter", "agent", "adjuster"])
+
+@router.post("/login/superadmin", response_model=TokenResponse)
+async def login_superadmin(req: LoginRequest, db: AsyncSession = Depends(get_db)):
+    return await perform_login(req, db, ["superadmin"])
 
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 async def register(req: UserCreate, db: AsyncSession = Depends(get_db)):

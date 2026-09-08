@@ -17,19 +17,11 @@ export function ClaimsDashboardPage() {
 
   if (loading) return <div className="p-8 text-on-surface-variant animate-pulse font-body text-body">Loading queue...</div>
 
-  // Generate mock data for UI alignment if API is sparse
-  const displayQueue = queue.length > 0 ? queue.map((q: any) => ({
+  const displayQueue = queue.map((q: any) => ({
     ...q,
-    fraud_confidence: Math.floor(Math.random() * 100),
-    age_days: Math.floor(Math.random() * 30) + 1,
-  })) : [
-    { id: '1', claim_number: 'CLM-992-814', policy: 'Auto - Comprehensive', claimant: 'Robert Jenkins', amount: '$14,500.00', fraud_confidence: 94, fraud_label: 'Critical', age_days: 12 },
-    { id: '2', claim_number: 'CLM-881-402', policy: 'Home - Water Damage', claimant: 'Sarah Miller', amount: '$32,150.00', fraud_confidence: 88, fraud_label: 'High', age_days: 45 },
-    { id: '3', claim_number: 'CLM-773-119', policy: 'Auto - Collision', claimant: 'David Chen', amount: '$4,200.00', fraud_confidence: 65, fraud_label: 'Medium', age_days: 8 },
-    { id: '4', claim_number: 'CLM-650-221', policy: 'Property - Theft', claimant: 'Elena Rodriguez', amount: '$1,850.00', fraud_confidence: 12, fraud_label: 'Low', age_days: 2 },
-    { id: '5', claim_number: 'CLM-549-003', policy: 'Auto - Glass', claimant: 'Michael Chang', amount: '$450.00', fraud_confidence: 5, fraud_label: 'Minimal', age_days: 1 },
-    { id: '6', claim_number: 'CLM-421-998', policy: 'Auto - Liability', claimant: 'Amanda Foster', amount: '$8,900.00', fraud_confidence: 2, fraud_label: 'Minimal', age_days: 4 },
-  ];
+    fraud_confidence: Math.floor(Math.random() * 100), // Random confidence for UI
+    age_days: Math.floor(Math.random() * 30) + 1, // Random age for UI
+  }))
 
   return (
     <div className="flex-1 flex flex-col h-[calc(100vh-64px)] overflow-hidden bg-background">

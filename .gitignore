@@ -36,3 +36,18 @@ Insure-IQ_schema.pdf
 docs1/
 proj_docs/plansandwalkthrough/
 proj_docs/prompts/
+
+# Temporary and Ad-hoc Test Scripts
+test_*.py
+test_*.sh
+extract_*.py
+find_*.py
+backend/test_*.py
+backend/test_*.sh
+backend/*.patch
+backend/test.db
+*.patch
+
+# Implementation and prompt docs
+implementation_plan*.md
+production_saas_*.md

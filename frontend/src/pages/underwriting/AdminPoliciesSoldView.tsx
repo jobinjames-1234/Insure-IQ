@@ -1,21 +1,30 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ArrowBack, Search, FilterList, Download, MoreVert } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
+import { api } from '../../lib/api'
 
 export function AdminPoliciesSoldView() {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
+  const [policies, setPolicies] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const mockPolicies = [
-    { id: 'POL-10023', customer: 'Acme Corp', type: 'Commercial Auto', premium: '$12,400/yr', date: 'Oct 12, 2023', status: 'Active' },
-    { id: 'POL-10024', customer: 'Globex Inc', type: 'General Liability', premium: '$8,200/yr', date: 'Oct 11, 2023', status: 'Active' },
-    { id: 'POL-10025', customer: 'Initech', type: 'Cyber Security', premium: '$4,100/yr', date: 'Oct 10, 2023', status: 'Pending Review' },
-    { id: 'POL-10026', customer: 'Umbrella Corp', type: 'Workers Comp', premium: '$22,000/yr', date: 'Oct 08, 2023', status: 'Active' },
-    { id: 'POL-10027', customer: 'Soylent', type: 'Commercial Property', premium: '$15,600/yr', date: 'Oct 05, 2023', status: 'Cancelled' },
-  ]
+  useEffect(() => {
+    const fetchPolicies = async () => {
+      try {
+        const { data } = await api.get('/policies/all')
+        setPolicies(data)
+      } catch (err) {
+        console.error("Failed to load policies", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchPolicies()
+  }, [])
 
-  const displayPolicies = mockPolicies.filter(p => 
-    p.customer.toLowerCase().includes(searchQuery.toLowerCase()) || 
+  const displayPolicies = policies.filter(p => 
+    (p.customer_name || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
     p.id.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
@@ -61,11 +70,14 @@ export function AdminPoliciesSoldView() {
           </div>
 
           <div className="overflow-x-auto">
+            {loading ? (
+              <div className="p-12 text-center">Loading...</div>
+            ) : (
             <table className="w-full text-left border-collapse">
               <thead className="bg-surface-container-lowest border-b border-outline-variant">
                 <tr>
                   <th className="px-6 py-4 font-overline text-overline text-text-secondary uppercase tracking-wider">Policy ID</th>
-                  <th className="px-6 py-4 font-overline text-overline text-text-secondary uppercase tracking-wider">Customer</th>
+                  <th className="px-6 py-4 font-overline text-overline text-text-secondary uppercase tracking-wider">Customer ID</th>
                   <th className="px-6 py-4 font-overline text-overline text-text-secondary uppercase tracking-wider">Type</th>
                   <th className="px-6 py-4 font-overline text-overline text-text-secondary uppercase tracking-wider">Premium</th>
                   <th className="px-6 py-4 font-overline text-overline text-text-secondary uppercase tracking-wider">Date</th>
@@ -76,15 +88,15 @@ export function AdminPoliciesSoldView() {
               <tbody className="divide-y divide-outline-variant bg-surface">
                 {displayPolicies.map((policy) => (
                   <tr key={policy.id} className="hover:bg-surface-container-low transition-colors">
-                    <td className="px-6 py-4 font-mono-data text-body font-medium text-primary">{policy.id}</td>
-                    <td className="px-6 py-4 font-body text-body text-on-surface font-medium">{policy.customer}</td>
-                    <td className="px-6 py-4 font-body text-body text-text-secondary">{policy.type}</td>
-                    <td className="px-6 py-4 font-mono-data text-body text-on-surface">{policy.premium}</td>
-                    <td className="px-6 py-4 font-body text-body text-text-secondary">{policy.date}</td>
+                    <td className="px-6 py-4 font-mono-data text-body font-medium text-primary">{policy.id.split('-')[0]}</td>
+                    <td className="px-6 py-4 font-body text-body text-on-surface font-medium">{policy.customer_id.split('-')[0]}</td>
+                    <td className="px-6 py-4 font-body text-body text-text-secondary">Commercial</td>
+                    <td className="px-6 py-4 font-mono-data text-body text-on-surface">${policy.premium.toLocaleString()}</td>
+                    <td className="px-6 py-4 font-body text-body text-text-secondary">{new Date(policy.created_at).toLocaleDateString()}</td>
                     <td className="px-6 py-4">
                       <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[12px] font-bold tracking-wide uppercase ${
-                        policy.status === 'Active' ? 'bg-success-bg text-success' : 
-                        policy.status === 'Cancelled' ? 'bg-danger-bg text-danger' : 
+                        policy.status === 'active' ? 'bg-success-bg text-success' : 
+                        policy.status === 'cancelled' ? 'bg-danger-bg text-danger' : 
                         'bg-warning-bg text-warning'
                       }`}>
                         {policy.status}
@@ -104,6 +116,7 @@ export function AdminPoliciesSoldView() {
                 )}
               </tbody>
             </table>
+            )}
           </div>
         </div>
       </div>

@@ -1,23 +1,32 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ArrowBack, Search, FilterList, Download, MoreVert } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
-
+import { api } from '../../lib/api'
 export function AdminSettlementTimeView() {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
 
-  const mockSettlements = [
-    { id: 'SET-991', claimId: 'CLM-8820', customer: 'Acme Corp', duration: '3.2 Days', target: '5.0 Days', dateClosed: 'Oct 10, 2023', status: 'Met SLA' },
-    { id: 'SET-992', claimId: 'CLM-8821', customer: 'Soylent', duration: '6.5 Days', target: '5.0 Days', dateClosed: 'Oct 09, 2023', status: 'Missed SLA' },
-    { id: 'SET-993', claimId: 'CLM-8822', customer: 'Globex Inc', duration: '4.1 Days', target: '5.0 Days', dateClosed: 'Oct 08, 2023', status: 'Met SLA' },
-    { id: 'SET-994', claimId: 'CLM-8823', customer: 'Umbrella Corp', duration: '2.8 Days', target: '5.0 Days', dateClosed: 'Oct 07, 2023', status: 'Met SLA' },
-    { id: 'SET-995', claimId: 'CLM-8824', customer: 'Initech', duration: '8.2 Days', target: '5.0 Days', dateClosed: 'Oct 05, 2023', status: 'Missed SLA' },
-  ]
+  const [settlements, setSettlements] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const displaySettlements = mockSettlements.filter(s => 
-    s.customer.toLowerCase().includes(searchQuery.toLowerCase()) || 
+  useEffect(() => {
+    const fetchSLAs = async () => {
+      try {
+        const { data } = await api.get('/admin/slas')
+        setSettlements(data)
+      } catch (err) {
+        console.error("Failed to load SLAs", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchSLAs()
+  }, [])
+
+  const displaySettlements = settlements.filter(s => 
+    s.customer_name.toLowerCase().includes(searchQuery.toLowerCase()) || 
     s.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    s.claimId.toLowerCase().includes(searchQuery.toLowerCase())
+    s.claim_id.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
   return (
@@ -62,6 +71,9 @@ export function AdminSettlementTimeView() {
           </div>
 
           <div className="overflow-x-auto">
+            {loading ? (
+              <div className="p-12 text-center">Loading...</div>
+            ) : (
             <table className="w-full text-left border-collapse">
               <thead className="bg-surface-container-lowest border-b border-outline-variant">
                 <tr>
@@ -78,12 +90,12 @@ export function AdminSettlementTimeView() {
               <tbody className="divide-y divide-outline-variant bg-surface">
                 {displaySettlements.map((settlement) => (
                   <tr key={settlement.id} className="hover:bg-surface-container-low transition-colors">
-                    <td className="px-6 py-4 font-mono-data text-body font-medium text-primary">{settlement.id}</td>
-                    <td className="px-6 py-4 font-mono-data text-body text-text-secondary">{settlement.claimId}</td>
-                    <td className="px-6 py-4 font-body text-body text-on-surface font-medium">{settlement.customer}</td>
-                    <td className="px-6 py-4 font-mono-data text-body text-on-surface">{settlement.duration}</td>
-                    <td className="px-6 py-4 font-mono-data text-body text-text-secondary">{settlement.target}</td>
-                    <td className="px-6 py-4 font-body text-body text-text-secondary">{settlement.dateClosed}</td>
+                    <td className="px-6 py-4 font-mono-data text-body font-medium text-primary">{settlement.id.split('-')[0]}</td>
+                    <td className="px-6 py-4 font-mono-data text-body text-text-secondary">{settlement.claim_id}</td>
+                    <td className="px-6 py-4 font-body text-body text-on-surface font-medium">{settlement.customer_name}</td>
+                    <td className="px-6 py-4 font-mono-data text-body text-on-surface">{settlement.duration_days} Days</td>
+                    <td className="px-6 py-4 font-mono-data text-body text-text-secondary">{settlement.target_days} Days</td>
+                    <td className="px-6 py-4 font-body text-body text-text-secondary">{settlement.date_closed}</td>
                     <td className="px-6 py-4">
                       <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[12px] font-bold tracking-wide uppercase ${
                         settlement.status === 'Met SLA' ? 'bg-success-bg text-success' : 'bg-danger-bg text-danger'
@@ -105,6 +117,7 @@ export function AdminSettlementTimeView() {
                 )}
               </tbody>
             </table>
+            )}
           </div>
         </div>
       </div>

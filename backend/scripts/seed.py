@@ -13,7 +13,7 @@ from app.core.database import AsyncSessionLocal, engine, Base
 from app.models import (
     Tenant, TenantBranding, TenantSettings, Role, User, UserProfile, TenantUser, UserRole, Password,
     Customer, CustomerProfile, InsuranceProduct, PolicyType, Coverage, PremiumBand,
-    SubscriptionPlan
+    SubscriptionPlan, CommissionRecord, TenantInvoice, Claim, ClaimSLA, RetentionAlert, Policy, Application
 )
 
 # A simple mock hash for seeding (In Phase 4, proper bcrypt hashing will be used)
@@ -115,6 +115,43 @@ async def seed_tenant(session: AsyncSession, name: str, slug: str, color: str, p
             phone="555-0100"
         )
         session.add(cust_profile)
+
+        # Retention Alerts mock
+        if i == 1:
+            alert1 = RetentionAlert(tenant_id=tenant.id, customer_id=customer.id, severity="Urgent", reason="Multiple claims in last 3 months. Policy premium increased by 15%. High churn risk.", action="Call Now")
+            alert2 = RetentionAlert(tenant_id=tenant.id, customer_id=customer.id, severity="Medium", reason="Missed second payment reminder. Auto-pay card expired last week.", action="Update Card")
+            alert3 = RetentionAlert(tenant_id=tenant.id, customer_id=customer.id, severity="Low", reason="Browsing competitor rates via partner portal link.", action="Offer Discount")
+            session.add_all([alert1, alert2, alert3])
+
+    # Create mock applications, policies and commissions for agent1
+    app1 = Application(tenant_id=tenant.id, customer_id=customer.id, policy_type_id=policy_type.id, status="approved", quoted_premium=1200)
+    app2 = Application(tenant_id=tenant.id, customer_id=customer.id, policy_type_id=policy_type.id, status="approved", quoted_premium=4500)
+    app3 = Application(tenant_id=tenant.id, customer_id=customer.id, policy_type_id=policy_type.id, status="approved", quoted_premium=850)
+    session.add_all([app1, app2, app3])
+    await session.flush()
+
+    policy1 = Policy(tenant_id=tenant.id, application_id=app1.id, customer_id=customer.id, policy_type_id=policy_type.id, policy_number=f"POL-8492-AX-{tenant.slug}", start_date=date(2026, 1, 1), end_date=date(2026, 12, 31), total_premium=1200)
+    policy2 = Policy(tenant_id=tenant.id, application_id=app2.id, customer_id=customer.id, policy_type_id=policy_type.id, policy_number=f"POL-3310-BQ-{tenant.slug}", start_date=date(2026, 2, 1), end_date=date(2027, 1, 31), total_premium=4500)
+    policy3 = Policy(tenant_id=tenant.id, application_id=app3.id, customer_id=customer.id, policy_type_id=policy_type.id, policy_number=f"POL-9921-CX-{tenant.slug}", start_date=date(2026, 3, 1), end_date=date(2027, 2, 28), total_premium=850)
+    session.add_all([policy1, policy2, policy3])
+    await session.flush()
+
+    comm1 = CommissionRecord(tenant_id=tenant.id, agent_id=agent1.id, policy_id=policy1.id, amount=180, status="paid", calculation_date=date(2026, 10, 24))
+    comm2 = CommissionRecord(tenant_id=tenant.id, agent_id=agent1.id, policy_id=policy2.id, amount=675, status="pending", calculation_date=date(2026, 10, 22))
+    comm3 = CommissionRecord(tenant_id=tenant.id, agent_id=agent1.id, policy_id=policy3.id, amount=127.5, status="paid", calculation_date=date(2026, 10, 18))
+    session.add_all([comm1, comm2, comm3])
+
+    # Tenant Invoices
+    inv1 = TenantInvoice(tenant_id=tenant.id, amount_due=499.00, due_date=date(2023, 10, 1), status="paid")
+    session.add(inv1)
+
+    # Claims and SLA
+    claim1 = Claim(tenant_id=tenant.id, policy_id=policy1.id, customer_id=customer.id, claim_number=f"CLM-89241-{tenant.slug}", status="under_review", incident_date=date(2023, 9, 1), reported_date=date(2023, 9, 2), description="Mock claim", claimed_amount=1000)
+    session.add(claim1)
+    await session.flush()
+
+    sla1 = ClaimSLA(tenant_id=tenant.id, claim_id=str(claim1.id), customer_name="Sarah Jenkins", duration_days=13, target_days=14, status="Met SLA", date_closed=date(2023, 9, 15))
+    session.add(sla1)
     
     return tenant
 
@@ -126,11 +163,12 @@ async def seed():
             if not platform_data:
                 return
             
-            print("Creating global superadmin...")
-            await create_user(session, platform_data["roles"]["superadmin"].id, "super@platform.com", "Super", "Admin", None)
-            
             print("Seeding Tenant 1 (ABC Insurance)...")
-            await seed_tenant(session, "ABC Insurance", "abc", "#1A56FF", platform_data)
+            tenant1 = await seed_tenant(session, "ABC Insurance", "abc", "#1A56FF", platform_data)
+            
+            print("Creating global superadmin...")
+            await create_user(session, platform_data["roles"]["superadmin"].id, "super@platform.com", "Super", "Admin", tenant1.id)
+
             
             print("Seeding Tenant 2 (National Life)...")
             await seed_tenant(session, "National Life", "national", "#12805C", platform_data)

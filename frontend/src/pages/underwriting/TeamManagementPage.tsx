@@ -87,15 +87,7 @@ export function TeamManagementPage() {
 
   if (loading && users.length === 0) return <div className="p-8 text-on-surface-variant animate-pulse font-caption text-caption">Loading team...</div>
 
-  // For the UI demonstration, let's use the hardcoded values if no users are returned or the API fails.
-  const baseUsers = users.length > 0 ? users : [
-    { id: '1', name: 'Sarah Jenkins', email: 'sarah.j@insureiq.com', role: 'Administrator', status: 'Active', lastActive: '2 hours ago', initials: '', avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBXVttuVKGb8eLqcGCZWNVjy-rBXMhrbHqBbABZUqp5sIeXbx7Mqkui5e-Qy7mpp3Owci76lnozjv_7rQulhIrh-u4T1_O5A6r2kLxMkCAyKa4joCifUnx4seRWZez-0xDMzubOmc73fbat_rAx2ROyvh2EmaG1BDyyVYQNFPyWH8POitfc86cEaDHXnx7IlW9drm9eoSIl7yoOXky3_vtGUoBaQGXGUojTu2Ns_nIXVm2a8fTZ0o7cTA' },
-    { id: '2', name: 'Michael Ross', email: 'm.ross@insureiq.com', role: 'Underwriter', status: 'Active', lastActive: 'Oct 12, 2023', initials: 'MR', avatar: '' },
-    { id: '3', name: 'David Chen', email: 'd.chen@insureiq.com', role: 'Adjuster', status: 'Active', lastActive: 'Oct 10, 2023', initials: '', avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAlWqGqKxWRHiAW0k-96jj1xsYkvz3xCDrg6xo6WTjSc1gqHsbpNKKXkm383lg9ZQOZjU5cNxZfJLzN2wQ9fFNnk2s7GAUQxDfm1F1TSraan1kbO5xiL59QWyB7Dw8QZbJbadb8y_NMG5LQUsk8Mwj5-ZSMVixPBMmqeYE6pjlFEpn7n-FriM_y9BntdcAh5us3UaRNanGFOscbwHlsjFsLSpcUm4XEikRh49_bp2zQh0kvUQt3vgCmOQ' },
-    { id: '4', name: 'Elena Lopez', email: 'elena.l@insureiq.com', role: 'Agent', status: 'Suspended', lastActive: 'Sep 28, 2023', initials: 'EL', avatar: '' },
-  ]
-
-  const displayUsers = baseUsers.filter(u => 
+  const displayUsers = users.filter(u => 
     (u.name && u.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
     (u.email && u.email.toLowerCase().includes(searchQuery.toLowerCase())) ||
     (u.role && u.role.toLowerCase().includes(searchQuery.toLowerCase()))

@@ -24,7 +24,7 @@ export function FileAClaimPage() {
     try {
       await api.post('/claims', {
         ...formData,
-        estimated_amount: parseFloat(formData.estimated_amount || '0')
+        claimed_amount: parseFloat(formData.estimated_amount || '0')
       })
       // If we had a document, we would upload it here
       navigate('/portal/claims')

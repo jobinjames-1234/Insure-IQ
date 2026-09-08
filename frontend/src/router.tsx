@@ -165,7 +165,15 @@ const AuthSuperAdminShell = () => {
 export const router = createBrowserRouter([
   {
     path: '/login',
-    element: <LoginPage />,
+    element: <LoginPage portalType="customer" />,
+  },
+  {
+    path: '/institution/login',
+    element: <LoginPage portalType="institution" />,
+  },
+  {
+    path: '/superadmin/login',
+    element: <LoginPage portalType="superadmin" />,
   },
   {
     path: '/register',

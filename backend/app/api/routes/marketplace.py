@@ -10,16 +10,34 @@ class QuoteRequest(BaseModel):
     age: int
     coverage_level: str
 
+from app.api.deps import get_db
+from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import Depends
+from sqlalchemy.future import select
+from app.models import InsuranceProduct
+
 @router.get("/products")
-async def get_products():
-    return {
-        "categories": [
-            {"id": "auto", "name": "Auto Insurance", "icon": "directions_car", "description": "Protect your vehicle and passengers."},
-            {"id": "home", "name": "Homeowners Insurance", "icon": "home", "description": "Protect your most valuable asset."},
-            {"id": "life", "name": "Life Insurance", "icon": "favorite", "description": "Financial security for your loved ones."},
-            {"id": "renters", "name": "Renters Insurance", "icon": "apartment", "description": "Protect your personal belongings."}
-        ]
+async def get_products(db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(InsuranceProduct).where(InsuranceProduct.status == 'active'))
+    products = result.scalars().all()
+    
+    icon_map = {
+        "auto": "directions_car",
+        "home": "home",
+        "life": "favorite",
+        "renters": "apartment"
     }
+    
+    categories = []
+    for p in products:
+        categories.append({
+            "id": p.category,
+            "name": p.name,
+            "icon": icon_map.get(p.category, "category"),
+            "description": p.description or ""
+        })
+        
+    return {"categories": categories}
 
 @router.post("/quotes")
 async def get_quotes(req: QuoteRequest):

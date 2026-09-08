@@ -8,19 +8,24 @@ import { api } from '../../lib/api'
 export function AdminDashboardPage() {
   const navigate = useNavigate()
   const [stats, setStats] = useState<any>(null)
+  const [activities, setActivities] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    api.get('/admin/stats')
-      .then((res: any) => setStats(res.data))
-      .catch((err: any) => console.error(err))
-      .finally(() => setLoading(false))
+    Promise.all([
+      api.get('/admin/stats'),
+      api.get('/admin/activities')
+    ]).then(([statsRes, activitiesRes]) => {
+      setStats(statsRes.data)
+      setActivities(activitiesRes.data.slice(0, 5))
+    })
+    .catch((err: any) => console.error(err))
+    .finally(() => setLoading(false))
   }, [])
 
   if (loading && !stats) return <div className="p-8 text-text-secondary animate-pulse text-[14px]">Loading admin dashboard...</div>
 
-  const mockChartData = [12000, 15000, 18000, 14000, 19000, 22000, 20000];
-  const chartData = stats?.lead_volume || mockChartData;
+  const chartData = stats?.lead_volume || [12000, 15000, 18000, 14000, 19000, 22000, 20000];
 
   return (
     <div className="flex-1 flex flex-col h-[calc(100vh-64px)] overflow-hidden bg-background">
@@ -184,61 +189,19 @@ export function AdminDashboardPage() {
               </div>
               <div className="space-y-6 flex-1">
                 {/* Activity Items */}
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-success-bg text-success flex-shrink-0 flex items-center justify-center">
-                    <FactCheck className="text-sm" />
+                {activities.map((activity: any) => (
+                  <div key={activity.id} className="flex gap-4">
+                    <div className="w-10 h-10 rounded-full bg-surface-container text-outline flex-shrink-0 flex items-center justify-center">
+                      <LockOpen className="text-sm" />
+                    </div>
+                    <div className="flex flex-col">
+                      <p className="font-body text-body text-on-surface leading-tight">
+                        <span className="font-semibold">{activity.title}:</span> {activity.description}
+                      </p>
+                      <span className="text-[11px] font-mono-data text-text-muted mt-1 uppercase">{new Date(activity.created_at).toLocaleString()}</span>
+                    </div>
                   </div>
-                  <div className="flex flex-col">
-                    <p className="font-body text-body text-on-surface leading-tight">
-                      <span className="font-semibold">Underwriting Approval:</span> Policy #AX-9023 was approved by System Auto.
-                    </p>
-                    <span className="text-[11px] font-mono-data text-text-muted mt-1 uppercase">2 minutes ago</span>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-primary-fixed text-primary flex-shrink-0 flex items-center justify-center">
-                    <PersonAdd className="text-sm" />
-                  </div>
-                  <div className="flex flex-col">
-                    <p className="font-body text-body text-on-surface leading-tight">
-                      <span className="font-semibold">New Agent Onboarded:</span> Sarah Jenkins joined the Northeast team.
-                    </p>
-                    <span className="text-[11px] font-mono-data text-text-muted mt-1 uppercase">45 minutes ago</span>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-warning-bg text-warning flex-shrink-0 flex items-center justify-center">
-                    <NotificationsActive className="text-sm" />
-                  </div>
-                  <div className="flex flex-col">
-                    <p className="font-body text-body text-on-surface leading-tight">
-                      <span className="font-semibold">Billing Alert:</span> Stripe payment failed for Tenant ID: 5521.
-                    </p>
-                    <span className="text-[11px] font-mono-data text-text-muted mt-1 uppercase">2 hours ago</span>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-danger-bg text-danger flex-shrink-0 flex items-center justify-center">
-                    <Policy className="text-sm" />
-                  </div>
-                  <div className="flex flex-col">
-                    <p className="font-body text-body text-on-surface leading-tight">
-                      <span className="font-semibold">Rejection Issued:</span> Claim #C-882 denied due to documentation lapse.
-                    </p>
-                    <span className="text-[11px] font-mono-data text-text-muted mt-1 uppercase">5 hours ago</span>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-surface-container text-outline flex-shrink-0 flex items-center justify-center">
-                    <LockOpen className="text-sm" />
-                  </div>
-                  <div className="flex flex-col">
-                    <p className="font-body text-body text-on-surface leading-tight">
-                      <span className="font-semibold">Admin Login:</span> Root access detected from IP 192.168.1.1.
-                    </p>
-                    <span className="text-[11px] font-mono-data text-text-muted mt-1 uppercase">8 hours ago</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>

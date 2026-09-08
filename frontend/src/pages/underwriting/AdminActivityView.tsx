@@ -1,23 +1,31 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ArrowBack, Search, FilterList, FactCheck, PersonAdd, NotificationsActive, Policy, LockOpen, FileDownload } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
-
+import { api } from '../../lib/api'
 export function AdminActivityView() {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
+  const [activities, setActivities] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const mockActivities = [
-    { id: 'ACT-001', type: 'Underwriting', title: 'Underwriting Approval', desc: 'Policy #AX-9023 was approved by System Auto.', time: '2 minutes ago', icon: <FactCheck className="text-sm" />, color: 'bg-success-bg text-success' },
-    { id: 'ACT-002', type: 'Team', title: 'New Agent Onboarded', desc: 'Sarah Jenkins joined the Northeast team.', time: '45 minutes ago', icon: <PersonAdd className="text-sm" />, color: 'bg-primary-fixed text-primary' },
-    { id: 'ACT-003', type: 'Billing', title: 'Billing Alert', desc: 'Stripe payment failed for Tenant ID: 5521.', time: '2 hours ago', icon: <NotificationsActive className="text-sm" />, color: 'bg-warning-bg text-warning' },
-    { id: 'ACT-004', type: 'Claims', title: 'Rejection Issued', desc: 'Claim #C-882 denied due to documentation lapse.', time: '5 hours ago', icon: <Policy className="text-sm" />, color: 'bg-danger-bg text-danger' },
-    { id: 'ACT-005', type: 'Security', title: 'Admin Login', desc: 'Root access detected from IP 192.168.1.1.', time: '8 hours ago', icon: <LockOpen className="text-sm" />, color: 'bg-surface-container text-outline' },
-    { id: 'ACT-006', type: 'System', title: 'Data Export', desc: 'Global policy data exported by Admin User.', time: '1 day ago', icon: <FileDownload className="text-sm" />, color: 'bg-secondary-fixed text-secondary' },
-  ]
+  useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        const { data } = await api.get('/admin/activities')
+        // map backend keys if needed, assuming backend returns similar names
+        setActivities(data)
+      } catch (err) {
+        console.error("Failed to load activities", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchActivities()
+  }, [])
 
-  const displayActivities = mockActivities.filter(a => 
+  const displayActivities = activities.filter(a => 
     a.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    a.desc.toLowerCase().includes(searchQuery.toLowerCase())
+    a.description.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
   return (
@@ -56,19 +64,22 @@ export function AdminActivityView() {
           </div>
 
           <div className="p-6">
+            {loading ? (
+              <div className="py-12 text-center text-text-secondary font-body">Loading...</div>
+            ) : (
             <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-outline-variant before:to-transparent">
               {displayActivities.map((activity, index) => (
                 <div key={activity.id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                  <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-surface ${activity.color} shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10`}>
-                    {activity.icon}
+                  <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-surface ${activity.color || 'bg-primary-fixed text-primary'} shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10`}>
+                    <FactCheck className="text-sm" />
                   </div>
                   
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-outline-variant bg-surface-container-lowest shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:border-primary transition-colors">
                     <div className="flex items-center justify-between space-x-2 mb-1">
                       <div className="font-semibold text-on-surface font-body">{activity.title}</div>
-                      <time className="font-mono-data text-[11px] text-text-muted uppercase">{activity.time}</time>
+                      <time className="font-mono-data text-[11px] text-text-muted uppercase">{new Date(activity.created_at).toLocaleString()}</time>
                     </div>
-                    <div className="text-body text-text-secondary font-body">{activity.desc}</div>
+                    <div className="text-body text-text-secondary font-body">{activity.description}</div>
                   </div>
                 </div>
               ))}
@@ -77,6 +88,7 @@ export function AdminActivityView() {
                 <div className="py-12 text-center text-text-secondary font-body">No activities found matching your search.</div>
               )}
             </div>
+            )}
           </div>
         </div>
       </div>

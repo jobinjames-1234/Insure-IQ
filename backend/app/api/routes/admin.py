@@ -157,9 +157,52 @@ async def update_policy_config(
 
 @router.get("/audit-log")
 async def get_audit_log(
-    current_user: User = Depends(require_role(["admin"]))
+    current_user: User = Depends(require_role(["admin"])),
+    db: AsyncSession = Depends(get_db)
 ):
-    return [
-        {"timestamp": "2026-08-17T10:00:00Z", "user": "admin@example.com", "action": "Updated policy config"},
-        {"timestamp": "2026-08-16T14:30:00Z", "user": "agent@example.com", "action": "Viewed customer record"}
-    ]
+    from app.models.reporting import SystemActivityLog
+    res = await db.execute(
+        select(SystemActivityLog)
+        .where(SystemActivityLog.tenant_id == current_user.tenant_id)
+        .order_by(SystemActivityLog.created_at.desc())
+    )
+    return res.scalars().all()
+
+@router.get("/activities")
+async def get_system_activities(
+    current_user: User = Depends(require_role(["admin", "superadmin"])),
+    db: AsyncSession = Depends(get_db)
+):
+    from app.models.reporting import SystemActivityLog
+    res = await db.execute(
+        select(SystemActivityLog)
+        .where(SystemActivityLog.tenant_id == current_user.tenant_id)
+        .order_by(SystemActivityLog.created_at.desc())
+    )
+    return res.scalars().all()
+
+@router.get("/ledger")
+async def get_financial_ledger(
+    current_user: User = Depends(require_role(["admin", "superadmin"])),
+    db: AsyncSession = Depends(get_db)
+):
+    from app.models.reporting import FinancialLedger
+    res = await db.execute(
+        select(FinancialLedger)
+        .where(FinancialLedger.tenant_id == current_user.tenant_id)
+        .order_by(FinancialLedger.transaction_date.desc())
+    )
+    return res.scalars().all()
+
+@router.get("/slas")
+async def get_claim_slas(
+    current_user: User = Depends(require_role(["admin", "superadmin"])),
+    db: AsyncSession = Depends(get_db)
+):
+    from app.models.reporting import ClaimSLA
+    res = await db.execute(
+        select(ClaimSLA)
+        .where(ClaimSLA.tenant_id == current_user.tenant_id)
+        .order_by(ClaimSLA.date_closed.desc())
+    )
+    return res.scalars().all()

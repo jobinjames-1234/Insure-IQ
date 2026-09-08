@@ -1,21 +1,30 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ArrowBack, Search, FilterList, Download, MoreVert } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
+import { api } from '../../lib/api'
 
 export function AdminClaimsPendingView() {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
+  const [claims, setClaims] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const mockClaims = [
-    { id: 'CLM-8829', customer: 'Globex Inc', type: 'Property Damage', amount: '$45,000', dateFiled: 'Oct 14, 2023', status: 'In Review' },
-    { id: 'CLM-8830', customer: 'Acme Corp', type: 'Auto Liability', amount: '$12,500', dateFiled: 'Oct 13, 2023', status: 'Awaiting Docs' },
-    { id: 'CLM-8831', customer: 'Initech', type: 'Cyber Breach', amount: '$120,000', dateFiled: 'Oct 12, 2023', status: 'In Review' },
-    { id: 'CLM-8832', customer: 'Soylent', type: 'Workers Comp', amount: '$8,900', dateFiled: 'Oct 10, 2023', status: 'Processing' },
-    { id: 'CLM-8833', customer: 'Umbrella Corp', type: 'General Liability', amount: '$34,200', dateFiled: 'Oct 09, 2023', status: 'Awaiting Docs' },
-  ]
+  useEffect(() => {
+    const fetchClaims = async () => {
+      try {
+        const { data } = await api.get('/claims/queue')
+        setClaims(data)
+      } catch (err) {
+        console.error("Failed to load claims", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchClaims()
+  }, [])
 
-  const displayClaims = mockClaims.filter(c => 
-    c.customer.toLowerCase().includes(searchQuery.toLowerCase()) || 
+  const displayClaims = claims.filter(c => 
+    (c.customer_id || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
     c.id.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
@@ -61,11 +70,14 @@ export function AdminClaimsPendingView() {
           </div>
 
           <div className="overflow-x-auto">
+            {loading ? (
+              <div className="p-12 text-center">Loading...</div>
+            ) : (
             <table className="w-full text-left border-collapse">
               <thead className="bg-surface-container-lowest border-b border-outline-variant">
                 <tr>
                   <th className="px-6 py-4 font-overline text-overline text-text-secondary uppercase tracking-wider">Claim ID</th>
-                  <th className="px-6 py-4 font-overline text-overline text-text-secondary uppercase tracking-wider">Customer</th>
+                  <th className="px-6 py-4 font-overline text-overline text-text-secondary uppercase tracking-wider">Customer ID</th>
                   <th className="px-6 py-4 font-overline text-overline text-text-secondary uppercase tracking-wider">Type</th>
                   <th className="px-6 py-4 font-overline text-overline text-text-secondary uppercase tracking-wider">Est Amount</th>
                   <th className="px-6 py-4 font-overline text-overline text-text-secondary uppercase tracking-wider">Date Filed</th>
@@ -76,15 +88,15 @@ export function AdminClaimsPendingView() {
               <tbody className="divide-y divide-outline-variant bg-surface">
                 {displayClaims.map((claim) => (
                   <tr key={claim.id} className="hover:bg-surface-container-low transition-colors">
-                    <td className="px-6 py-4 font-mono-data text-body font-medium text-primary">{claim.id}</td>
-                    <td className="px-6 py-4 font-body text-body text-on-surface font-medium">{claim.customer}</td>
-                    <td className="px-6 py-4 font-body text-body text-text-secondary">{claim.type}</td>
-                    <td className="px-6 py-4 font-mono-data text-body text-on-surface">{claim.amount}</td>
-                    <td className="px-6 py-4 font-body text-body text-text-secondary">{claim.dateFiled}</td>
+                    <td className="px-6 py-4 font-mono-data text-body font-medium text-primary">{claim.claim_number}</td>
+                    <td className="px-6 py-4 font-body text-body text-on-surface font-medium">{claim.customer_id.split('-')[0]}</td>
+                    <td className="px-6 py-4 font-body text-body text-text-secondary">Property Damage</td>
+                    <td className="px-6 py-4 font-mono-data text-body text-on-surface">${claim.claimed_amount?.toLocaleString() || 0}</td>
+                    <td className="px-6 py-4 font-body text-body text-text-secondary">{new Date(claim.incident_date).toLocaleDateString()}</td>
                     <td className="px-6 py-4">
                       <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[12px] font-bold tracking-wide uppercase ${
-                        claim.status === 'Processing' ? 'bg-success-bg text-success' : 
-                        claim.status === 'Awaiting Docs' ? 'bg-danger-bg text-danger' : 
+                        claim.status === 'processing' ? 'bg-success-bg text-success' : 
+                        claim.status === 'investigation_needed' ? 'bg-danger-bg text-danger' : 
                         'bg-warning-bg text-warning'
                       }`}>
                         {claim.status}
@@ -104,6 +116,7 @@ export function AdminClaimsPendingView() {
                 )}
               </tbody>
             </table>
+            )}
           </div>
         </div>
       </div>

@@ -1,10 +1,13 @@
+import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { PageHeader } from '../../components/ui/PageHeader'
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card'
 import { Button } from '../../components/ui/Button'
 import { Shield, CheckCircle2, ChevronLeft, CreditCard } from 'lucide-react'
+import { api } from '../../lib/api'
 
 export function PlanDetailPage() {
+  const [submitting, setSubmitting] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
   
@@ -95,9 +98,36 @@ export function PlanDetailPage() {
                 <Button 
                   className="w-full"
                   size="lg"
-                  onClick={() => {
-                    alert("In a real app, this would route to a Stripe Checkout session or a B2C application flow.")
-                    navigate('/login')
+                  disabled={submitting}
+                  onClick={async () => {
+                    const auth = (await import('../../store/authStore')).useAuthStore.getState()
+                    if (!auth.isAuthenticated) {
+                      navigate('/login')
+                      return
+                    }
+                    try {
+                      setSubmitting(true)
+                      // Find the first policy_type for demonstration, since UI doesn't pass one right now
+                      const resTypes = await api.get('/applications/policy-types')
+                      const policyTypeId = resTypes.data[0]?.id
+                      
+                      if (!policyTypeId) {
+                        alert("No policy types available to apply for.")
+                        return
+                      }
+
+                      await api.post('/applications', {
+                        policy_type_id: policyTypeId,
+                        data: quote
+                      })
+                      
+                      navigate('/portal') // Navigate to customer portal
+                    } catch (err) {
+                      console.error("Failed to submit application", err)
+                      alert("Failed to submit application.")
+                    } finally {
+                      setSubmitting(false)
+                    }
                   }}
                 >
                   <CreditCard className="w-5 h-5 mr-2" />

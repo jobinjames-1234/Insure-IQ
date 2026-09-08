@@ -5,19 +5,13 @@ import { api } from '../../lib/api'
 // Define local interfaces for the mock data matching the UI
 interface SLAClaim {
   id: string
-  name: string
-  type: string
-  target: number
-  elapsed: number
-  icon: any
+  claim_id: string
+  customer_name: string
+  duration_days: number
+  target_days: number
+  status: string
+  date_closed: string | null
 }
-
-const FALLBACK_DATA: SLAClaim[] = [
-  { id: 'CLM-89241', name: 'Sarah Jenkins', type: 'Property', target: 14, elapsed: 13, icon: Home },
-  { id: 'CLM-89105', name: 'Marcus Thorne', type: 'Auto', target: 7, elapsed: 6, icon: Car },
-  { id: 'CLM-89332', name: 'Elena Rostova', type: 'Medical', target: 21, elapsed: 15, icon: Activity },
-  { id: 'CLM-89410', name: 'David Chen', type: 'Auto', target: 7, elapsed: 2, icon: Car },
-]
 
 export function SLATrackerPage() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -25,12 +19,17 @@ export function SLATrackerPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Mocking a backend fetch for SLA data
-    // In a real app this would hit an endpoint calculating real-time elapsed durations against SLA targets
-    setTimeout(() => {
-      setClaims(FALLBACK_DATA)
-      setLoading(false)
-    }, 600)
+    const fetchSLAs = async () => {
+      try {
+        const data = await api.get('/admin/slas')
+        setClaims(data)
+      } catch (error) {
+        console.error('Failed to fetch SLAs:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchSLAs()
   }, [])
 
   const getSLAStatus = (elapsed: number, target: number) => {
@@ -40,9 +39,9 @@ export function SLATrackerPage() {
     return { type: 'On Track', color: 'success', bg: 'bg-success', text: 'text-success', badge: 'bg-success-bg text-success' }
   }
 
-  const criticalCount = claims.filter(c => (c.elapsed / c.target) >= 0.8).length
-  const warningCount = claims.filter(c => (c.elapsed / c.target) >= 0.6 && (c.elapsed / c.target) < 0.8).length
-  const totalCount = 143 // Mock total open from prototype
+  const criticalCount = claims.filter(c => (c.duration_days / c.target_days) >= 0.8).length
+  const warningCount = claims.filter(c => (c.duration_days / c.target_days) >= 0.6 && (c.duration_days / c.target_days) < 0.8).length
+  const totalCount = claims.length
 
   return (
     <div className="flex-1 flex flex-col h-[calc(100vh-64px)] overflow-hidden bg-background">
@@ -99,13 +98,13 @@ export function SLATrackerPage() {
           </div>
 
           {/* List Items */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             {loading ? (
-               <div className="p-8 text-center text-text-secondary animate-pulse font-body text-body">Loading SLA data...</div>
-            ) : claims.filter(c => c.id.toLowerCase().includes(searchTerm.toLowerCase())).map((claim) => {
-              const status = getSLAStatus(claim.elapsed, claim.target)
-              const percent = Math.min(100, Math.round((claim.elapsed / claim.target) * 100))
-              const Icon = claim.icon
+              <div className="p-6 text-center text-text-muted">Loading...</div>
+            ) : claims.filter(c => c.claim_id.toLowerCase().includes(searchTerm.toLowerCase())).map((claim) => {
+              const status = getSLAStatus(claim.duration_days, claim.target_days)
+              // Dynamically pick icon based on simple string matching on customer_name/claim_id for aesthetics, or just use Activity
+              const Icon = Activity
               
               return (
                 <div key={claim.id} className="bg-surface rounded-lg shadow-xs border border-outline-variant relative overflow-hidden group hover:shadow-md transition-shadow cursor-pointer">
@@ -114,35 +113,35 @@ export function SLATrackerPage() {
                   )}
                   <div className={`p-4 md:px-6 md:py-4 md:grid md:grid-cols-12 md:gap-4 md:items-center flex flex-col gap-3 ${status.type === 'On Track' ? 'pl-5 md:pl-7' : ''}`}>
                     <div className="col-span-2 flex items-center justify-between md:block">
-                      <span className="font-mono-data text-mono-data text-on-surface font-medium">{claim.id}</span>
+                      <span className="font-mono-data text-mono-data text-on-surface font-medium">{claim.claim_id}</span>
                       <span className={`md:hidden px-2 py-0.5 rounded-full font-overline text-overline uppercase ${status.badge}`}>
                         {status.type}
                       </span>
                     </div>
                     
                     <div className="col-span-3 font-body text-body text-on-surface truncate">
-                      {claim.name}
+                      {claim.customer_name}
                     </div>
                     
                     <div className="col-span-2">
                       <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-surface-container-high font-caption text-caption font-medium text-on-surface">
                         <Icon className="w-[14px] h-[14px]" />
-                        {claim.type}
+                        {claim.status}
                       </span>
                     </div>
                     
                     <div className="col-span-2 md:text-right font-mono-data text-mono-data text-text-secondary flex justify-between md:block">
                       <span className="md:hidden font-caption text-caption font-medium">Target: </span>
-                      {claim.target} Days
+                      {claim.target_days} Days
                     </div>
                     
                     <div className="col-span-3">
                       <div className="flex items-center justify-between mb-1">
-                        <span className={`font-caption text-caption font-medium ${status.text}`}>{claim.elapsed} Days Elapsed</span>
-                        <span className="font-caption text-caption font-medium text-text-muted">{percent}%</span>
+                        <span className={`font-caption text-caption font-medium ${status.text}`}>{claim.duration_days} Days Elapsed</span>
+                        <span className="font-caption text-caption font-medium text-text-muted">{Math.min(100, Math.round((claim.duration_days / claim.target_days) * 100))}%</span>
                       </div>
                       <div className="w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
-                        <div className={`h-1.5 rounded-full ${status.bg}`} style={{ width: `${percent}%` }}></div>
+                        <div className={`h-1.5 rounded-full ${status.bg}`} style={{ width: `${Math.min(100, Math.round((claim.duration_days / claim.target_days) * 100))}%` }}></div>
                       </div>
                     </div>
                   </div>

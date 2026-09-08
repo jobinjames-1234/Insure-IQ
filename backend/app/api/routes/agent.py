@@ -45,17 +45,52 @@ async def get_commission(
     current_user: User = Depends(require_role(["agent"])),
     db: AsyncSession = Depends(get_db)
 ):
-    # Mock commission data
+    from app.models.billing import CommissionRecord
+    from app.models.customer import CustomerProfile
+    
+    # Query Commission Records joined with Policy and CustomerProfile
+    stmt = (
+        select(CommissionRecord, Policy, CustomerProfile)
+        .join(Policy, CommissionRecord.policy_id == Policy.id)
+        .join(CustomerProfile, Policy.customer_id == CustomerProfile.customer_id)
+        .where(CommissionRecord.agent_id == current_user.id)
+    )
+    result = await db.execute(stmt)
+    rows = result.all()
+    
+    ledger = []
+    mtd_commission = 0.0
+    pending_commission = 0.0
+    active_policies = 0
+    ytd_commission = 0.0 # simplified for now
+    
+    for comm, pol, cust in rows:
+        amount = comm.amount
+        if comm.status == "pending":
+            pending_commission += amount
+        elif comm.status == "paid":
+            mtd_commission += amount
+            ytd_commission += amount
+            
+        if pol.status == "active":
+            active_policies += 1
+            
+        ledger.append({
+            "id": str(comm.id),
+            "date": comm.calculation_date.strftime("%b %d, %Y") if comm.calculation_date else "",
+            "policy_id": pol.policy_number,
+            "customer": f"{cust.first_name} {cust.last_name}",
+            "premium": pol.total_premium,
+            "commission": amount,
+            "status": comm.status.capitalize()
+        })
+        
     return {
-        "mtd_commission": 4500.00,
-        "ytd_commission": 38200.00,
-        "active_policies": 142,
-        "pending_commission": 3120.00,
-        "ledger": [
-            { "id": 1, "date": "2026-10-24", "policy_id": "POL-8492-AX", "customer": "Sarah Jenkins", "premium": 1200, "commission": 180, "status": "Paid" },
-            { "id": 2, "date": "2026-10-22", "policy_id": "POL-3310-BQ", "customer": "TechFlow Solutions", "premium": 4500, "commission": 675, "status": "Pending" },
-            { "id": 3, "date": "2026-10-18", "policy_id": "POL-9921-CX", "customer": "Marcus Thorne", "premium": 850, "commission": 127.5, "status": "Paid" }
-        ]
+        "mtd_commission": mtd_commission,
+        "ytd_commission": ytd_commission,
+        "active_policies": active_policies,
+        "pending_commission": pending_commission,
+        "ledger": ledger
     }
 
 @router.get("/retention-alerts")

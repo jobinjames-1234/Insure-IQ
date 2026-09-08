@@ -5,3 +5,4 @@ from app.models.policy import *
 from app.models.claim import *
 from app.models.ai_stubs import *
 from app.models.billing import *
+from app.models.reporting import *

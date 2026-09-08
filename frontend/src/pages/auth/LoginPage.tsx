@@ -17,7 +17,7 @@ const loginSchema = z.object({
 
 type LoginFormData = z.infer<typeof loginSchema>
 
-export function LoginPage() {
+export function LoginPage({ portalType = 'customer' }: { portalType?: 'customer' | 'institution' | 'superadmin' }) {
   const navigate = useNavigate()
   const location = useLocation()
   const { setAuth } = useAuthStore()
@@ -33,7 +33,8 @@ export function LoginPage() {
     try {
       setGlobalError(null)
       // 1. Get tokens
-      const res = await api.post('/auth/login', data)
+      const endpoint = `/auth/login/${portalType}`
+      const res = await api.post(endpoint, data)
       const { access_token, refresh_token } = res.data
       
       // 2. Temporarily set token in axios to fetch me
@@ -77,13 +78,19 @@ export function LoginPage() {
             <ShieldCheck className="h-7 w-7" />
           </div>
           <h2 className="text-center font-h2 text-h2 text-on-surface">
-            Sign in to your account
+            Sign in to {portalType === 'customer' ? 'your account' : portalType === 'institution' ? 'Institution Portal' : 'Superadmin Portal'}
           </h2>
           <p className="mt-2 text-center font-body text-body text-text-secondary">
-            Or{' '}
-            <Link to="/register" className="font-medium text-primary hover:text-primary-hover transition-colors">
-              start your customer journey
-            </Link>
+            {portalType === 'customer' ? (
+              <>
+                Or{' '}
+                <Link to="/register" className="font-medium text-primary hover:text-primary-hover transition-colors">
+                  start your customer journey
+                </Link>
+              </>
+            ) : (
+              'Authorized personnel only'
+            )}
           </p>
         </div>
         

@@ -36,7 +36,6 @@ async def get_current_user(
     if not user.is_active:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Inactive user")
         
-    # We can attach the payload role so route handlers know it
     user.role = payload.get("role")
     
     return user
