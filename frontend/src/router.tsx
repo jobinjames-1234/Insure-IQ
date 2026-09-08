@@ -81,7 +81,7 @@ const RoleBasedRedirect = () => {
   return <Navigate to={route} replace />
 }
 
-const AdminHome = () => <div>SuperAdmin Dashboard</div>;
+
 
 const AuthB2BShell = () => {
   const { user } = useAuthStore()
@@ -162,7 +162,7 @@ const AuthSuperAdminShell = () => {
   )
 }
 
-export const router = createBrowserRouter([
+const commonAuthRoutes = [
   {
     path: '/login',
     element: <LoginPage portalType="customer" />,
@@ -187,7 +187,132 @@ export const router = createBrowserRouter([
     path: '/unauthorized',
     element: <UnauthorizedPage />,
   },
-  // --- B2B Tenant Routes ---
+  {
+    path: '/styleguide',
+    element: <StyleGuide />,
+  }
+];
+
+export const superadminRouter = createBrowserRouter([
+  ...commonAuthRoutes,
+  {
+    path: '/admin',
+    element: <ProtectedRoute allowedRoles={['superadmin']}><AuthSuperAdminShell /></ProtectedRoute>,
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/admin/console" replace />,
+      },
+      {
+        path: 'console',
+        element: <PlatformConsolePage />,
+      },
+      {
+        path: 'tenants',
+        element: <TenantDirectoryPage />,
+      },
+      {
+        path: 'tenants/new',
+        element: <ProvisionTenantPage />,
+      },
+      {
+        path: 'tenants/:id',
+        element: <TenantDetailPage />,
+      },
+      {
+        path: 'tenants/:id/edit',
+        element: <TenantEditPage />,
+      },
+      {
+        path: 'users',
+        element: <PlatformUsersPage />,
+      },
+      {
+        path: 'settings',
+        element: <GlobalSettingsPage />,
+      }
+    ],
+  },
+  {
+    path: '/',
+    element: <Navigate to="/admin" replace />,
+  },
+  {
+    path: '*',
+    element: <Navigate to="/admin" replace />,
+  }
+]);
+
+export const marketplaceRouter = createBrowserRouter([
+  ...commonAuthRoutes,
+  {
+    path: '/portal',
+    element: <ProtectedRoute allowedRoles={['customer']}><AuthMarketplaceShell /></ProtectedRoute>,
+    children: [
+      {
+        index: true,
+        element: <CustomerHomePage />,
+      },
+      {
+        path: 'policies/:id',
+        element: <PolicyDetailPage />,
+      },
+      {
+        path: 'claims',
+        element: <ClaimTrackerPage />,
+      },
+      {
+        path: 'claims/new',
+        element: <FileAClaimPage />,
+      },
+      {
+        path: 'profile',
+        element: <ProfilePage />,
+      },
+      {
+        path: 'apply',
+        element: <BrowseAndApplyPage />,
+      },
+      {
+        path: 'applications',
+        element: <ApplicationStatusPage />,
+      }
+    ],
+  },
+  {
+    path: '/marketplace',
+    element: <PublicMarketplaceShell />,
+    children: [
+      {
+        index: true,
+        element: <MarketplaceHomePage />
+      },
+      {
+        path: 'quote',
+        element: <GetAQuotePage />
+      },
+      {
+        path: 'compare',
+        element: <CompareQuotesPage />
+      },
+      {
+        path: 'plan/:id',
+        element: <PlanDetailPage />
+      }
+    ]
+  },
+  {
+    path: '/',
+    element: <Navigate to="/marketplace" replace />,
+  },
+  {
+    path: '*',
+    element: <Navigate to="/marketplace" replace />,
+  }
+]);
+
+export const b2bRouter = createBrowserRouter([
+  ...commonAuthRoutes,
   {
     path: '/b2b',
     element: <ProtectedRoute allowedRoles={['agent', 'underwriter', 'adjuster', 'admin']}><AuthB2BShell /></ProtectedRoute>,
@@ -315,110 +440,25 @@ export const router = createBrowserRouter([
       }
     ],
   },
-  // --- B2C Marketplace Routes ---
-  {
-    path: '/portal',
-    element: <ProtectedRoute allowedRoles={['customer']}><AuthMarketplaceShell /></ProtectedRoute>,
-    children: [
-      {
-        index: true,
-        element: <CustomerHomePage />,
-      },
-      {
-        path: 'policies/:id',
-        element: <PolicyDetailPage />,
-      },
-      {
-        path: 'claims',
-        element: <ClaimTrackerPage />,
-      },
-      {
-        path: 'claims/new',
-        element: <FileAClaimPage />,
-      },
-      {
-        path: 'profile',
-        element: <ProfilePage />,
-      },
-      {
-        path: 'apply',
-        element: <BrowseAndApplyPage />,
-      },
-      {
-        path: 'applications',
-        element: <ApplicationStatusPage />,
-      }
-    ],
-  },
-  // --- Platform Super Admin Routes ---
-  {
-    path: '/admin',
-    element: <ProtectedRoute allowedRoles={['superadmin']}><AuthSuperAdminShell /></ProtectedRoute>,
-    children: [
-      {
-        index: true,
-        element: <Navigate to="/admin/console" replace />,
-      },
-      {
-        path: 'console',
-        element: <PlatformConsolePage />,
-      },
-      {
-        path: 'tenants',
-        element: <TenantDirectoryPage />,
-      },
-      {
-        path: 'tenants/new',
-        element: <ProvisionTenantPage />,
-      },
-      {
-        path: 'tenants/:id',
-        element: <TenantDetailPage />,
-      },
-      {
-        path: 'tenants/:id/edit',
-        element: <TenantEditPage />,
-      },
-      {
-        path: 'users',
-        element: <PlatformUsersPage />,
-      },
-      {
-        path: 'settings',
-        element: <GlobalSettingsPage />,
-      }
-    ],
-  },
-  // --- Public Marketplace Routes ---
-  {
-    path: '/marketplace',
-    element: <PublicMarketplaceShell />,
-    children: [
-      {
-        index: true,
-        element: <MarketplaceHomePage />
-      },
-      {
-        path: 'quote',
-        element: <GetAQuotePage />
-      },
-      {
-        path: 'compare',
-        element: <CompareQuotesPage />
-      },
-      {
-        path: 'plan/:id',
-        element: <PlanDetailPage />
-      }
-    ]
-  },
-  // Default redirect (temporary)
   {
     path: '/',
-    element: <Navigate to="/marketplace" replace />,
+    element: <Navigate to="/b2b" replace />,
   },
   {
-    path: '/styleguide',
-    element: <StyleGuide />,
+    path: '*',
+    element: <Navigate to="/b2b" replace />,
   }
 ]);
+
+export function getRouterForSubdomain(subdomain: string) {
+  switch (subdomain) {
+    case 'superadmin':
+      return superadminRouter;
+    case 'marketplace':
+      return marketplaceRouter;
+    case 'b2b':
+    default:
+      return b2bRouter;
+  }
+}
+
