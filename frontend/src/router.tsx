@@ -3,7 +3,9 @@ import { B2BShell } from './components/layout/B2BShell';
 import { MarketplaceShell } from './components/layout/MarketplaceShell';
 import { SuperAdminShell } from './components/layout/SuperAdminShell';
 import { StyleGuide } from './pages/StyleGuide';
-import { LoginPage } from './pages/auth/LoginPage';
+import { SuperAdminLoginPage } from './pages/superadmin/LoginPage';
+import { MarketplaceLoginPage } from './pages/marketplace/LoginPage';
+import { B2BLoginPage } from './pages/b2b/LoginPage';
 import { RegisterPage } from './pages/auth/RegisterPage';
 import { KYCWizard } from './pages/auth/KYCWizard';
 import { UnauthorizedPage } from './pages/UnauthorizedPage';
@@ -162,26 +164,10 @@ const AuthSuperAdminShell = () => {
   )
 }
 
-const commonAuthRoutes = [
-  {
-    path: '/login',
-    element: <LoginPage portalType="customer" />,
-  },
-  {
-    path: '/institution/login',
-    element: <LoginPage portalType="institution" />,
-  },
-  {
-    path: '/superadmin/login',
-    element: <LoginPage portalType="superadmin" />,
-  },
+const commonRoutes = [
   {
     path: '/register',
     element: <RegisterPage />,
-  },
-  {
-    path: '/kyc',
-    element: <ProtectedRoute allowedRoles={['customer']}><KYCWizard /></ProtectedRoute>,
   },
   {
     path: '/unauthorized',
@@ -194,7 +180,11 @@ const commonAuthRoutes = [
 ];
 
 export const superadminRouter = createBrowserRouter([
-  ...commonAuthRoutes,
+  ...commonRoutes,
+  {
+    path: '/login',
+    element: <SuperAdminLoginPage />,
+  },
   {
     path: '/admin',
     element: <ProtectedRoute allowedRoles={['superadmin']}><AuthSuperAdminShell /></ProtectedRoute>,
@@ -244,7 +234,15 @@ export const superadminRouter = createBrowserRouter([
 ]);
 
 export const marketplaceRouter = createBrowserRouter([
-  ...commonAuthRoutes,
+  ...commonRoutes,
+  {
+    path: '/login',
+    element: <MarketplaceLoginPage />,
+  },
+  {
+    path: '/kyc',
+    element: <ProtectedRoute allowedRoles={['customer']}><KYCWizard /></ProtectedRoute>,
+  },
   {
     path: '/portal',
     element: <ProtectedRoute allowedRoles={['customer']}><AuthMarketplaceShell /></ProtectedRoute>,
@@ -312,7 +310,11 @@ export const marketplaceRouter = createBrowserRouter([
 ]);
 
 export const b2bRouter = createBrowserRouter([
-  ...commonAuthRoutes,
+  ...commonRoutes,
+  {
+    path: '/login',
+    element: <B2BLoginPage />,
+  },
   {
     path: '/b2b',
     element: <ProtectedRoute allowedRoles={['agent', 'underwriter', 'adjuster', 'admin']}><AuthB2BShell /></ProtectedRoute>,

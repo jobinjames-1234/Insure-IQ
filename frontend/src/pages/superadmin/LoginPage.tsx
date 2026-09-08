@@ -17,7 +17,7 @@ const loginSchema = z.object({
 
 type LoginFormData = z.infer<typeof loginSchema>
 
-export function LoginPage({ portalType = 'customer' }: { portalType?: 'customer' | 'institution' | 'superadmin' }) {
+export function SuperAdminLoginPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const { setAuth } = useAuthStore()
@@ -32,12 +32,9 @@ export function LoginPage({ portalType = 'customer' }: { portalType?: 'customer'
   const onSubmit = async (data: LoginFormData) => {
     try {
       setGlobalError(null)
-      // 1. Get tokens
-      const endpoint = `/auth/login/${portalType}`
-      const res = await api.post(endpoint, data)
+      const res = await api.post('/auth/login/superadmin', data)
       const { access_token, refresh_token } = res.data
       
-      // 2. Temporarily set token in axios to fetch me
       api.defaults.headers.common['Authorization'] = `Bearer ${access_token}`
       const meRes = await api.get('/auth/me')
       const { user, role, profile } = meRes.data
@@ -49,10 +46,8 @@ export function LoginPage({ portalType = 'customer' }: { portalType?: 'customer'
         last_name: profile?.last_name
       }
       
-      // 3. Save to store
       setAuth(userForStore, access_token, refresh_token)
       
-      // 4. Redirect based on role or intended destination
       if (from) {
         navigate(from, { replace: true })
       } else {
@@ -78,19 +73,10 @@ export function LoginPage({ portalType = 'customer' }: { portalType?: 'customer'
             <ShieldCheck className="h-7 w-7" />
           </div>
           <h2 className="text-center font-h2 text-h2 text-on-surface">
-            Sign in to {portalType === 'customer' ? 'your account' : portalType === 'institution' ? 'Institution Portal' : 'Superadmin Portal'}
+            Sign in to Superadmin Portal
           </h2>
           <p className="mt-2 text-center font-body text-body text-text-secondary">
-            {portalType === 'customer' ? (
-              <>
-                Or{' '}
-                <Link to="/register" className="font-medium text-primary hover:text-primary-hover transition-colors">
-                  start your customer journey
-                </Link>
-              </>
-            ) : (
-              'Authorized personnel only'
-            )}
+            Authorized personnel only
           </p>
         </div>
         
@@ -99,7 +85,7 @@ export function LoginPage({ portalType = 'customer' }: { portalType?: 'customer'
             <Input 
               label="Email address"
               type="email" 
-              placeholder="name@company.com"
+              placeholder="admin@insureiq.com"
               autoComplete="email"
               error={errors.email?.message}
               {...register('email')}
