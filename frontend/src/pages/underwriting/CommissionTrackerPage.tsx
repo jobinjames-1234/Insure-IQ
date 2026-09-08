@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { api } from '../../lib/api'
-import { TrendingUp, Clock, DollarSign, Download, Search } from 'lucide-react'
+import { TrendingUp, Clock, Download, Search } from 'lucide-react'
 
 export function CommissionTrackerPage() {
   const [data, setData] = useState<any>(null)

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ArrowBack, Search, FilterList, FactCheck, PersonAdd, NotificationsActive, Policy, LockOpen, FileDownload } from '@mui/icons-material'
+import { ArrowBack, Search, FilterList, FactCheck } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../../lib/api'
 export function AdminActivityView() {
@@ -68,7 +68,7 @@ export function AdminActivityView() {
               <div className="py-12 text-center text-text-secondary font-body">Loading...</div>
             ) : (
             <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-outline-variant before:to-transparent">
-              {displayActivities.map((activity, index) => (
+              {displayActivities.map((activity) => (
                 <div key={activity.id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
                   <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-surface ${activity.color || 'bg-primary-fixed text-primary'} shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10`}>
                     <FactCheck className="text-sm" />

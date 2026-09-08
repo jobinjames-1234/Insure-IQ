@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Search, Notifications, Menu, Description, AssignmentLate, Schedule, Payments, TrendingUp, TrendingDown, FactCheck, PersonAdd, NotificationsActive, Policy, LockOpen, Warning } from '@mui/icons-material'
+import { Search, Notifications, Menu, Description, AssignmentLate, Schedule, Payments, TrendingUp, TrendingDown, LockOpen, Warning } from '@mui/icons-material'
 import { api } from '../../lib/api'
 
 // Lucide React doesn't map 1:1 to material symbols outlined used in the HTML. I'll use Lucide where applicable, or standard spans with material-symbols-outlined class if I include the font. The HTML includes the material-symbols-outlined font, so I can use standard spans with that class for exact visual parity.

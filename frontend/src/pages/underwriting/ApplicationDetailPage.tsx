@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Menu, PersonStanding, Badge as BadgeIcon, Car, CheckCircle, ZoomIn, Download, AlertTriangle, X, Check, Users, Terminal } from 'lucide-react'
+import { Menu, PersonStanding, Badge as BadgeIcon, Car, CheckCircle, ZoomIn, Download, X, Check, Users, Terminal } from 'lucide-react'
 import { api } from '../../lib/api'
 
 export function ApplicationDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [data, setData] = useState<any>(null)
-  const [riskScore, setRiskScore] = useState<any>(null)
+  const [riskScore] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [comments, setComments] = useState("")
   const [submitting, setSubmitting] = useState(false)
@@ -58,7 +58,7 @@ export function ApplicationDetailPage() {
   const displayRiskBand = riskScore ? riskScore.risk_band : 'Medium Risk'
   const isDanger = parseInt(displayScore) > 75
   const isWarning = parseInt(displayScore) > 40 && parseInt(displayScore) <= 75
-  const isSuccess = parseInt(displayScore) <= 40
+//   const isSuccess = parseInt(displayScore) <= 40 (removed unused)
 
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-background">

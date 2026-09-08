@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Filter, Search, Home, Car, Activity } from 'lucide-react'
+import { Filter, Search, Activity } from 'lucide-react'
 import { api } from '../../lib/api'
 
 // Define local interfaces for the mock data matching the UI
@@ -22,7 +22,7 @@ export function SLATrackerPage() {
     const fetchSLAs = async () => {
       try {
         const data = await api.get('/admin/slas')
-        setClaims(data)
+        setClaims(data.data || data)
       } catch (error) {
         console.error('Failed to fetch SLAs:', error)
       } finally {

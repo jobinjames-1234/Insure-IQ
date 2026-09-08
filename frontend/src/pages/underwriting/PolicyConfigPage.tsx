@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { api } from '../../lib/api'
-import { History, Add, DirectionsCar, ExpandMore, HealthAndSafety, Home as HomeIcon, ChevronRight } from '@mui/icons-material'
+import { History, Add, DirectionsCar, ExpandMore, HealthAndSafety, Home as HomeIcon } from '@mui/icons-material'
 
 export function PolicyConfigPage() {
   const [config, setConfig] = useState<any>(null)

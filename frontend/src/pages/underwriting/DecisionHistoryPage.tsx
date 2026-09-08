@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { api } from '../../lib/api'
-import { Search, Filter, Download, ChevronDown, ChevronUp } from 'lucide-react'
+import { Search, Filter, Download, ChevronDown } from 'lucide-react'
 
 export function DecisionHistoryPage() {
   const [history, setHistory] = useState<any[]>([])

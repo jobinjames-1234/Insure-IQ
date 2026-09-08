@@ -21,7 +21,7 @@ export function AgentPolicyDetailPage() {
   if (!policy && !loading) return <div className="p-8 text-center text-text-secondary font-body text-body">Policy not found.</div>
 
   const isAuto = policy?.policy_type?.toLowerCase().includes('auto') || policy?.policy_type?.toLowerCase().includes('motor')
-  const isHome = policy?.policy_type?.toLowerCase().includes('home') || policy?.policy_type?.toLowerCase().includes('property')
+//   const isHome = policy?.policy_type?.toLowerCase().includes('home') || policy?.policy_type?.toLowerCase().includes('property') (removed unused)
   
   const icon = isAuto ? <Car className="w-5 h-5" /> : <Shield className="w-5 h-5" />
   const policyTitle = policy?.policy_type || 'Insurance Policy'

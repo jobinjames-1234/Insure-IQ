@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Shield, Bell, AlertCircle, Home, Car, ChevronRight, CheckCircle, FileText, Heart, Activity } from 'lucide-react'
+import { Shield, AlertCircle, Home, Car, ChevronRight, CheckCircle, FileText, Heart, Activity } from 'lucide-react'
 import { Button } from '../../components/ui/Button'
 import { api } from '../../lib/api'
 import { useAuthStore } from '../../store/authStore'

@@ -13,7 +13,7 @@ export function AdminUserProfilePage() {
       try {
         const { api } = await import('../../lib/api')
         const users = await api.get('/admin/users')
-        const found = users.find((u: any) => String(u.id) === String(id))
+        const found = (users.data || []).find((u: any) => String(u.id) === String(id))
         
         if (found) {
           // Map backend fields to UI fields

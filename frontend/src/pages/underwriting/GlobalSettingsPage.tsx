@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Settings, Save, Server, Shield, Mail, Bell } from 'lucide-react';
+import { useState } from 'react';
+import { Save, Server, Shield, Mail } from 'lucide-react';
 
 export default function GlobalSettingsPage() {
   const [saving, setSaving] = useState(false);

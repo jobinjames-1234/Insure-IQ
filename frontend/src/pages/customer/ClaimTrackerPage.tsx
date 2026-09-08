@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { FileText, ChevronRight, Download, Phone, Check, Activity, Search, MapPin, Info, User, CheckCircle2, Clock, Camera } from 'lucide-react'
+import { FileText, ChevronRight, Check, Activity, MapPin, Info, User, CheckCircle2, Clock, Camera } from 'lucide-react'
 import { PageHeader } from '../../components/ui/PageHeader'
 import { DataTable } from '../../components/ui/DataTable'
 import { Badge } from '../../components/ui/Badge'

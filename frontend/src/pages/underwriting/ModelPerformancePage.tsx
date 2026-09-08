@@ -1,4 +1,4 @@
-import { Calendar, Download, TrendingUp, TrendingDown, Minus, Bell, Info, AlertTriangle, CheckCircle } from 'lucide-react'
+import { Calendar, TrendingUp, TrendingDown, Minus, Bell, Info, AlertTriangle, CheckCircle } from 'lucide-react'
 
 export function ModelPerformancePage() {
   return (
