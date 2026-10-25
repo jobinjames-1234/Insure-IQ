@@ -51,3 +51,9 @@ backend/test.db
 # Implementation and prompt docs
 implementation_plan*.md
 production_saas_*.md
+
+HOW_TO_START.txt
+
+# Databases
+*.db
+insureiq.db
