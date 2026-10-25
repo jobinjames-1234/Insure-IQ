@@ -6,7 +6,7 @@ import api from './api';
 
 function App() {
   const hostname = window.location.hostname;
-  const isConsole = hostname.startsWith('console');
+  const isConsole = hostname.startsWith('console') || hostname.includes('superadmin');
   const [tenantContext, setTenantContext] = useState<any>(null);
   const [loading, setLoading] = useState(!isConsole);
   const [error, setError] = useState('');
