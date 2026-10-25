@@ -15,7 +15,7 @@ origins = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://console.localh
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_origin_regex=r"^https?://([a-zA-Z0-9-]+\.)?(jobinjames\.in|localhost)(:[0-9]+)?$",
+    allow_origin_regex=r"^https?://([a-zA-Z0-9-]+\.)?(jobinjames\.in|localhost|vercel\.app)(:[0-9]+)?$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
