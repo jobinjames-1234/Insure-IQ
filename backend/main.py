@@ -24,6 +24,28 @@ app.add_middleware(
 app.include_router(auth.router, prefix="/api")
 app.include_router(tenants.router, prefix="/api")
 
+@app.on_event("startup")
+def ensure_super_admin():
+    from .database import SessionLocal
+    from . import models, auth as auth_lib
+    db = SessionLocal()
+    try:
+        admin_email = os.getenv("SUPER_ADMIN_EMAIL", "superadmin@insureiq.com")
+        admin_pass = os.getenv("SUPER_ADMIN_PASSWORD", "admin123")
+        existing_admin = db.query(models.User).filter(models.User.role == models.Role.super_admin).first()
+        if not existing_admin:
+            super_admin = models.User(
+                email=admin_email,
+                hashed_password=auth_lib.get_password_hash(admin_pass),
+                role=models.Role.super_admin,
+                tenant_id=None
+            )
+            db.add(super_admin)
+            db.commit()
+            print(f"Created initial Super Admin: {admin_email}")
+    finally:
+        db.close()
+
 @app.get("/")
 def read_root():
     return {"message": "Welcome to InsureIQ API"}
