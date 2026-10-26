@@ -2,10 +2,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from .database import engine, Base
+from .migrations import auto_upgrade_schema
 from .routers import auth, tenants, team, policy_config, audit, billing, underwriting, claims, agents
 
-# We use create_all instead of alembic for now, as requested.
-Base.metadata.create_all(bind=engine)
+# Auto-migrate database schema: creates missing tables, types, and adds newly added columns
+auto_upgrade_schema(engine)
 
 app = FastAPI(title="InsureIQ Platform API")
 
