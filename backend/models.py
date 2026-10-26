@@ -46,7 +46,7 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     status = Column(Enum(UserStatus), default=UserStatus.active, nullable=False)
     profile_photo = Column(Text, nullable=True)
-    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=True)
+    created_at = Column(DateTime(timezone=True), default=func.now(), server_default=func.now(), nullable=True)
 
 class PolicyConfigStatus(str, enum.Enum):
     active = "active"
@@ -201,6 +201,10 @@ class PolicyApplication(Base):
     decided_by_id = Column(Integer, nullable=True)
     decided_by_name = Column(String, nullable=True)
 
+    # Originating agent / customer reference
+    customer_id = Column(Integer, nullable=True, index=True)
+    agent_id = Column(Integer, nullable=True, index=True)
+
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False, index=True)
     updated_at = Column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now(), nullable=False)
 
@@ -212,6 +216,7 @@ class Policy(Base):
     policy_number = Column(String, unique=True, index=True, nullable=False)  # e.g., POL-2026-001
     application_id = Column(Integer, nullable=True, index=True)
     policy_config_id = Column(Integer, nullable=True, index=True)
+    customer_id = Column(Integer, nullable=True, index=True)
     holder_name = Column(String, nullable=False)
     holder_email = Column(String, nullable=False)
     product_type = Column(String, nullable=False)
@@ -268,6 +273,97 @@ class Claim(Base):
     decided_at = Column(DateTime(timezone=True), nullable=True)
     decided_by_id = Column(Integer, nullable=True)
     decided_by_name = Column(String, nullable=True)
+
+
+class Customer(Base):
+    __tablename__ = "customers"
+
+    id = Column(Integer, primary_key=True, index=True)
+    tenant_id = Column(Integer, nullable=False, index=True)
+    agent_id = Column(Integer, nullable=True, index=True)
+    first_name = Column(String, nullable=False)
+    last_name = Column(String, nullable=False)
+    email = Column(String, nullable=False, index=True)
+    phone = Column(String, nullable=True)
+    date_of_birth = Column(String, nullable=True)
+    address = Column(String, nullable=True)
+    status = Column(String, default="active", nullable=False)  # active, prospect, churned
+    churn_risk_flag = Column(Boolean, default=False, nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now(), nullable=False)
+
+
+class CustomerNote(Base):
+    __tablename__ = "customer_notes"
+
+    id = Column(Integer, primary_key=True, index=True)
+    tenant_id = Column(Integer, nullable=False, index=True)
+    customer_id = Column(Integer, nullable=False, index=True)
+    agent_id = Column(Integer, nullable=False, index=True)
+    agent_name = Column(String, nullable=False)
+    note = Column(Text, nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class RetentionAlert(Base):
+    __tablename__ = "retention_alerts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    tenant_id = Column(Integer, nullable=False, index=True)
+    agent_id = Column(Integer, nullable=False, index=True)
+    customer_id = Column(Integer, nullable=True, index=True)
+    policy_id = Column(Integer, nullable=True, index=True)
+    policy_number = Column(String, nullable=False)
+    customer_name = Column(String, nullable=False)
+    customer_email = Column(String, nullable=False)
+    customer_phone = Column(String, nullable=True)
+    product_type = Column(String, nullable=False)
+    alert_type = Column(String, default="lapse_risk", nullable=False)
+    churn_reason = Column(String, nullable=True)
+    renewal_date = Column(DateTime(timezone=True), nullable=True)
+    days_remaining = Column(Integer, default=30, nullable=False)
+    status = Column(String, default="open", nullable=False)  # open, resolved
+    resolved_at = Column(DateTime(timezone=True), nullable=True)
+    resolution_note = Column(Text, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class OutreachLog(Base):
+    __tablename__ = "outreach_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    tenant_id = Column(Integer, nullable=False, index=True)
+    alert_id = Column(Integer, nullable=True, index=True)
+    customer_id = Column(Integer, nullable=True, index=True)
+    agent_id = Column(Integer, nullable=False, index=True)
+    agent_name = Column(String, nullable=False)
+    contact_method = Column(String, nullable=False)  # call, email, in_person, sms
+    outcome = Column(String, nullable=False)  # contacted_renewing, left_message, unreachable, not_renewing
+    notes = Column(Text, nullable=True)
+    logged_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class CommissionEntry(Base):
+    __tablename__ = "commission_entries"
+
+    id = Column(Integer, primary_key=True, index=True)
+    tenant_id = Column(Integer, nullable=False, index=True)
+    agent_id = Column(Integer, nullable=False, index=True)
+    customer_id = Column(Integer, nullable=True, index=True)
+    customer_name = Column(String, nullable=False)
+    policy_id = Column(Integer, nullable=True, index=True)
+    policy_number = Column(String, nullable=False)
+    product_type = Column(String, nullable=False)
+    event_type = Column(String, default="new_business", nullable=False)
+    premium_amount = Column(Float, default=0.0, nullable=False)
+    commission_rate = Column(Float, default=0.10, nullable=False)
+    commission_amount = Column(Float, default=0.0, nullable=False)
+    status = Column(String, default="pending", nullable=False)  # pending, paid
+    effective_date = Column(DateTime(timezone=True), nullable=True)
+    paid_at = Column(DateTime(timezone=True), nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
 
 
 

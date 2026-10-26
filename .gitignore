@@ -47,6 +47,7 @@ backend/test_*.sh
 backend/*.patch
 backend/test.db
 *.patch
+scratch/
 
 # Implementation and prompt docs
 implementation_plan*.md

@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from datetime import datetime
 from .. import models, schemas, database, auth
 from ..audit import log_audit_event
 from .auth import get_current_user
@@ -64,7 +65,8 @@ def invite_team_member(
         role=invite.role,
         tenant_id=admin.tenant_id,
         status=models.UserStatus.active,
-        hashed_password=auth.get_password_hash(invite.temporary_password)
+        hashed_password=auth.get_password_hash(invite.temporary_password),
+        created_at=datetime.utcnow()
     )
     db.add(new_user)
     db.commit()

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from .database import engine, Base
-from .routers import auth, tenants, team, policy_config, audit, billing, underwriting, claims
+from .routers import auth, tenants, team, policy_config, audit, billing, underwriting, claims, agents
 
 # We use create_all instead of alembic for now, as requested.
 Base.metadata.create_all(bind=engine)
@@ -29,6 +29,7 @@ app.include_router(audit.router, prefix="/api")
 app.include_router(billing.router, prefix="/api")
 app.include_router(underwriting.router, prefix="/api")
 app.include_router(claims.router, prefix="/api")
+app.include_router(agents.router, prefix="/api")
 
 @app.on_event("startup")
 def ensure_super_admin():

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from typing import List, Optional
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 import random
 from .. import models, schemas, database
 from ..audit import log_audit_event
@@ -412,6 +412,7 @@ def record_underwriting_decision(
             policy_number=issued_policy_number,
             application_id=app.id,
             policy_config_id=app.policy_config_id,
+            customer_id=app.customer_id,
             holder_name=app.applicant_name,
             holder_email=app.applicant_email,
             product_type=app.product_type,
@@ -420,9 +421,32 @@ def record_underwriting_decision(
             deductible=500.0,
             status="active",
             issued_by_id=user.id,
-            start_date=now
+            start_date=now,
+            end_date=now + timedelta(days=365)
         )
         db.add(policy)
+
+        # Generate commission entry if application was submitted by an agent
+        if app.agent_id:
+            comm_rate = 0.12  # Standard 12% new business commission
+            final_prem = float(app.adjusted_premium or app.proposed_premium)
+            comm_amount = round(final_prem * comm_rate, 2)
+            comm_entry = models.CommissionEntry(
+                tenant_id=user.tenant_id,
+                agent_id=app.agent_id,
+                customer_id=app.customer_id,
+                customer_name=app.applicant_name,
+                policy_id=policy.id,
+                policy_number=issued_policy_number,
+                product_type=app.product_type,
+                event_type="new_business",
+                premium_amount=final_prem,
+                commission_rate=comm_rate,
+                commission_amount=comm_amount,
+                status="pending",
+                effective_date=now
+            )
+            db.add(comm_entry)
 
     # Record immutable audit log
     final_premium = app.adjusted_premium or app.proposed_premium

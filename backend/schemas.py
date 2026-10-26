@@ -461,5 +461,343 @@ class SlaDashboardSummary(BaseModel):
     claims: List[SlaClaimItem]
 
 
+class CustomerBase(BaseModel):
+    first_name: str
+    last_name: str
+    email: EmailStr
+    phone: Optional[str] = None
+    date_of_birth: Optional[str] = None
+    dob: Optional[str] = None
+    address: Optional[str] = None
+
+class CustomerCreate(CustomerBase):
+    churn_risk_flag: Optional[bool] = False
+    risk_flag: Optional[str] = "low"
+
+
+class CustomerResponse(BaseModel):
+    id: int
+    tenant_id: int
+    agent_id: Optional[int] = None
+    first_name: str
+    last_name: str
+    full_name: str
+    email: str
+    phone: Optional[str] = None
+    date_of_birth: Optional[str] = None
+    dob: Optional[str] = None
+    address: Optional[str] = None
+    status: str
+    churn_risk_flag: bool = False
+    risk_flag: str = "low"
+    policy_count: int = 0
+    total_premium: float = 0.0
+    next_renewal_date: Optional[str] = None
+    created_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+class CustomerListResponse(BaseModel):
+    items: List[CustomerResponse]
+    total: int
+    page: int
+    page_size: int
+    total_pages: int
+
+
+class CustomerPolicyItem(BaseModel):
+    id: int
+    policy_number: str
+    product_type: str
+    premium_amount: float
+    coverage_limit: float
+    deductible: float
+    status: str
+    start_date: datetime
+    end_date: Optional[datetime] = None
+    renewal_date: Optional[str] = None
+    days_until_renewal: Optional[int] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class CustomerPoliciesResponse(BaseModel):
+    customer_id: int
+    customer_name: str
+    policies: List[CustomerPolicyItem]
+    total_active_premium: float
+    active_count: int
+
+
+class CustomerClaimItem(BaseModel):
+    id: int
+    claim_number: str
+    policy_number: str
+    incident_date: datetime
+    incident_type: str
+    incident_description: str
+    claimed_amount: float
+    approved_settlement_amount: Optional[float] = None
+    deductible_applied: Optional[float] = None
+    status: str
+    sla_deadline: Optional[datetime] = None
+    created_at: datetime
+    decided_at: Optional[datetime] = None
+    decided_by_name: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+
+class CustomerClaimsResponse(BaseModel):
+    customer_id: int
+    customer_name: str
+    claims: List[CustomerClaimItem]
+    total_claimed: float
+    total_approved: float
+    open_claims_count: int
+
+
+class CustomerNoteCreate(BaseModel):
+    note: str = Field(..., min_length=5, max_length=2000, description="Customer interaction or outreach note")
+
+
+class CustomerNoteResponse(BaseModel):
+    id: int
+    customer_id: int
+    agent_id: int
+    agent_name: str
+    note: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class CustomerNotesListResponse(BaseModel):
+    customer_id: int
+    customer_name: str
+    notes: List[CustomerNoteResponse]
+    total: int
+
+
+class AgentApplicationCreate(BaseModel):
+    customer_id: int
+    product_type: str = Field(..., description="auto, property, home, life, health")
+    coverage_amount: float = Field(..., gt=0, description="Total coverage limit")
+    proposed_premium: float = Field(..., gt=0, description="Proposed annual premium")
+    effective_date: Optional[str] = None
+    applicant_data: Optional[Dict[str, Any]] = None
+
+
+class AgentApplicationResponse(BaseModel):
+    id: int
+    tenant_id: int
+    agent_id: Optional[int] = None
+    customer_id: Optional[int] = None
+    application_number: str
+    applicant_name: str
+    applicant_email: str
+    applicant_phone: Optional[str] = None
+    product_type: str
+    coverage_amount: float
+    proposed_premium: float
+    adjusted_premium: Optional[float] = None
+    risk_score: int
+    risk_tier: str
+    status: str
+    applicant_data: Optional[Dict[str, Any]] = None
+    documents: Optional[list] = None
+    decision_note: Optional[str] = None
+    decided_at: Optional[datetime] = None
+    decided_by_name: Optional[str] = None
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+
+class AgentApplicationListItem(BaseModel):
+    id: int
+    application_number: str
+    customer_id: Optional[int] = None
+    applicant_name: str
+    applicant_email: str
+    applicant_phone: Optional[str] = None
+    product_type: str
+    coverage_amount: float
+    proposed_premium: float
+    adjusted_premium: Optional[float] = None
+    risk_score: int
+    risk_tier: str
+    status: str
+    document_count: int
+    decision_note: Optional[str] = None
+    decided_at: Optional[datetime] = None
+    decided_by_name: Optional[str] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class AgentApplicationsListResponse(BaseModel):
+    applications: List[AgentApplicationListItem]
+    total: int
+    page: int
+    limit: int
+    total_pages: int
+    status_counts: Dict[str, int]
+
+
+
+class ApplicationDocumentCreate(BaseModel):
+    doc_type: str = Field(..., description="drivers_license, property_deed, inspection_report, medical_records, id_proof, income_proof, vehicle_title, other")
+    file_name: str = Field(..., min_length=3, max_length=255)
+    file_url: Optional[str] = None
+    file_size_bytes: Optional[int] = Field(default=0, ge=0, le=10 * 1024 * 1024)
+    description: Optional[str] = None
+
+
+class ApplicationDocumentItem(BaseModel):
+    id: str
+    doc_type: str
+    name: str
+    url: Optional[str] = None
+    size_bytes: int
+    description: Optional[str] = None
+    uploaded_at: str
+    uploaded_by: str
+
+
+class ApplicationDocumentsResponse(BaseModel):
+    application_id: int
+    application_number: str
+    documents: List[ApplicationDocumentItem]
+    total: int
+
+
+class RetentionAlertItem(BaseModel):
+    id: int
+    policy_id: Optional[int] = None
+    policy_number: str
+    customer_id: Optional[int] = None
+    customer_name: str
+    customer_email: str
+    customer_phone: Optional[str] = None
+    product_type: str
+    alert_type: str
+    churn_reason: Optional[str] = None
+    renewal_date: Optional[datetime] = None
+    days_remaining: int
+    urgency: str  # critical (<=7), moderate (8-14), standard (>14)
+    status: str
+    resolved_at: Optional[datetime] = None
+    resolution_note: Optional[str] = None
+    created_at: datetime
+
+
+class RetentionAlertsListResponse(BaseModel):
+    alerts: List[RetentionAlertItem]
+    total: int
+    page: int
+    limit: int
+    total_pages: int
+    open_count: int
+    resolved_count: int
+    critical_count: int
+    moderate_count: int
+
+
+class RetentionAlertCreate(BaseModel):
+    agent_id: int
+    customer_id: Optional[int] = None
+    policy_id: Optional[int] = None
+    policy_number: str
+    customer_name: str
+    customer_email: str
+    customer_phone: Optional[str] = None
+    product_type: str
+    alert_type: str = "upcoming_renewal"
+    churn_reason: Optional[str] = None
+    renewal_date: Optional[datetime] = None
+    days_remaining: int = 30
+
+
+class OutreachLogCreate(BaseModel):
+    contact_method: str = Field(..., description="call, email, in_person, sms")
+    outcome: str = Field(..., description="contacted_renewing, left_message, unreachable, not_renewing")
+    notes: Optional[str] = Field(None, max_length=1000)
+
+
+class OutreachLogItem(BaseModel):
+    id: int
+    alert_id: Optional[int] = None
+    customer_id: Optional[int] = None
+    agent_id: int
+    agent_name: str
+    contact_method: str
+    outcome: str
+    notes: Optional[str] = None
+    logged_at: datetime
+
+
+class AlertOutreachResponse(BaseModel):
+    outreach: OutreachLogItem
+    alert_id: int
+    alert_status: str
+    resolution_note: Optional[str] = None
+    policy_renewed: bool
+
+
+class CommissionItem(BaseModel):
+    id: int
+    policy_id: Optional[int] = None
+    policy_number: str
+    customer_id: Optional[int] = None
+    customer_name: str
+    product_type: str
+    event_type: str
+    premium_amount: float
+    commission_rate: float
+    commission_amount: float
+    status: str
+    effective_date: Optional[datetime] = None
+    paid_at: Optional[datetime] = None
+    created_at: datetime
+
+
+class CommissionSummary(BaseModel):
+    total_earned: float
+    paid_amount: float
+    pending_amount: float
+    mtd_amount: float
+    ytd_amount: float
+    pending_count: int
+    paid_count: int
+
+
+class CommissionListResponse(BaseModel):
+    entries: List[CommissionItem]
+    total: int
+    page: int
+    limit: int
+    total_pages: int
+    summary: CommissionSummary
+
+
+
+
+
+
+
+
+
+
+
 
 

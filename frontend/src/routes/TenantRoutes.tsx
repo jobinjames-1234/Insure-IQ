@@ -18,6 +18,14 @@ import AdjusterDashboard from '../adjuster/pages/AdjusterDashboard';
 import AdjusterClaimDetail from '../adjuster/pages/AdjusterClaimDetail';
 import AdjusterInvestigations from '../adjuster/pages/AdjusterInvestigations';
 import AdjusterSlaTracker from '../adjuster/pages/AdjusterSlaTracker';
+import AgentLayout from '../agent/components/AgentLayout';
+import AgentDashboard from '../agent/pages/AgentDashboard';
+import AgentCustomers from '../agent/pages/AgentCustomers';
+import AgentRetentionAlerts from '../agent/pages/AgentRetentionAlerts';
+import AgentCommission from '../agent/pages/AgentCommission';
+import AgentCustomerDetail from '../agent/pages/AgentCustomerDetail';
+import AgentNewApplication from '../agent/pages/AgentNewApplication';
+import AgentApplications from '../agent/pages/AgentApplications';
 
 interface TenantRoutesProps {
   tenantContext: {
@@ -174,6 +182,101 @@ export default function TenantRoutes({ tenantContext }: TenantRoutesProps) {
           <Route path="*" element={<Navigate to="/adjuster/dashboard" replace />} />
         </Routes>
       </AdjusterLayout>
+    );
+  }
+
+  // If user is authenticated as an Insurance Agent
+  if (currentUser && currentUser.role === 'agent') {
+    return (
+      <AgentLayout tenantContext={tenantContext} currentUser={currentUser}>
+        <Routes>
+          <Route
+            path="/agent/dashboard"
+            element={
+              <AgentDashboard
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/agent/customers"
+            element={
+              <AgentCustomers
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/agent/customers/new"
+            element={
+              <AgentCustomers
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/agent/customers/:id"
+            element={
+              <AgentCustomerDetail
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/agent/retention-alerts"
+            element={
+              <AgentRetentionAlerts
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/agent/applications"
+            element={
+              <AgentApplications
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/agent/applications/new"
+            element={
+              <AgentNewApplication
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/agent/commission"
+            element={
+              <AgentCommission
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/agent/profile"
+            element={
+              <TenantProfile
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route path="/dashboard" element={<Navigate to="/agent/dashboard" replace />} />
+          <Route path="/login" element={<Navigate to="/agent/dashboard" replace />} />
+          <Route path="/" element={<Navigate to="/agent/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/agent/dashboard" replace />} />
+        </Routes>
+      </AgentLayout>
     );
   }
 
