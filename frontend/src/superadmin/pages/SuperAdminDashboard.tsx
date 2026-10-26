@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import api from '../../api';
 import ProvisionTenantWizard from '../components/ProvisionTenantWizard';
 import ViewTenant from './ViewTenant';
 import EditTenant from './EditTenant';
 import Profile from './SuperAdminProfile';
-import { LogOut, Plus, Server, Database, Eye, Edit2, Trash2, PlayCircle, User } from 'lucide-react';
+import { LogOut, Plus, Server, Database, Eye, Edit2, Trash2, PlayCircle, User, Shield } from 'lucide-react';
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [user, setUser] = useState<any>(null);
   const [tenants, setTenants] = useState<any[]>([]);
 
@@ -44,28 +45,209 @@ export default function Dashboard() {
     navigate('/login');
   };
 
-  if (!user) return <div className="loading">Loading...</div>;
+  const getInitials = () => {
+    if (user?.name) {
+      return user.name
+        .split(' ')
+        .map((n: string) => n[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase();
+    }
+    return user?.email ? user.email.slice(0, 2).toUpperCase() : 'SA';
+  };
+
+  if (!user) return <div className="loading" style={{ padding: 40, color: '#94a3b8' }}>Loading console...</div>;
+
+  const isTenantsActive = location.pathname === '/dashboard' || location.pathname.startsWith('/dashboard/tenants') || location.pathname.startsWith('/dashboard/provision');
+  const isProfileActive = location.pathname === '/dashboard/profile';
 
   return (
-    <div className="dashboard-layout">
-      <aside className="sidebar">
-        <div className="brand">
-          <h2>InsureIQ <span className="badge">CONSOLE</span></h2>
-        </div>
-        <nav>
-          <a className="nav-item active" onClick={() => navigate('/dashboard')}><Database size={18} /> Tenants</a>
-          <a className="nav-item"><Server size={18} /> Platform Health</a>
-        </nav>
-        <div className="sidebar-footer">
-          <div className="user-info" style={{marginBottom: 12}}>
-            <div style={{display: 'flex', alignItems: 'center', gap: 6, color: '#888', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4}}>
-              <User size={12}/> Super Admin
+    <div className="dashboard-layout" style={{ minHeight: '100vh', display: 'flex', background: '#0b1329', color: '#f1f5f9' }}>
+      <aside className="sidebar" style={{ width: 260, borderRight: '1px solid #1e293b', background: '#0f172a', display: 'flex', flexDirection: 'column' }}>
+        <div className="brand" style={{ padding: '24px 20px', borderBottom: '1px solid #1e293b' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ background: '#0284c7', padding: 8, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Shield size={22} style={{ color: '#ffffff' }} />
             </div>
-            <div style={{overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 500, fontSize: '0.875rem'}}>{user.email}</div>
+            <div>
+              <h2 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#f8fafc' }}>
+                InsureIQ
+              </h2>
+              <span style={{ fontSize: '0.65rem', background: '#0369a1', color: '#e0f2fe', padding: '2px 6px', borderRadius: 4, fontWeight: 600, textTransform: 'uppercase' }}>
+                Console
+              </span>
+            </div>
           </div>
-          <div style={{display: 'flex', flexDirection: 'column', gap: 4}}>
-            <button onClick={() => navigate('/dashboard/profile')} className="btn-icon" style={{width: '100%', justifyContent: 'flex-start', padding: '8px 12px', borderRadius: 6}}><User size={16} /> Profile</button>
-            <button onClick={logout} className="btn-icon" style={{width: '100%', justifyContent: 'flex-start', padding: '8px 12px', borderRadius: 6, color: '#ef4444'}}><LogOut size={16} /> Logout</button>
+        </div>
+
+        <nav style={{ padding: '16px 12px', flex: 1 }}>
+          <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', color: '#64748b', fontWeight: 700, padding: '8px 12px', letterSpacing: '0.05em' }}>
+            System Administration
+          </div>
+          <button
+            onClick={() => navigate('/dashboard')}
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12,
+              padding: '10px 14px',
+              borderRadius: 8,
+              fontSize: '0.9rem',
+              fontWeight: 600,
+              color: '#ffffff',
+              background: isTenantsActive ? '#0284c7' : 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              marginBottom: 4,
+              textAlign: 'left',
+              transition: 'all 0.15s ease'
+            }}
+            onMouseEnter={e => {
+              if (!isTenantsActive) e.currentTarget.style.background = '#1e293b';
+            }}
+            onMouseLeave={e => {
+              if (!isTenantsActive) e.currentTarget.style.background = 'transparent';
+            }}
+          >
+            <Database size={18} />
+            <span>Tenants</span>
+          </button>
+          <button
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12,
+              padding: '10px 14px',
+              borderRadius: 8,
+              fontSize: '0.9rem',
+              fontWeight: 500,
+              color: '#94a3b8',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              marginBottom: 4,
+              textAlign: 'left'
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = '#1e293b'}
+            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+          >
+            <Server size={18} />
+            <span>Platform Health</span>
+          </button>
+        </nav>
+
+        <div className="sidebar-footer" style={{ padding: 16, borderTop: '1px solid #1e293b', background: '#0b1329' }}>
+          <div
+            onClick={() => navigate('/dashboard/profile')}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12,
+              marginBottom: 12,
+              cursor: 'pointer',
+              padding: '6px 8px',
+              borderRadius: 8,
+              transition: 'background 0.15s ease'
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = '#1e293b'}
+            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+            title="Manage profile"
+          >
+            {user.profile_photo ? (
+              <img
+                src={user.profile_photo}
+                alt="Super Admin Avatar"
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  border: '2px solid #0284c7',
+                  flexShrink: 0
+                }}
+              />
+            ) : (
+              <div
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: '50%',
+                  background: '#0369a1',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 700,
+                  fontSize: '0.82rem',
+                  flexShrink: 0
+                }}
+              >
+                {getInitials()}
+              </div>
+            )}
+            <div style={{ overflow: 'hidden', flex: 1 }}>
+              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#f8fafc', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                {user.name || user.email}
+              </div>
+              <div style={{ fontSize: '0.7rem', color: '#38bdf8', fontWeight: 500 }}>
+                Super Admin
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <button
+              onClick={() => navigate('/dashboard/profile')}
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                padding: '8px 12px',
+                borderRadius: 6,
+                background: isProfileActive ? '#0284c7' : '#1e293b',
+                border: isProfileActive ? '1px solid #0284c7' : '1px solid #334155',
+                color: '#f8fafc',
+                fontSize: '0.8rem',
+                fontWeight: 500,
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              <User size={14} /> Profile Settings
+            </button>
+            <button
+              onClick={logout}
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 8,
+                padding: '8px 12px',
+                borderRadius: 6,
+                background: 'transparent',
+                border: '1px solid #334155',
+                color: '#f87171',
+                fontSize: '0.8rem',
+                fontWeight: 500,
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = '#ef4444';
+                e.currentTarget.style.background = '#ef444415';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = '#334155';
+                e.currentTarget.style.background = 'transparent';
+              }}
+            >
+              <LogOut size={14} /> Sign Out
+            </button>
           </div>
         </div>
       </aside>

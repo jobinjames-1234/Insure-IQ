@@ -67,8 +67,19 @@ def get_tenant_by_subdomain(subdomain: str, db: Session = Depends(database.get_d
         "id": tenant.id,
         "name": tenant.name,
         "subdomain": tenant.subdomain,
+        "plan_tier": tenant.plan_tier,
         "status": tenant.status
     }
+
+@router.get("/me", response_model=schemas.Tenant)
+def get_my_tenant(db: Session = Depends(database.get_db), current_user: models.User = Depends(get_current_user)):
+    if not current_user.tenant_id:
+        raise HTTPException(status_code=400, detail="User is not associated with any tenant")
+    tenant = db.query(models.Tenant).filter(models.Tenant.id == current_user.tenant_id).first()
+    if not tenant:
+        raise HTTPException(status_code=404, detail="Tenant not found")
+    return tenant
+
 
 @router.get("/{tenant_id}", response_model=schemas.Tenant)
 def get_tenant(tenant_id: int, db: Session = Depends(database.get_db), current_user: models.User = Depends(get_current_user)):

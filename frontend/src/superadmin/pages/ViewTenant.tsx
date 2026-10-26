@@ -37,43 +37,45 @@ export default function ViewTenant() {
       </div>
 
       <div className="card" style={{padding: 24, display: 'flex', flexDirection: 'column', gap: 16}}>
-        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: 16}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: 16}}>
           <span className="text-secondary">Tenant ID</span>
-          <span style={{color: '#fff'}}>{tenant.id}</span>
+          <span style={{color: '#f8fafc'}}>#{tenant.id}</span>
         </div>
-        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: 16}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: 16}}>
           <span className="text-secondary">Company Name</span>
-          <span style={{color: '#fff'}}>{tenant.name}</span>
+          <span style={{color: '#f8fafc', fontWeight: 600}}>{tenant.name}</span>
         </div>
-        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: 16}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: 16}}>
           <span className="text-secondary">Subdomain</span>
-          <span style={{color: '#fff'}}>{tenant.subdomain}</span>
+          <span className="mono">{tenant.subdomain}</span>
         </div>
-        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: 16}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: 16}}>
           <span className="text-secondary">Local Domain</span>
-          <span style={{color: '#fff'}}>{tenant.subdomain}.localhost</span>
+          <span className="mono">{tenant.subdomain}.localhost:5173</span>
         </div>
-        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: 16}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: 16}}>
           <span className="text-secondary">Isolation Mode</span>
-          <span style={{color: '#fff'}}>{tenant.isolation_mode}</span>
+          <span className={`tag tag-${tenant.isolation_mode}`}>{tenant.isolation_mode}</span>
         </div>
-        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: 16}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: 16}}>
           <span className="text-secondary">Plan Tier</span>
-          <span style={{color: '#fff'}}>{tenant.plan_tier}</span>
+          <span style={{color: '#f8fafc', textTransform: 'uppercase'}}>{tenant.plan_tier}</span>
         </div>
-        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: 16}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: 16}}>
           <span className="text-secondary">Status</span>
           <span style={{
-            color: tenant.status === 'active' ? '#10b981' : '#ef4444'
+            color: tenant.status === 'active' ? '#10b981' : '#ef4444',
+            fontWeight: 600,
+            textTransform: 'capitalize'
           }}>{tenant.status}</span>
         </div>
-        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: 16}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: 16}}>
           <span className="text-secondary">Created At</span>
-          <span style={{color: '#fff'}}>{new Date(tenant.created_at).toLocaleString()}</span>
+          <span style={{color: '#f8fafc'}}>{new Date(tenant.created_at).toLocaleString()}</span>
         </div>
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
           <span className="text-secondary">Last Updated</span>
-          <span style={{color: '#fff'}}>{new Date(tenant.updated_at).toLocaleString()}</span>
+          <span style={{color: '#f8fafc'}}>{new Date(tenant.updated_at).toLocaleString()}</span>
         </div>
       </div>
     </div>

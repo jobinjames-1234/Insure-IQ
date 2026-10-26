@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from .database import engine, Base
-from .routers import auth, tenants
+from .routers import auth, tenants, team, policy_config, audit, billing, underwriting, claims
 
 # We use create_all instead of alembic for now, as requested.
 Base.metadata.create_all(bind=engine)
@@ -23,6 +23,12 @@ app.add_middleware(
 
 app.include_router(auth.router, prefix="/api")
 app.include_router(tenants.router, prefix="/api")
+app.include_router(team.router, prefix="/api")
+app.include_router(policy_config.router, prefix="/api")
+app.include_router(audit.router, prefix="/api")
+app.include_router(billing.router, prefix="/api")
+app.include_router(underwriting.router, prefix="/api")
+app.include_router(claims.router, prefix="/api")
 
 @app.on_event("startup")
 def ensure_super_admin():

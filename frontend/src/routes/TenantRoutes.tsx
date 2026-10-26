@@ -1,30 +1,263 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import api from '../api';
+import TenantLogin from '../tenant/pages/TenantLogin';
+import TenantLayout from '../tenant/components/TenantLayout';
+import TenantAdminDashboard from '../tenant/pages/TenantAdminDashboard';
+import TenantTeam from '../tenant/pages/TenantTeam';
+import TenantPolicies from '../tenant/pages/TenantPolicies';
+import TenantAuditLog from '../tenant/pages/TenantAuditLog';
+import TenantBilling from '../tenant/pages/TenantBilling';
+import TenantProfile from '../tenant/pages/TenantProfile';
+import UnderwriterLayout from '../underwriter/components/UnderwriterLayout';
+import UnderwriterDashboard from '../underwriter/pages/UnderwriterDashboard';
+import UnderwriterApplicationDetail from '../underwriter/pages/UnderwriterApplicationDetail';
+import UnderwriterHistory from '../underwriter/pages/UnderwriterHistory';
+import AdjusterLayout from '../adjuster/components/AdjusterLayout';
+import AdjusterDashboard from '../adjuster/pages/AdjusterDashboard';
+import AdjusterClaimDetail from '../adjuster/pages/AdjusterClaimDetail';
+import AdjusterInvestigations from '../adjuster/pages/AdjusterInvestigations';
+import AdjusterSlaTracker from '../adjuster/pages/AdjusterSlaTracker';
 
 interface TenantRoutesProps {
-  tenantContext: any;
+  tenantContext: {
+    id: number;
+    name: string;
+    subdomain: string;
+    plan_tier?: string;
+    status: string;
+  };
 }
 
 export default function TenantRoutes({ tenantContext }: TenantRoutesProps) {
+  const location = useLocation();
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [verifyingAuth, setVerifyingAuth] = useState(true);
+
+  useEffect(() => {
+    verifySession();
+  }, [location.pathname]);
+
+  const verifySession = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setCurrentUser(null);
+      setVerifyingAuth(false);
+      return;
+    }
+
+    try {
+      const res = await api.get('/api/auth/me');
+      const user = res.data;
+
+      // Validate user belongs to this tenant
+      if (user.tenant_id !== tenantContext.id) {
+        localStorage.removeItem('token');
+        setCurrentUser(null);
+      } else {
+        setCurrentUser(user);
+      }
+    } catch (err) {
+      localStorage.removeItem('token');
+      setCurrentUser(null);
+    } finally {
+      setVerifyingAuth(false);
+    }
+  };
+
+  if (verifyingAuth) {
+    return <div className="loading" style={{ padding: 40 }}>Verifying workspace session...</div>;
+  }
+
+  // If user is authenticated as an Underwriter
+  if (currentUser && currentUser.role === 'underwriter') {
+    return (
+      <UnderwriterLayout tenantContext={tenantContext} currentUser={currentUser}>
+        <Routes>
+          <Route
+            path="/underwriter/dashboard"
+            element={
+              <UnderwriterDashboard
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/underwriter/applications/:id"
+            element={
+              <UnderwriterApplicationDetail
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/underwriter/history"
+            element={
+              <UnderwriterHistory
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/underwriter/profile"
+            element={
+              <TenantProfile
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route path="/dashboard" element={<Navigate to="/underwriter/dashboard" replace />} />
+          <Route path="/login" element={<Navigate to="/underwriter/dashboard" replace />} />
+          <Route path="/" element={<Navigate to="/underwriter/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/underwriter/dashboard" replace />} />
+        </Routes>
+      </UnderwriterLayout>
+    );
+  }
+
+  // If user is authenticated as a Claims Adjuster
+  if (currentUser && currentUser.role === 'adjuster') {
+    return (
+      <AdjusterLayout tenantContext={tenantContext} currentUser={currentUser}>
+        <Routes>
+          <Route
+            path="/adjuster/dashboard"
+            element={
+              <AdjusterDashboard
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/adjuster/claims/:id"
+            element={
+              <AdjusterClaimDetail
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/adjuster/investigations"
+            element={
+              <AdjusterInvestigations
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/adjuster/sla-tracker"
+            element={
+              <AdjusterSlaTracker
+                tenantContext={tenantContext}
+              />
+            }
+          />
+          <Route
+            path="/adjuster/profile"
+            element={
+              <TenantProfile
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route path="/dashboard" element={<Navigate to="/adjuster/dashboard" replace />} />
+          <Route path="/login" element={<Navigate to="/adjuster/dashboard" replace />} />
+          <Route path="/" element={<Navigate to="/adjuster/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/adjuster/dashboard" replace />} />
+        </Routes>
+      </AdjusterLayout>
+    );
+  }
+
+  // If user is authenticated as Tenant Admin (or other staff)
+  if (currentUser) {
+    return (
+      <TenantLayout tenantContext={tenantContext} currentUser={currentUser}>
+        <Routes>
+          <Route
+            path="/dashboard"
+            element={
+              <TenantAdminDashboard
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/team"
+            element={
+              <TenantTeam
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/policies"
+            element={
+              <TenantPolicies
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/audit"
+            element={
+              <TenantAuditLog
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/billing"
+            element={
+              <TenantBilling
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <TenantProfile
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/underwriter/dashboard"
+            element={
+              <UnderwriterDashboard
+                tenantContext={tenantContext}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route path="/login" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      </TenantLayout>
+    );
+  }
+
+  // If unauthenticated, only expose login
   return (
     <Routes>
-      <Route
-        path="/*"
-        element={
-          <div className="tenant-container" style={{ padding: 40 }}>
-            <header style={{ marginBottom: 24, borderBottom: '1px solid #333', paddingBottom: 16 }}>
-              <h1 style={{ margin: 0, fontSize: '1.75rem' }}>{tenantContext?.name} Workspace</h1>
-              <p style={{ color: '#888', margin: '4px 0 0 0' }}>
-                Plan: <span style={{ textTransform: 'uppercase' }}>{tenantContext?.plan_tier}</span> | Subdomain: {tenantContext?.subdomain}
-              </p>
-            </header>
-            <div className="card" style={{ padding: 24, background: '#18181b', borderRadius: 8, border: '1px solid #27272a' }}>
-              <h2>Tenant Portal</h2>
-              <p>Welcome to the {tenantContext?.name} administration workspace.</p>
-            </div>
-          </div>
-        }
-      />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="/login" element={<TenantLogin tenantContext={tenantContext} />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 }
