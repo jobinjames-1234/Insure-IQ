@@ -25,6 +25,7 @@ import {
   History,
   Check
 } from 'lucide-react';
+import api from '../../api';
 
 interface AgentRetentionAlertsProps {
   tenantContext: {
@@ -117,7 +118,6 @@ export default function AgentRetentionAlerts({ tenantContext, currentUser }: Age
     setLoading(true);
     setError(null);
     try {
-      const token = localStorage.getItem('token');
       const params = new URLSearchParams();
       if (statusFilter !== 'all') params.append('status', statusFilter);
       if (urgencyFilter !== 'all') params.append('urgency', urgencyFilter);
@@ -125,15 +125,8 @@ export default function AgentRetentionAlerts({ tenantContext, currentUser }: Age
       if (searchQuery.trim()) params.append('search', searchQuery.trim());
       params.append('limit', '50');
 
-      const res = await fetch(`/api/agents/me/retention-alerts?${params.toString()}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      if (!res.ok) {
-        throw new Error(`Failed to load retention alerts (HTTP ${res.status})`);
-      }
-
-      const data = await res.json();
+      const res = await api.get(`/api/agents/me/retention-alerts?${params.toString()}`);
+      const data = res.data;
       setAlerts(data.alerts || []);
       setCounts({
         total: data.total || 0,
@@ -142,12 +135,8 @@ export default function AgentRetentionAlerts({ tenantContext, currentUser }: Age
         critical_count: data.critical_count || 0,
         moderate_count: data.moderate_count || 0
       });
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('An unexpected error occurred while fetching retention alerts.');
-      }
+    } catch (err: any) {
+      setError(err.response?.data?.detail || err.message || 'Failed to load retention alerts.');
     } finally {
       setLoading(false);
     }
@@ -166,14 +155,8 @@ export default function AgentRetentionAlerts({ tenantContext, currentUser }: Age
     const fetchHistory = async () => {
       setLoadingHistory(true);
       try {
-        const token = localStorage.getItem('token');
-        const res = await fetch(`/api/agents/me/retention-alerts/${selectedAlert.id}/outreach`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const logs = await res.json();
-          setOutreachHistory(logs);
-        }
+        const res = await api.get(`/api/agents/me/retention-alerts/${selectedAlert.id}/outreach`);
+        setOutreachHistory(res.data);
       } catch (err) {
         console.error('Failed to load outreach history:', err);
       } finally {
@@ -187,27 +170,14 @@ export default function AgentRetentionAlerts({ tenantContext, currentUser }: Age
     setScanning(true);
     setScanMessage(null);
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch('/api/agents/me/retention-alerts/scan', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      if (!res.ok) {
-        throw new Error(`Portfolio scan failed (HTTP ${res.status})`);
-      }
-
-      const result = await res.json();
+      const res = await api.post('/api/agents/me/retention-alerts/scan');
+      const result = res.data;
       setScanMessage(
         `Scan complete: Checked ${result.scanned_policies} policies, generated ${result.new_alerts_created} new retention alert(s).`
       );
       fetchAlerts();
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('Error initiating automated portfolio retention scan.');
-      }
+    } catch (err: any) {
+      setError(err.response?.data?.detail || err.message || 'Error initiating automated portfolio retention scan.');
     } finally {
       setScanning(false);
     }
@@ -220,26 +190,13 @@ export default function AgentRetentionAlerts({ tenantContext, currentUser }: Age
     setSubmittingOutreach(true);
     setError(null);
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch(`/api/agents/me/retention-alerts/${outreachModalAlert.id}/outreach`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          contact_method: contactMethod,
-          outcome: outreachOutcome,
-          notes: outreachNotes.trim() || undefined
-        })
+      const res = await api.post(`/api/agents/me/retention-alerts/${outreachModalAlert.id}/outreach`, {
+        contact_method: contactMethod,
+        outcome: outreachOutcome,
+        notes: outreachNotes.trim() || undefined
       });
 
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.detail || `Failed to log outreach (HTTP ${res.status})`);
-      }
-
-      const data = await res.json();
+      const data = res.data;
       setOutreachSuccess(
         data.policy_renewed
           ? `Outreach logged! Policy renewed and alert #${outreachModalAlert.id} marked as resolved.`
@@ -254,12 +211,8 @@ export default function AgentRetentionAlerts({ tenantContext, currentUser }: Age
 
       // Refresh list
       fetchAlerts();
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('Failed to record outreach touchpoint.');
-      }
+    } catch (err: any) {
+      setError(err.response?.data?.detail || err.message || 'Failed to record outreach touchpoint.');
     } finally {
       setSubmittingOutreach(false);
     }

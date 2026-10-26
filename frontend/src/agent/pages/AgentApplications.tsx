@@ -21,6 +21,7 @@ import {
   ExternalLink,
   X
 } from 'lucide-react';
+import api from '../../api';
 
 interface AgentApplicationsProps {
   tenantContext: {
@@ -105,33 +106,21 @@ export default function AgentApplications({ tenantContext, currentUser }: AgentA
     setLoading(true);
     setError(null);
     try {
-      const token = localStorage.getItem('token');
       const params = new URLSearchParams();
       if (statusFilter !== 'all') params.append('status', statusFilter);
       if (productFilter !== 'all') params.append('product_type', productFilter);
       if (searchQuery.trim()) params.append('search', searchQuery.trim());
       params.append('limit', '50');
 
-      const res = await fetch(`/api/agents/me/applications?${params.toString()}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-
-      if (!res.ok) {
-        throw new Error(`Failed to load applications (HTTP ${res.status})`);
-      }
-
-      const data = await res.json();
+      const res = await api.get(`/api/agents/me/applications?${params.toString()}`);
+      const data = res.data;
       setApplications(data.applications || []);
       setTotalCount(data.total || 0);
       if (data.status_counts) {
         setStatusCounts(data.status_counts);
       }
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('An unexpected error occurred while loading applications.');
-      }
+    } catch (err: any) {
+      setError(err.response?.data?.detail || err.message || 'An unexpected error occurred while loading applications.');
     } finally {
       setLoading(false);
     }
@@ -146,21 +135,10 @@ export default function AgentApplications({ tenantContext, currentUser }: AgentA
     setLoadingDetail(true);
     setDetailError(null);
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch(`/api/agents/me/applications/${appId}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (!res.ok) {
-        throw new Error(`Failed to load application details (HTTP ${res.status})`);
-      }
-      const data: ApplicationDetailData = await res.json();
-      setSelectedAppDetail(data);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setDetailError(err.message);
-      } else {
-        setDetailError('Failed to load application dossier.');
-      }
+      const res = await api.get(`/api/agents/me/applications/${appId}`);
+      setSelectedAppDetail(res.data);
+    } catch (err: any) {
+      setDetailError(err.response?.data?.detail || err.message || 'Failed to load application dossier.');
     } finally {
       setLoadingDetail(false);
     }

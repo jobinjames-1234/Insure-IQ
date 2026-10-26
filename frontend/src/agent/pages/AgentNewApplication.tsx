@@ -16,6 +16,7 @@ import {
   FileText,
   Paperclip
 } from 'lucide-react';
+import api from '../../api';
 
 interface AgentNewApplicationProps {
   tenantContext: {
@@ -134,15 +135,8 @@ export default function AgentNewApplication({ tenantContext, currentUser }: Agen
     setLoadingCustomer(true);
     setCustomerError(null);
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch('/api/agents/me/customers?limit=100', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (!res.ok) {
-        throw new Error('Failed to load your assigned customer portfolio.');
-      }
-      const data = await res.json();
-      const list: CustomerOption[] = data.customers || [];
+      const res = await api.get('/api/agents/me/customers?limit=100');
+      const list: CustomerOption[] = res.data.customers || res.data.items || [];
       setCustomers(list);
 
       if (preselectedCustomerId) {
@@ -151,23 +145,16 @@ export default function AgentNewApplication({ tenantContext, currentUser }: Agen
           setSelectedCustomer(found);
         } else {
           // Attempt direct fetch if not in the first 100
-          const directRes = await fetch(`/api/agents/me/customers/${preselectedCustomerId}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-          });
-          if (directRes.ok) {
-            const directCust = await directRes.json();
-            setSelectedCustomer(directCust);
-          } else {
+          try {
+            const directRes = await api.get(`/api/agents/me/customers/${preselectedCustomerId}`);
+            setSelectedCustomer(directRes.data);
+          } catch {
             setCustomerError(`Customer #${preselectedCustomerId} not found in your assigned portfolio.`);
           }
         }
       }
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setCustomerError(err.message);
-      } else {
-        setCustomerError('An unexpected error occurred while loading customers.');
-      }
+    } catch (err: any) {
+      setCustomerError(err.response?.data?.detail || err.message || 'Failed to load your assigned customer portfolio.');
     } finally {
       setLoadingCustomer(false);
     }
@@ -228,7 +215,6 @@ export default function AgentNewApplication({ tenantContext, currentUser }: Agen
     }
 
     try {
-      const token = localStorage.getItem('token');
       const payload = {
         customer_id: selectedCustomer.id,
         product_type: selectedProduct,
@@ -243,28 +229,10 @@ export default function AgentNewApplication({ tenantContext, currentUser }: Agen
         }
       };
 
-      const res = await fetch('/api/agents/me/applications', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!res.ok) {
-        const errJson = await res.json().catch(() => null);
-        throw new Error(errJson?.detail || `Application submission failed (HTTP ${res.status})`);
-      }
-
-      const created: SubmittedApplication = await res.json();
-      setSubmittedApp(created);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setSubmitError(err.message);
-      } else {
-        setSubmitError('An unexpected error occurred during submission.');
-      }
+      const res = await api.post('/api/agents/me/applications', payload);
+      setSubmittedApp(res.data);
+    } catch (err: any) {
+      setSubmitError(err.response?.data?.detail || err.message || 'An unexpected error occurred during submission.');
     } finally {
       setSubmitting(false);
     }
@@ -272,14 +240,8 @@ export default function AgentNewApplication({ tenantContext, currentUser }: Agen
 
   const fetchAppDocuments = useCallback(async (appId: number) => {
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch(`/api/agents/me/applications/${appId}/documents`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setUploadedDocs(data.documents || []);
-      }
+      const res = await api.get(`/api/agents/me/applications/${appId}/documents`);
+      setUploadedDocs(res.data.documents || []);
     } catch (err) {
       // silent
     }
@@ -316,38 +278,20 @@ export default function AgentNewApplication({ tenantContext, currentUser }: Agen
     setUploadDocSuccess(false);
 
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch(`/api/agents/me/applications/${submittedApp.id}/documents`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          doc_type: selectedDocType,
-          file_name: selectedFile.name,
-          file_size_bytes: selectedFile.size,
-          description: docDescription.trim() || undefined
-        })
+      const res = await api.post(`/api/agents/me/applications/${submittedApp.id}/documents`, {
+        doc_type: selectedDocType,
+        file_name: selectedFile.name,
+        file_size_bytes: selectedFile.size,
+        description: docDescription.trim() || undefined
       });
 
-      if (!res.ok) {
-        const errData = await res.json().catch(() => null);
-        throw new Error(errData?.detail || `Document upload failed (HTTP ${res.status})`);
-      }
-
-      const newDoc: ApplicationDocItem = await res.json();
-      setUploadedDocs((prev) => [...prev, newDoc]);
+      setUploadedDocs((prev) => [...prev, res.data]);
       setSelectedFile(null);
       setDocDescription('');
       setUploadDocSuccess(true);
       setTimeout(() => setUploadDocSuccess(false), 3500);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setUploadDocError(err.message);
-      } else {
-        setUploadDocError('Failed to upload document.');
-      }
+    } catch (err: any) {
+      setUploadDocError(err.response?.data?.detail || err.message || 'Failed to upload document.');
     } finally {
       setUploadingDoc(false);
     }

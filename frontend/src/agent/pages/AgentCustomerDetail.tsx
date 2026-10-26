@@ -22,6 +22,7 @@ import {
   User,
   CheckCircle2
 } from 'lucide-react';
+import api from '../../api';
 
 interface AgentCustomerDetailProps {
   tenantContext: {
@@ -162,30 +163,10 @@ export default function AgentCustomerDetail({ tenantContext, currentUser }: Agen
     setLoading(true);
     setError(null);
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch(`/api/agents/me/customers/${id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!res.ok) {
-        if (res.status === 404) {
-          throw new Error(`Customer #${id} was not found in your assigned portfolio.`);
-        } else if (res.status === 403) {
-          throw new Error('Access denied: You are not authorized to view this customer record.');
-        }
-        throw new Error(`Failed to load customer profile (HTTP ${res.status})`);
-      }
-
-      const data: CustomerDossier = await res.json();
-      setCustomer(data);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('An unexpected error occurred while loading the customer dossier.');
-      }
+      const res = await api.get(`/api/agents/me/customers/${id}`);
+      setCustomer(res.data);
+    } catch (err: any) {
+      setError(err.response?.data?.detail || err.message || 'An unexpected error occurred while loading the customer dossier.');
     } finally {
       setLoading(false);
     }
@@ -196,25 +177,10 @@ export default function AgentCustomerDetail({ tenantContext, currentUser }: Agen
     setPoliciesLoading(true);
     setPoliciesError(null);
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch(`/api/agents/me/customers/${id}/policies`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!res.ok) {
-        throw new Error(`Failed to load customer policies (HTTP ${res.status})`);
-      }
-
-      const data: CustomerPoliciesResponse = await res.json();
-      setPolicies(data.policies || []);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setPoliciesError(err.message);
-      } else {
-        setPoliciesError('Failed to load customer policies.');
-      }
+      const res = await api.get<CustomerPoliciesResponse>(`/api/agents/me/customers/${id}/policies`);
+      setPolicies(res.data.policies || []);
+    } catch (err: any) {
+      setPoliciesError(err.response?.data?.detail || err.message || 'Failed to load customer policies.');
     } finally {
       setPoliciesLoading(false);
     }
@@ -225,25 +191,10 @@ export default function AgentCustomerDetail({ tenantContext, currentUser }: Agen
     setClaimsLoading(true);
     setClaimsError(null);
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch(`/api/agents/me/customers/${id}/claims`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!res.ok) {
-        throw new Error(`Failed to load customer claims (HTTP ${res.status})`);
-      }
-
-      const data: CustomerClaimsResponse = await res.json();
-      setClaims(data.claims || []);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setClaimsError(err.message);
-      } else {
-        setClaimsError('Failed to load customer claims.');
-      }
+      const res = await api.get<CustomerClaimsResponse>(`/api/agents/me/customers/${id}/claims`);
+      setClaims(res.data.claims || []);
+    } catch (err: any) {
+      setClaimsError(err.response?.data?.detail || err.message || 'Failed to load customer claims.');
     } finally {
       setClaimsLoading(false);
     }
@@ -254,25 +205,10 @@ export default function AgentCustomerDetail({ tenantContext, currentUser }: Agen
     setNotesLoading(true);
     setNotesError(null);
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch(`/api/agents/me/customers/${id}/notes`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!res.ok) {
-        throw new Error(`Failed to load customer notes (HTTP ${res.status})`);
-      }
-
-      const data: CustomerNotesListResponse = await res.json();
-      setNotes(data.notes || []);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setNotesError(err.message);
-      } else {
-        setNotesError('Failed to load customer notes.');
-      }
+      const res = await api.get<CustomerNotesListResponse>(`/api/agents/me/customers/${id}/notes`);
+      setNotes(res.data.notes || []);
+    } catch (err: any) {
+      setNotesError(err.response?.data?.detail || err.message || 'Failed to load customer notes.');
     } finally {
       setNotesLoading(false);
     }
@@ -295,32 +231,13 @@ export default function AgentCustomerDetail({ tenantContext, currentUser }: Agen
     setCreateNoteSuccess(false);
 
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch(`/api/agents/me/customers/${id}/notes`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ note: trimmed })
-      });
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => null);
-        throw new Error(errData?.detail || `Failed to add note (HTTP ${res.status})`);
-      }
-
-      const created: NoteItem = await res.json();
-      setNotes(prev => [created, ...prev]);
+      const res = await api.post(`/api/agents/me/customers/${id}/notes`, { note: trimmed });
+      setNotes(prev => [res.data, ...prev]);
       setNewNoteText('');
       setCreateNoteSuccess(true);
       setTimeout(() => setCreateNoteSuccess(false), 3000);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setCreateNoteError(err.message);
-      } else {
-        setCreateNoteError('Failed to record note.');
-      }
+    } catch (err: any) {
+      setCreateNoteError(err.response?.data?.detail || err.message || 'Failed to record note.');
     } finally {
       setSubmittingNote(false);
     }

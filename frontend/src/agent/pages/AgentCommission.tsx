@@ -16,6 +16,7 @@ import {
   User,
   Download
 } from 'lucide-react';
+import api from '../../api';
 
 interface AgentCommissionProps {
   tenantContext: {
@@ -87,32 +88,20 @@ export default function AgentCommission({ tenantContext, currentUser }: AgentCom
     setLoading(true);
     setError(null);
     try {
-      const token = localStorage.getItem('token');
       const params = new URLSearchParams();
       if (statusFilter !== 'all') params.append('status', statusFilter);
       if (eventTypeFilter !== 'all') params.append('event_type', eventTypeFilter);
       if (searchQuery.trim()) params.append('search', searchQuery.trim());
       params.append('limit', '50');
 
-      const res = await fetch(`/api/agents/me/commission?${params.toString()}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      if (!res.ok) {
-        throw new Error(`Failed to load commission ledger (HTTP ${res.status})`);
-      }
-
-      const data = await res.json();
+      const res = await api.get(`/api/agents/me/commission?${params.toString()}`);
+      const data = res.data;
       setEntries(data.entries || []);
       if (data.summary) {
         setSummary(data.summary);
       }
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('An unexpected error occurred while fetching commission data.');
-      }
+    } catch (err: any) {
+      setError(err.response?.data?.detail || err.message || 'An unexpected error occurred while fetching commission data.');
     } finally {
       setLoading(false);
     }
@@ -121,22 +110,17 @@ export default function AgentCommission({ tenantContext, currentUser }: AgentCom
   const handleExportCSV = async () => {
     setExporting(true);
     try {
-      const token = localStorage.getItem('token');
       const params = new URLSearchParams();
       if (statusFilter !== 'all') params.append('status', statusFilter);
       if (eventTypeFilter !== 'all') params.append('event_type', eventTypeFilter);
       if (searchQuery.trim()) params.append('search', searchQuery.trim());
 
-      const res = await fetch(`/api/agents/me/commission/export?${params.toString()}`, {
-        headers: { Authorization: `Bearer ${token}` }
+      const res = await api.get(`/api/agents/me/commission/export?${params.toString()}`, {
+        responseType: 'blob'
       });
 
-      if (!res.ok) {
-        throw new Error(`Failed to export commission CSV (HTTP ${res.status})`);
-      }
-
-      const blob = await res.blob();
-      const contentDisposition = res.headers.get('Content-Disposition');
+      const blob = new Blob([res.data], { type: 'text/csv' });
+      const contentDisposition = res.headers['content-disposition'];
       let filename = 'commission_ledger.csv';
       if (contentDisposition) {
         const match = contentDisposition.match(/filename="?([^"]+)"?/);
@@ -151,12 +135,8 @@ export default function AgentCommission({ tenantContext, currentUser }: AgentCom
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('Failed to download CSV export');
-      }
+    } catch (err: any) {
+      setError(err.response?.data?.detail || err.message || 'Failed to download CSV export');
     } finally {
       setExporting(false);
     }

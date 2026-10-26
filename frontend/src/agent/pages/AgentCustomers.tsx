@@ -17,6 +17,7 @@ import {
   MapPin,
   UserPlus
 } from 'lucide-react';
+import api from '../../api';
 
 interface AgentCustomersProps {
   tenantContext: {
@@ -106,7 +107,6 @@ export default function AgentCustomers({ tenantContext, currentUser }: AgentCust
     setLoading(true);
     setError(null);
     try {
-      const token = localStorage.getItem('token');
       const params = new URLSearchParams({
         page: page.toString(),
         page_size: pageSize.toString(),
@@ -122,29 +122,14 @@ export default function AgentCustomers({ tenantContext, currentUser }: AgentCust
         params.append('product_type', productFilter);
       }
 
-      const res = await fetch(`/api/agents/me/customers?${params.toString()}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!res.ok) {
-        if (res.status === 403) {
-          throw new Error('Access denied: only licensed agents can view this customer portfolio.');
-        }
-        throw new Error(`Failed to load customer portfolio (HTTP ${res.status})`);
-      }
-
-      const data: CustomerListApiResponse = await res.json();
+      const res = await api.get(`/api/agents/me/customers?${params.toString()}`);
+      const data: CustomerListApiResponse = res.data;
       setCustomers(data.items || []);
       setTotal(data.total || 0);
       setTotalPages(data.total_pages || 1);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('An unexpected error occurred while fetching customers.');
-      }
+    } catch (err: any) {
+      const msg = err.response?.data?.detail || err.message || 'Failed to load customer portfolio';
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -208,7 +193,6 @@ export default function AgentCustomers({ tenantContext, currentUser }: AgentCust
 
     setRegLoading(true);
     try {
-      const token = localStorage.getItem('token');
       const payload = {
         first_name: regFirstName.trim(),
         last_name: regLastName.trim(),
@@ -219,26 +203,8 @@ export default function AgentCustomers({ tenantContext, currentUser }: AgentCust
         churn_risk_flag: regRiskFlag
       };
 
-      const res = await fetch('/api/agents/me/customers', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => null);
-        if (res.status === 409) {
-          throw new Error(errorData?.detail || 'A customer with this email already exists in your tenant.');
-        } else if (res.status === 422) {
-          throw new Error(errorData?.detail || 'Invalid customer information entered.');
-        }
-        throw new Error(errorData?.detail || `Failed to register customer (HTTP ${res.status})`);
-      }
-
-      const newCustomer: CustomerRecord = await res.json();
+      const res = await api.post('/api/agents/me/customers', payload);
+      const newCustomer: CustomerRecord = res.data;
       setRegSuccess(`Successfully registered ${newCustomer.full_name}!`);
 
       // Prepend to current list and update total
@@ -258,12 +224,8 @@ export default function AgentCustomers({ tenantContext, currentUser }: AgentCust
       setTimeout(() => {
         handleCloseRegisterModal();
       }, 900);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setRegError(err.message);
-      } else {
-        setRegError('Failed to register customer. Please try again.');
-      }
+    } catch (err: any) {
+      setRegError(err.response?.data?.detail || err.message || 'Failed to register customer. Please try again.');
     } finally {
       setRegLoading(false);
     }
